@@ -15,35 +15,35 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fms.ems.entity.User;
-import com.fms.ems.repository.UserRepository;
+import com.fms.ems.entity.Project;
+import com.fms.ems.repository.ProjectRepository;
 
 @RestController
 @RequestMapping("/api")
-public class UserRestController {
+public class ProjectRestController {
 
-  @Autowired UserRepository userRepository;
+  @Autowired ProjectRepository projectRepository;
 
-  @GetMapping("/users")
-  public ResponseEntity<List<User>> getAllUsers() {
+  @GetMapping("/projects")
+  public ResponseEntity<List<Project>> getAllProjects() {
     try {
-      final List<User> users = userRepository.findAll();
-      if (users.isEmpty()) {
+      final List<Project> projects = projectRepository.findAll();
+      if (projects.isEmpty()) {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
       } else {
-        return new ResponseEntity<>(users, HttpStatus.OK);
+        return new ResponseEntity<>(projects, HttpStatus.OK);
       }
     } catch (Exception e) {
       return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
-  @GetMapping("/user/{id}")
-  public ResponseEntity<User> getUserById(@PathVariable String id) {
+  @GetMapping("/project/{id}")
+  public ResponseEntity<Project> getProjectById(@PathVariable String id) {
     try {
-      final Optional<User> userOptional = userRepository.findById(Integer.parseInt(id));
-      if (userOptional.isPresent()) {
-        return new ResponseEntity<>(userOptional.get(), HttpStatus.OK);
+      final Optional<Project> projectOptional = projectRepository.findById(Integer.parseInt(id));
+      if (projectOptional.isPresent()) {
+        return new ResponseEntity<>(projectOptional.get(), HttpStatus.OK);
       } else {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
       }
@@ -52,32 +52,32 @@ public class UserRestController {
     }
   }
 
-  @PostMapping("/user")
-  public ResponseEntity<User> createUser(@RequestBody User user) {
+  @PostMapping("/project")
+  public ResponseEntity<Project> createProject(@RequestBody Project project) {
     try {
-      final User savedUser = userRepository.save(user);
-      return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
+      final Project savedProject = projectRepository.save(project);
+      return new ResponseEntity<>(savedProject, HttpStatus.CREATED);
     } catch (Exception e) {
       return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
-  @PutMapping("/user/{id}")
-  public ResponseEntity<User> updateUser(@RequestBody User user) {
-    final User updatedUser = userRepository.save(user);
+  @PutMapping("/project/{id}")
+  public ResponseEntity<Project> updateProject(@RequestBody Project project) {
+    final Project updatedProject = projectRepository.save(project);
     try {
-      return new ResponseEntity<>(updatedUser, HttpStatus.OK);
+      return new ResponseEntity<>(updatedProject, HttpStatus.OK);
     } catch (Exception e) {
       return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
-  @DeleteMapping("/user/{id}")
-  public ResponseEntity<User> deleteUser(@PathVariable String id) {
+  @DeleteMapping("/project/{id}")
+  public ResponseEntity<Project> deleteProject(@PathVariable String id) {
     try {
-      final Optional<User> userOptional = userRepository.findById(Integer.parseInt(id));
-      if (userOptional.isPresent()) {
-        userRepository.delete(userOptional.get());
+      final Optional<Project> projectOptional = projectRepository.findById(Integer.parseInt(id));
+      if (projectOptional.isPresent()) {
+        projectRepository.delete(projectOptional.get());
         return new ResponseEntity<>(HttpStatus.OK);
       } else {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

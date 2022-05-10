@@ -15,35 +15,35 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fms.ems.entity.User;
-import com.fms.ems.repository.UserRepository;
+import com.fms.ems.entity.Vendor;
+import com.fms.ems.repository.VendorRepository;
 
 @RestController
 @RequestMapping("/api")
-public class UserRestController {
+public class VendorRestController {
 
-  @Autowired UserRepository userRepository;
+  @Autowired VendorRepository vendorRepository;
 
-  @GetMapping("/users")
-  public ResponseEntity<List<User>> getAllUsers() {
+  @GetMapping("/vendors")
+  public ResponseEntity<List<Vendor>> getAllVendors() {
     try {
-      final List<User> users = userRepository.findAll();
-      if (users.isEmpty()) {
+      final List<Vendor> vendors = vendorRepository.findAll();
+      if (vendors.isEmpty()) {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
       } else {
-        return new ResponseEntity<>(users, HttpStatus.OK);
+        return new ResponseEntity<>(vendors, HttpStatus.OK);
       }
     } catch (Exception e) {
       return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
-  @GetMapping("/user/{id}")
-  public ResponseEntity<User> getUserById(@PathVariable String id) {
+  @GetMapping("/vendor/{id}")
+  public ResponseEntity<Vendor> getVendorById(@PathVariable String id) {
     try {
-      final Optional<User> userOptional = userRepository.findById(Integer.parseInt(id));
-      if (userOptional.isPresent()) {
-        return new ResponseEntity<>(userOptional.get(), HttpStatus.OK);
+      final Optional<Vendor> vendorOptional = vendorRepository.findById(Integer.parseInt(id));
+      if (vendorOptional.isPresent()) {
+        return new ResponseEntity<>(vendorOptional.get(), HttpStatus.OK);
       } else {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
       }
@@ -52,32 +52,32 @@ public class UserRestController {
     }
   }
 
-  @PostMapping("/user")
-  public ResponseEntity<User> createUser(@RequestBody User user) {
+  @PostMapping("/vendor")
+  public ResponseEntity<Vendor> createVendor(@RequestBody Vendor vendor) {
     try {
-      final User savedUser = userRepository.save(user);
-      return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
+      final Vendor savedVendor = vendorRepository.save(vendor);
+      return new ResponseEntity<>(savedVendor, HttpStatus.CREATED);
     } catch (Exception e) {
       return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
-  @PutMapping("/user/{id}")
-  public ResponseEntity<User> updateUser(@RequestBody User user) {
-    final User updatedUser = userRepository.save(user);
+  @PutMapping("/vendor/{id}")
+  public ResponseEntity<Vendor> updateVendor(@RequestBody Vendor vendor) {
+    final Vendor updatedVendor = vendorRepository.save(vendor);
     try {
-      return new ResponseEntity<>(updatedUser, HttpStatus.OK);
+      return new ResponseEntity<>(updatedVendor, HttpStatus.OK);
     } catch (Exception e) {
       return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
-  @DeleteMapping("/user/{id}")
-  public ResponseEntity<User> deleteUser(@PathVariable String id) {
+  @DeleteMapping("/vendor/{id}")
+  public ResponseEntity<Vendor> deleteVendor(@PathVariable String id) {
     try {
-      final Optional<User> userOptional = userRepository.findById(Integer.parseInt(id));
-      if (userOptional.isPresent()) {
-        userRepository.delete(userOptional.get());
+      final Optional<Vendor> vendorOptional = vendorRepository.findById(Integer.parseInt(id));
+      if (vendorOptional.isPresent()) {
+        vendorRepository.delete(vendorOptional.get());
         return new ResponseEntity<>(HttpStatus.OK);
       } else {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
