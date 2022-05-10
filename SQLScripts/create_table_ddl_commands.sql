@@ -2,13 +2,15 @@
 
 USE fms;
 
+SET SQL_MODE='ALLOW_INVALID_DATES';
+
 CREATE TABLE IF NOT EXISTS fms.permission(
 permission_id integer NOT NULL AUTO_INCREMENT,
 name varchar(100) NOT NULL,
 created_datetime timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
 updated_datetime timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
 concurrency_version integer NOT NULL,
-CONSTRAINT pk_permission PRIMARY KEY (permission_id)};
+CONSTRAINT pk_permission PRIMARY KEY (permission_id));
 
 CREATE TABLE IF NOT EXISTS fms.role(
 role_id integer NOT NULL AUTO_INCREMENT,
@@ -79,18 +81,15 @@ CONSTRAINT pk_approver_level PRIMARY KEY (approver_level_id),
 CONSTRAINT fk_01_approver_level_project FOREIGN KEY (project_id) references project(project_id),
 CONSTRAINT fk_02_approver_level_user FOREIGN KEY (approver_id) references user(user_id));
 
-create type IF NOT EXISTS fms.notification_type as ENUM 
-('AUTOMATED', 'MANUAL');
-
 CREATE TABLE IF NOT EXISTS fms.notification(
 notification_id integer NOT NULL AUTO_INCREMENT,
-notification_type fms.notification_type NOT NULL,
+notification_type ENUM('AUTOMATED', 'MANUAL'),
 message varchar(255),
 triggered_by integer NOT NULL,
 triggered_to integer NOT NULL,
-seen_datetime timestampz NOT NULL,
-email_sent_datetime timestamp NOT NULL,
-sms_sent_datetime timestamp NOT NULL,
+seen_datetime timestamp,
+sms_sent_datetime timestamp,
+email_sent_datetime timestamp,
 created_datetime timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
 updated_datetime timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
 concurrency_version integer NOT NULL,
