@@ -1,5 +1,7 @@
 /*MySQL Scripts*/
 
+USE fms;
+
 create table user(
 user_id integer NOT NULL AUTO_INCREMENT,
 role_id integer,
