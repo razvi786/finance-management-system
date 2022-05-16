@@ -14,10 +14,12 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import lombok.Data;
+import lombok.ToString;
 
 @Data
 @Table(name = "permission")
 @Entity
+@ToString
 public class Permission {
 
 	@Id

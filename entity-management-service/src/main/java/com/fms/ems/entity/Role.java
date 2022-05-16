@@ -1,12 +1,16 @@
 package com.fms.ems.entity;
 
 import java.time.OffsetDateTime;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
@@ -14,10 +18,12 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import lombok.Data;
+import lombok.ToString;
 
 @Data
 @Table(name = "role")
 @Entity
+@ToString
 public class Role {
 
 	@Id
@@ -27,6 +33,12 @@ public class Role {
 
 	@Column(name = "name")
 	private String name;
+	
+	@ManyToMany
+	@JoinTable(name = "role_permission", 
+			  joinColumns = @JoinColumn(name = "role_id"), 
+			  inverseJoinColumns = @JoinColumn(name = "permission_id"))
+	List<Permission> rolePermissions;
 
 	@CreationTimestamp
 	@Column(name = "created_datetime")

@@ -19,13 +19,10 @@ concurrency_version integer NOT NULL,
 CONSTRAINT pk_role PRIMARY KEY (role_id));
 
 CREATE TABLE IF NOT EXISTS fms.role_permission(
-role_permission_id integer NOT NULL AUTO_INCREMENT,
 role_id integer NOT NULL,
 permission_id integer NOT NULL,
-created_datetime timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-updated_datetime timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-concurrency_version integer NOT NULL,
-CONSTRAINT pk_role_permission PRIMARY KEY (role_permission_id),
+PRIMARY KEY (role_id,permission_id),
+KEY role_id (role_id),
 CONSTRAINT fk_01_role_permission FOREIGN KEY (role_id) references role(role_id),
 CONSTRAINT fk_02_role_permission FOREIGN KEY (permission_id) references permission(permission_id));
 
