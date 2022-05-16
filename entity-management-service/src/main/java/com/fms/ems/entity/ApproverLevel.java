@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
@@ -25,11 +27,13 @@ public class ApproverLevel {
   @Column(name = "approver_level_id")
   private int approverLevelId;
 
-  @Column(name = "project_id")
-  private int projectId;
+  @ManyToOne
+  @JoinColumn(name = "project_id", nullable = false)
+  private Project project;
 
-  @Column(name = "approver_id")
-  private int approverId;
+  @ManyToOne
+  @JoinColumn(name = "approver_id", nullable = false)
+  private User approver;
 
   @Column(name = "level")
   private int level;

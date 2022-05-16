@@ -3,6 +3,8 @@ package com.fms.ems.controller;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,13 +18,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fms.ems.entity.ApproverLevel;
+import com.fms.ems.entity.Project;
+import com.fms.ems.entity.User;
 import com.fms.ems.repository.ApproverLevelRepository;
+import com.fms.ems.repository.ProjectRepository;
+import com.fms.ems.repository.UserRepository;
 
 @RestController
 @RequestMapping("/api")
 public class ApproverLevelRestController {
 
   @Autowired ApproverLevelRepository approverLevelRepository;
+
+  @Autowired UserRepository userRepository;
+
+  @Autowired ProjectRepository projectRepository;
 
   @GetMapping("/approver-levels")
   public ResponseEntity<List<ApproverLevel>> getAllApproverLevels() {
@@ -54,9 +64,30 @@ public class ApproverLevelRestController {
   }
 
   @PostMapping("/approver-level")
+  @Transactional
   public ResponseEntity<ApproverLevel> createApproverLevel(
       @RequestBody ApproverLevel approverLevel) {
     try {
+      if (approverLevel.getProject() != null) {
+        final Optional<Project> projectOptional =
+            projectRepository.findById(approverLevel.getProject().getProjectId());
+        if (projectOptional.isPresent()) {
+          final Project project = projectOptional.get();
+          approverLevel.setProject(project);
+        } else {
+          return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+      }
+      if (approverLevel.getApprover() != null) {
+        final Optional<User> userOptional =
+            userRepository.findById(approverLevel.getApprover().getUserId());
+        if (userOptional.isPresent()) {
+          final User user = userOptional.get();
+          approverLevel.setApprover(user);
+        } else {
+          return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+      }
       final ApproverLevel savedApproverLevel = approverLevelRepository.save(approverLevel);
       return new ResponseEntity<>(savedApproverLevel, HttpStatus.CREATED);
     } catch (Exception e) {
@@ -65,6 +96,7 @@ public class ApproverLevelRestController {
   }
 
   @PutMapping("/approver-level/{id}")
+  @Transactional
   public ResponseEntity<ApproverLevel> updateApproverLevel(
       @RequestBody ApproverLevel approverLevel) {
     final ApproverLevel updatedApproverLevel = approverLevelRepository.save(approverLevel);
@@ -76,6 +108,7 @@ public class ApproverLevelRestController {
   }
 
   @DeleteMapping("/approver-level/{id}")
+  @Transactional
   public ResponseEntity<ApproverLevel> deleteApproverLevel(@PathVariable String id) {
     try {
       final Optional<ApproverLevel> approverLevelOptional =

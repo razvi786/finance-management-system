@@ -3,6 +3,8 @@ package com.fms.ems.controller;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fms.ems.entity.Role;
 import com.fms.ems.entity.User;
+import com.fms.ems.repository.RoleRepository;
 import com.fms.ems.repository.UserRepository;
 
 @RestController
@@ -23,6 +27,8 @@ import com.fms.ems.repository.UserRepository;
 public class UserRestController {
 
   @Autowired UserRepository userRepository;
+
+  @Autowired RoleRepository roleRepository;
 
   @GetMapping("/users")
   public ResponseEntity<List<User>> getAllUsers() {
@@ -53,8 +59,18 @@ public class UserRestController {
   }
 
   @PostMapping("/user")
+  @Transactional
   public ResponseEntity<User> createUser(@RequestBody User user) {
     try {
+      if (user.getRole() != null) {
+        final Optional<Role> roleOptional = roleRepository.findById(user.getRole().getRoleId());
+        if (roleOptional.isPresent()) {
+          final Role role = roleOptional.get();
+          user.setRole(role);
+        } else {
+          return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+      }
       final User savedUser = userRepository.save(user);
       return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
     } catch (Exception e) {
@@ -63,6 +79,7 @@ public class UserRestController {
   }
 
   @PutMapping("/user/{id}")
+  @Transactional
   public ResponseEntity<User> updateUser(@RequestBody User user) {
     final User updatedUser = userRepository.save(user);
     try {
@@ -73,6 +90,7 @@ public class UserRestController {
   }
 
   @DeleteMapping("/user/{id}")
+  @Transactional
   public ResponseEntity<User> deleteUser(@PathVariable String id) {
     try {
       final Optional<User> userOptional = userRepository.findById(Integer.parseInt(id));

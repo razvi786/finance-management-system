@@ -3,6 +3,8 @@ package com.fms.ems.controller;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,13 +18,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fms.ems.entity.Project;
+import com.fms.ems.entity.User;
 import com.fms.ems.repository.ProjectRepository;
+import com.fms.ems.repository.UserRepository;
 
 @RestController
 @RequestMapping("/api")
 public class ProjectRestController {
 
   @Autowired ProjectRepository projectRepository;
+
+  @Autowired UserRepository userRepository;
 
   @GetMapping("/projects")
   public ResponseEntity<List<Project>> getAllProjects() {
@@ -53,8 +59,18 @@ public class ProjectRestController {
   }
 
   @PostMapping("/project")
+  @Transactional
   public ResponseEntity<Project> createProject(@RequestBody Project project) {
     try {
+      if (project.getUser() != null) {
+        final Optional<User> userOptional = userRepository.findById(project.getUser().getUserId());
+        if (userOptional.isPresent()) {
+          final User user = userOptional.get();
+          project.setUser(user);
+        } else {
+          return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+      }
       final Project savedProject = projectRepository.save(project);
       return new ResponseEntity<>(savedProject, HttpStatus.CREATED);
     } catch (Exception e) {
@@ -63,6 +79,7 @@ public class ProjectRestController {
   }
 
   @PutMapping("/project/{id}")
+  @Transactional
   public ResponseEntity<Project> updateProject(@RequestBody Project project) {
     final Project updatedProject = projectRepository.save(project);
     try {
@@ -73,6 +90,7 @@ public class ProjectRestController {
   }
 
   @DeleteMapping("/project/{id}")
+  @Transactional
   public ResponseEntity<Project> deleteProject(@PathVariable String id) {
     try {
       final Optional<Project> projectOptional = projectRepository.findById(Integer.parseInt(id));
