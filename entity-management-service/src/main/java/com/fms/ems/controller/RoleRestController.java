@@ -140,7 +140,7 @@ public class RoleRestController {
         Role updatedRole = roleRepository.save(role);
         return new ResponseEntity<>(updatedRole, HttpStatus.OK);
       } else {
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
       }
     } catch (Exception e) {
       return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

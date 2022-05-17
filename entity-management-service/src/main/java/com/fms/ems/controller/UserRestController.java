@@ -80,10 +80,15 @@ public class UserRestController {
 
   @PutMapping("/user/{id}")
   @Transactional
-  public ResponseEntity<User> updateUser(@RequestBody User user) {
-    final User updatedUser = userRepository.save(user);
+  public ResponseEntity<User> updateUser(@PathVariable String id, @RequestBody User user) {
     try {
-      return new ResponseEntity<>(updatedUser, HttpStatus.OK);
+      final Optional<User> userOptional = userRepository.findById(Integer.parseInt(id));
+      if (userOptional.isPresent()) {
+        final User updatedUser = userRepository.save(user);
+        return new ResponseEntity<>(updatedUser, HttpStatus.OK);
+      } else {
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+      }
     } catch (Exception e) {
       return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }

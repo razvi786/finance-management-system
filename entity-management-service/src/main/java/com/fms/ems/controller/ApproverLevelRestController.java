@@ -98,10 +98,16 @@ public class ApproverLevelRestController {
   @PutMapping("/approver-level/{id}")
   @Transactional
   public ResponseEntity<ApproverLevel> updateApproverLevel(
-      @RequestBody ApproverLevel approverLevel) {
-    final ApproverLevel updatedApproverLevel = approverLevelRepository.save(approverLevel);
+      @PathVariable String id, @RequestBody ApproverLevel approverLevel) {
     try {
-      return new ResponseEntity<>(updatedApproverLevel, HttpStatus.OK);
+      final Optional<ApproverLevel> approverLevelOptional =
+          approverLevelRepository.findById(Integer.parseInt(id));
+      if (approverLevelOptional.isPresent()) {
+        final ApproverLevel updatedApproverLevel = approverLevelRepository.save(approverLevel);
+        return new ResponseEntity<>(updatedApproverLevel, HttpStatus.OK);
+      } else {
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+      }
     } catch (Exception e) {
       return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }

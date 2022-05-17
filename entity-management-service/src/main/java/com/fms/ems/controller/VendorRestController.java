@@ -67,10 +67,15 @@ public class VendorRestController {
 
   @PutMapping("/vendor/{id}")
   @Transactional
-  public ResponseEntity<Vendor> updateVendor(@RequestBody Vendor vendor) {
-    final Vendor updatedVendor = vendorRepository.save(vendor);
+  public ResponseEntity<Vendor> updateVendor(@PathVariable String id, @RequestBody Vendor vendor) {
     try {
-      return new ResponseEntity<>(updatedVendor, HttpStatus.OK);
+      final Optional<Vendor> vendorOptional = vendorRepository.findById(Integer.parseInt(id));
+      if (vendorOptional.isPresent()) {
+        final Vendor updatedVendor = vendorRepository.save(vendor);
+        return new ResponseEntity<>(updatedVendor, HttpStatus.OK);
+      } else {
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+      }
     } catch (Exception e) {
       return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }

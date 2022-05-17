@@ -80,10 +80,16 @@ public class ProjectRestController {
 
   @PutMapping("/project/{id}")
   @Transactional
-  public ResponseEntity<Project> updateProject(@RequestBody Project project) {
-    final Project updatedProject = projectRepository.save(project);
+  public ResponseEntity<Project> updateProject(
+      @PathVariable String id, @RequestBody Project project) {
     try {
-      return new ResponseEntity<>(updatedProject, HttpStatus.OK);
+      final Optional<Project> projectOptional = projectRepository.findById(Integer.parseInt(id));
+      if (projectOptional.isPresent()) {
+        final Project updatedProject = projectRepository.save(project);
+        return new ResponseEntity<>(updatedProject, HttpStatus.OK);
+      } else {
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+      }
     } catch (Exception e) {
       return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
