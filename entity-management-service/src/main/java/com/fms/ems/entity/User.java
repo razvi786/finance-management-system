@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
@@ -25,8 +27,9 @@ public class User {
   @Column(name = "user_id")
   private int userId;
 
-  @Column(name = "role_id")
-  private int roleId;
+  @OneToOne
+  @JoinColumn(name = "role_id", nullable = false)
+  private Role role;
 
   @Column(name = "name")
   private String name;

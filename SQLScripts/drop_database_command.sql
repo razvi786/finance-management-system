@@ -1,0 +1,3 @@
+/*MySQL Scripts*/
+
+DROP DATABASE IF EXISTS fms;

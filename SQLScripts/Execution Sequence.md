@@ -1,7 +1,9 @@
 # MySQL Scripts
 
-1. create_database_command.sql
-2. create_table_ddl_commands.sql
+1. drop_database_command.sql
+2. create_database_command.sql
+3. create_table_ddl_commands.sql
+4. setup_tables_commands.sql
 
 # MongoDB Scripts
 

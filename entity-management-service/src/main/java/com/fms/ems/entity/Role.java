@@ -26,29 +26,30 @@ import lombok.ToString;
 @ToString
 public class Role {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	@Column(name = "role_id")
-	private int roleId;
+  @Id
+  @GeneratedValue(strategy = GenerationType.SEQUENCE)
+  @Column(name = "role_id")
+  private int roleId;
 
-	@Column(name = "name")
-	private String name;
-	
-	@ManyToMany
-	@JoinTable(name = "role_permission", 
-			  joinColumns = @JoinColumn(name = "role_id"), 
-			  inverseJoinColumns = @JoinColumn(name = "permission_id"))
-	List<Permission> rolePermissions;
+  @Column(name = "name")
+  private String name;
 
-	@CreationTimestamp
-	@Column(name = "created_datetime")
-	private OffsetDateTime createdDatetime;
+  @ManyToMany
+  @JoinTable(
+      name = "role_permission",
+      joinColumns = @JoinColumn(name = "role_id"),
+      inverseJoinColumns = @JoinColumn(name = "permission_id"))
+  private List<Permission> permissions;
 
-	@UpdateTimestamp
-	@Column(name = "updated_datetime")
-	private OffsetDateTime updatedDatetime;
+  @CreationTimestamp
+  @Column(name = "created_datetime")
+  private OffsetDateTime createdDatetime;
 
-	@Version
-	@Column(name = "concurrency_version")
-	private Integer concurrencyVersion;
+  @UpdateTimestamp
+  @Column(name = "updated_datetime")
+  private OffsetDateTime updatedDatetime;
+
+  @Version
+  @Column(name = "concurrency_version")
+  private Integer concurrencyVersion;
 }

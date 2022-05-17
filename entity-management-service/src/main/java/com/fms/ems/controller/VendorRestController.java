@@ -3,6 +3,8 @@ package com.fms.ems.controller;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -53,6 +55,7 @@ public class VendorRestController {
   }
 
   @PostMapping("/vendor")
+  @Transactional
   public ResponseEntity<Vendor> createVendor(@RequestBody Vendor vendor) {
     try {
       final Vendor savedVendor = vendorRepository.save(vendor);
@@ -63,16 +66,23 @@ public class VendorRestController {
   }
 
   @PutMapping("/vendor/{id}")
-  public ResponseEntity<Vendor> updateVendor(@RequestBody Vendor vendor) {
-    final Vendor updatedVendor = vendorRepository.save(vendor);
+  @Transactional
+  public ResponseEntity<Vendor> updateVendor(@PathVariable String id, @RequestBody Vendor vendor) {
     try {
-      return new ResponseEntity<>(updatedVendor, HttpStatus.OK);
+      final Optional<Vendor> vendorOptional = vendorRepository.findById(Integer.parseInt(id));
+      if (vendorOptional.isPresent()) {
+        final Vendor updatedVendor = vendorRepository.save(vendor);
+        return new ResponseEntity<>(updatedVendor, HttpStatus.OK);
+      } else {
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+      }
     } catch (Exception e) {
       return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
   @DeleteMapping("/vendor/{id}")
+  @Transactional
   public ResponseEntity<Vendor> deleteVendor(@PathVariable String id) {
     try {
       final Optional<Vendor> vendorOptional = vendorRepository.findById(Integer.parseInt(id));
