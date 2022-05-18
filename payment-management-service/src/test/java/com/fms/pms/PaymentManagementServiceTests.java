@@ -1,10 +1,10 @@
-package com.fms.ems;
+package com.fms.pms;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class FmsApplicationTests {
+class PaymentManagementServiceTests {
 
 	@Test
 	void contextLoads() {

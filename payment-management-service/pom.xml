@@ -8,11 +8,11 @@
 		<version>2.6.7</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.fms.nms</groupId>
-	<artifactId>NotificationManagementService</artifactId>
+	<groupId>com.fms.pms</groupId>
+	<artifactId>PaymentManagementService</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>NotificationManagementService</name>
-	<description>Backend Project for Notification Management Service</description>
+	<name>PaymentManagementService</name>
+	<description>Backend Project for Payment Management Service</description>
 	<properties>
 		<java.version>1.8</java.version>
 	</properties>
@@ -22,8 +22,16 @@
 			<artifactId>spring-boot-starter-data-mongodb</artifactId>
 		</dependency>
 		<dependency>
+		    <groupId>mysql</groupId>
+		    <artifactId>mysql-connector-java</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jms</artifactId>
 		</dependency>
 		<dependency>
 		    <groupId>org.springdoc</groupId>
@@ -31,11 +39,6 @@
 		    <version>1.6.4</version>
 		</dependency>
 		
-		<dependency>
-			<groupId>com.amazonaws</groupId>
-			<artifactId>aws-java-sdk-ses</artifactId>
-			<version>1.12.205</version>
-		</dependency>
 		<dependency>
 			<groupId>com.amazonaws</groupId>
 			<artifactId>aws-java-sdk-sns</artifactId>
