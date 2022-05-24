@@ -8,6 +8,8 @@ import org.springframework.data.annotation.Version;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import com.fms.pms.enums.Status;
+
 import lombok.Data;
 
 @Data
@@ -22,7 +24,10 @@ public class Payment {
   private int vendorId;
 
   @Field(name = "amount")
-  private int amount;
+  private double amount;
+
+  @Field(name = "status")
+  private Status status;
 
   @Field(name = "transaction_id")
   private String transactionId;

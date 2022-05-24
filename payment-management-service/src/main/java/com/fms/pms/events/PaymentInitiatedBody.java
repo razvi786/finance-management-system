@@ -1,9 +1,11 @@
 package com.fms.pms.events;
 
+import java.util.UUID;
+
 import lombok.Data;
 
 @Data
-public class RequestFullyApprovedBody {
+public class PaymentInitiatedBody {
 
   private int requestId;
 
@@ -16,4 +18,6 @@ public class RequestFullyApprovedBody {
   private double requestAmount;
 
   private int projectAssignedTo;
+
+  private UUID paymentUuid;
 }

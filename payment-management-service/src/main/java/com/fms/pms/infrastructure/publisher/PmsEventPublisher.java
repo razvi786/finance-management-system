@@ -37,8 +37,7 @@ public class PmsEventPublisher {
     log.debug("Inside PmsEventPublisher.publishEvent() with event: {}", event);
 
     try {
-      final String message =
-          IApplicationService.getObjectMapper().writeValueAsString(event.getBody());
+      final String message = IApplicationService.getObjectMapper().writeValueAsString(event);
       log.debug("Mapped message to String: {}", message);
 
       final Header header = event.getHeader();

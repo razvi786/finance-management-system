@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 @SpringBootApplication(scanBasePackages = "com.fms.pms")
-@EnableMongoRepositories(basePackages = "com.fms.pms.repository")
+@EnableMongoRepositories(basePackages = "com.fms.pms.infrastructure.repository")
 public class PaymentManagementService {
 
   public static void main(String[] args) {
