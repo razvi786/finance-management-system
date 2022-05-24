@@ -12,7 +12,7 @@ import com.amazonaws.services.sns.AmazonSNSClient;
 @Configuration
 public class AwsConfig {
 
-  @Value("${aws.region:eu-west-2}")
+  @Value("${aws.region}")
   private String region;
 
   /**

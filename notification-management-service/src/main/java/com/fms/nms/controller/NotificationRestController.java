@@ -21,12 +21,18 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fms.nms.entity.Notification;
 import com.fms.nms.enums.NotificationType;
 import com.fms.nms.repository.NotificationRepository;
+import com.fms.nms.service.EmailSenderService;
+import com.fms.nms.service.SmsSenderService;
 
 @RestController
 @RequestMapping("/api")
 public class NotificationRestController {
 
-  @Autowired NotificationRepository notificationRepository;
+  @Autowired private NotificationRepository notificationRepository;
+
+  @Autowired private EmailSenderService emailSenderService;
+
+  @Autowired private SmsSenderService smsSenderService;
 
   @GetMapping("/notification/{userId}")
   public ResponseEntity<List<Notification>> getAllNotificationsByUserId(
@@ -80,10 +86,20 @@ public class NotificationRestController {
       notification.setNotificationUuid(UUID.randomUUID());
       notification.setNotificationType(NotificationType.ALL);
       notification.setAppSentDatetime(OffsetDateTime.now());
-      // TODO: Send Email notification
-      notification.setEmailSentDatetime(OffsetDateTime.now());
-      // TODO: Send SMS notification
-      notification.setSmsSentDatetime(OffsetDateTime.now());
+
+      // Send Email
+      final String subject = "Notification from Payment Management Service";
+      final boolean isEmailSent =
+          emailSenderService.sendEmail(email, subject, notification.getMessage());
+      if (isEmailSent) {
+        notification.setEmailSentDatetime(OffsetDateTime.now());
+      }
+
+      // Send SMS
+      final boolean isSmsSent = smsSenderService.sendSms(phone, notification.getMessage());
+      if (isSmsSent) {
+        notification.setSmsSentDatetime(OffsetDateTime.now());
+      }
       final Notification savedNotification = notificationRepository.save(notification);
       return new ResponseEntity<>(savedNotification, HttpStatus.OK);
     } catch (Exception e) {
@@ -113,12 +129,20 @@ public class NotificationRestController {
   public ResponseEntity<Notification> sendEmailNotificationToUser(
       @RequestBody Notification notification, @PathVariable String email) {
     try {
-      notification.setNotificationUuid(UUID.randomUUID());
-      notification.setNotificationType(NotificationType.EMAIL);
-      // TODO: Send Email notification
-      notification.setEmailSentDatetime(OffsetDateTime.now());
-      final Notification savedNotification = notificationRepository.save(notification);
-      return new ResponseEntity<>(savedNotification, HttpStatus.OK);
+
+      // Send Email
+      final String subject = "Notification from Payment Management Service";
+      final boolean isEmailSent =
+          emailSenderService.sendEmail(email, subject, notification.getMessage());
+      if (isEmailSent) {
+        notification.setNotificationUuid(UUID.randomUUID());
+        notification.setNotificationType(NotificationType.EMAIL);
+        notification.setEmailSentDatetime(OffsetDateTime.now());
+        final Notification savedNotification = notificationRepository.save(notification);
+        return new ResponseEntity<>(savedNotification, HttpStatus.OK);
+      } else {
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+      }
     } catch (Exception e) {
       System.out.println("Some Exception Occurred: " + e);
       return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -130,12 +154,18 @@ public class NotificationRestController {
   public ResponseEntity<Notification> sendSmsNotificationToUser(
       @RequestBody Notification notification, @PathVariable String phone) {
     try {
-      notification.setNotificationUuid(UUID.randomUUID());
-      notification.setNotificationType(NotificationType.SMS);
-      // TODO: Send SMS notification
-      notification.setSmsSentDatetime(OffsetDateTime.now());
-      final Notification savedNotification = notificationRepository.save(notification);
-      return new ResponseEntity<>(savedNotification, HttpStatus.OK);
+
+      // Send SMS
+      final boolean isSmsSent = smsSenderService.sendSms(phone, notification.getMessage());
+      if (isSmsSent) {
+        notification.setNotificationUuid(UUID.randomUUID());
+        notification.setNotificationType(NotificationType.SMS);
+        notification.setSmsSentDatetime(OffsetDateTime.now());
+        final Notification savedNotification = notificationRepository.save(notification);
+        return new ResponseEntity<>(savedNotification, HttpStatus.OK);
+      } else {
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+      }
     } catch (Exception e) {
       System.out.println("Some Exception Occurred: " + e);
       return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
