@@ -7,6 +7,8 @@ public class PmsConstants {
   // Event Names
   public static final String REQUEST_FULLY_APPROVED = "RequestFullyApproved";
   public static final String PAYMENT_INITIATED = "PaymentInitiated";
+  public static final String UPDATE_PAYMENT = "/api/payment/update";
+  public static final String PAYMENT_UPDATED = "PaymentUpdated";
 
   // Services
   public static final String PAYMENT_MANAGEMENT_SERVICE = "PaymentManagementService";
