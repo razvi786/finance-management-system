@@ -30,11 +30,11 @@ public class InitiateRequestApplicationService implements IApplicationService {
 	public void process(RMSEvent rmsEvent) throws JsonProcessingException {
 		try {
 
-			final CreateRequestModel commandBody = IApplicationService.getObjectMapper().readValue(rmsEvent.getBody(),
+			final CreateRequestModel requestBody = IApplicationService.getObjectMapper().readValue(rmsEvent.getBody(),
 					CreateRequestModel.class);
 
 			final InitiateRequestCommand initiateRequestCommand = InitiateRequestCommand.builder()
-					.header(rmsEvent.getHeader()).body(commandBody).errors(rmsEvent.getErrors()).build();
+					.header(rmsEvent.getHeader()).body(requestBody).errors(rmsEvent.getErrors()).build();
 			log.debug("Initiate Request Command created: {}", initiateRequestCommand);
 
 			initiateRequestDomainService.on(initiateRequestCommand);

@@ -1,4 +1,4 @@
-package com.fms.rms.entity;
+package com.fms.rms.infrastructure.entity;
 
 import java.time.OffsetDateTime;
 import java.util.UUID;

@@ -1,6 +1,8 @@
-package com.fms.ams.domain.models;
+package com.fms.ams.infrastructure.events;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.io.Serializable;
+import java.util.UUID;
+
 import com.fms.ams.infrastructure.enums.StatusType;
 
 import lombok.Data;
@@ -8,10 +10,14 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class ApproveRequestModel {
+public class RequestApprovedEvent implements Serializable {
 
-	private int requiredNumberOfApprovalLevels;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4888518214366318357L;
+
+	private UUID approvalUuid;
 
 	private int requestUuid;
 
