@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 @SpringBootApplication(scanBasePackages = "com.fms.rms")
-@EnableMongoRepositories(basePackages = "com.fms.rms.repository")
+@EnableMongoRepositories(basePackages = "com.fms.rms.infrastructure.repository")
 public class RequestManagementServiceApplication {
 
 	public static void main(String[] args) {
