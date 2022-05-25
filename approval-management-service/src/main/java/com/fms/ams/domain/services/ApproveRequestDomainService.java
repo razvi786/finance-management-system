@@ -2,6 +2,7 @@ package com.fms.ams.domain.services;
 
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
@@ -42,9 +43,10 @@ public class ApproveRequestDomainService {
 			ApproveRequestModel approveRequestModel = approvalRequestCommand.getBody();
 
 			Approval approval = new Approval();
+			approval.setApprovalUuid(UUID.randomUUID());
 			approval.setRequestUuid(approveRequestModel.getRequestUuid());
-			approval.setApproverLevelUuid(approveRequestModel.getApproverLevelUuid());
-			approval.setApproverUuid(approveRequestModel.getApproverUuid());
+			approval.setApproverLevelId(approveRequestModel.getApproverLevelId());
+			approval.setApproverId(approveRequestModel.getApproverId());
 			approval.setComments(approveRequestModel.getComments());
 			approval.setStatusType(approveRequestModel.getStatusType());
 			approval.setCreatedDatetime(OffsetDateTime.now());
@@ -75,7 +77,7 @@ public class ApproveRequestDomainService {
 		RequestApprovedEvent requestApprovedEvent = new RequestApprovedEvent();
 		requestApprovedEvent.setApprovalUuid(publishApproval.getApprovalUuid());
 		requestApprovedEvent.setRequestUuid(publishApproval.getRequestUuid());
-		requestApprovedEvent.setApproverLevelUuid(publishApproval.getApproverLevelUuid());
+		requestApprovedEvent.setApproverLevelId(publishApproval.getApproverLevelId());
 		requestApprovedEvent.setComments(publishApproval.getComments());
 		requestApprovedEvent.setStatusType(publishApproval.getStatusType());
 		return requestApprovedEvent;

@@ -1,5 +1,7 @@
 package com.fms.ams.domain.models;
 
+import java.util.UUID;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fms.ams.infrastructure.enums.StatusType;
 
@@ -13,11 +15,11 @@ public class ApproveRequestModel {
 
 	private int requiredNumberOfApprovalLevels;
 
-	private int requestUuid;
+	private UUID requestUuid;
 
-	private int approverLevelUuid;
+	private int approverLevelId;
 
-	private int approverUuid;
+	private int approverId;
 
 	private String comments;
 

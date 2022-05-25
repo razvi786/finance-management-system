@@ -21,13 +21,13 @@ public class Approval {
 	private UUID approvalUuid;
 
 	@Field(name = "request_uuid")
-	private int requestUuid;
+	private UUID requestUuid;
 
-	@Field(name = "approver_level_uuid")
-	private int approverLevelUuid;
+	@Field(name = "approver_level_id")
+	private int approverLevelId;
 
-	@Field(name = "approver_uuid")
-	private int approverUuid;
+	@Field(name = "approver_id")
+	private int approverId;
 
 	@Field(name = "comments")
 	private String comments;

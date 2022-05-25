@@ -19,11 +19,11 @@ public class RequestApprovedEvent implements Serializable {
 
 	private UUID approvalUuid;
 
-	private int requestUuid;
+	private UUID requestUuid;
 
-	private int approverLevelUuid;
+	private int approverLevelId;
 
-	private int approverUuid;
+	private int approverId;
 
 	private String comments;
 

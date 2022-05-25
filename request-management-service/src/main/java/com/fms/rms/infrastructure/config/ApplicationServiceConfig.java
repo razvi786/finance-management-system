@@ -6,19 +6,13 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.jms.annotation.EnableJms;
 
 import com.fms.rms.application.IApplicationService;
 
 @Configuration
-@EnableJms
 public class ApplicationServiceConfig {
-
-	@Value("${aws.region}")
-	private String region;
 
 	List<IApplicationService> applicationServices;
 

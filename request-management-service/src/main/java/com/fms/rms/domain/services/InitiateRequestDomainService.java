@@ -2,6 +2,7 @@ package com.fms.rms.domain.services;
 
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
@@ -13,6 +14,7 @@ import com.fms.rms.application.IApplicationService;
 import com.fms.rms.constants.RMSConstants;
 import com.fms.rms.domain.commands.InitiateRequestCommand;
 import com.fms.rms.domain.models.CreateRequestModel;
+import com.fms.rms.enums.StatusType;
 import com.fms.rms.infrastructure.entity.Request;
 import com.fms.rms.infrastructure.events.RequestChangedEvent;
 import com.fms.rms.infrastructure.repository.RequestRepository;
@@ -42,8 +44,9 @@ public class InitiateRequestDomainService {
 			CreateRequestModel createRequestModel = initiateRequestCommand.getBody();
 
 			Request createRequest = new Request();
+			createRequest.setRequestUuid(UUID.randomUUID());
 			createRequest.setRaisedBy(createRequestModel.getRaisedBy());
-			createRequest.setStatusType(createRequestModel.getStatusType());
+			createRequest.setStatusType(StatusType.INITIATED);
 			createRequest.setDeadlineDatetime(createRequestModel.getDeadlineDatetime());
 			createRequest.setCreatedDatetime(OffsetDateTime.now());
 			savedRequest = requestRepository.save(createRequest);
