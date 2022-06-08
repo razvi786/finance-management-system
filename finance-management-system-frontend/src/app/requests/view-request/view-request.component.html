@@ -37,3 +37,76 @@
     <span class="font-weight-bold">3</span>
   </div>
 </div>
+
+<div class="form-group pb-5">
+  <div class="input-group mb-2">
+    <span class="input-group-text">Request Id</span>
+    <input
+      type="text"
+      class="form-control bg-white"
+      placeholder="Request Uuid"
+      [value]="request.request_uuid"
+      disabled
+    />
+  </div>
+  <div class="input-group mb-2">
+    <span class="input-group-text">Raised By</span>
+    <input
+      type="text"
+      class="form-control bg-white"
+      placeholder="Raised By"
+      [value]="request.raised_by_name"
+      disabled
+    />
+  </div>
+  <div class="input-group mb-2">
+    <span class="input-group-text">Project</span>
+    <input
+      type="text"
+      class="form-control bg-white"
+      placeholder="Project Name"
+      [value]="request.project_name"
+      disabled
+    />
+  </div>
+  <div class="input-group mb-2">
+    <span class="input-group-text">Amount (&#8377;)</span>
+    <input
+      type="number"
+      class="form-control bg-white"
+      placeholder="Request Amount"
+      [value]="request.amount"
+      disabled
+    />
+  </div>
+  <div class="input-group mb-2">
+    <span class="input-group-text">Status</span>
+    <input
+      type="text"
+      class="form-control bg-white"
+      placeholder="Request Status"
+      [value]="request.status"
+      disabled
+    />
+  </div>
+  <div class="input-group mb-2">
+    <span class="input-group-text">Description</span>
+    <input
+      type="text"
+      class="form-control bg-white"
+      placeholder="Request Description"
+      [value]="request.description"
+      disabled
+    />
+  </div>
+  <div class="input-group mb-2">
+    <span class="input-group-text">Deadline</span>
+    <input
+      type="text"
+      class="form-control bg-white"
+      placeholder="Dealine Date"
+      [value]="request.deadline_datetime | date: 'fullDate'"
+      disabled
+    />
+  </div>
+</div>

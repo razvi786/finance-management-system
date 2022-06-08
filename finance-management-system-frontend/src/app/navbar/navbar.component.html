@@ -52,55 +52,49 @@
           >
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Release Payments</a>
-        </li>
-        <li class="nav-item dropdown">
           <a
-            class="nav-link dropdown-toggle"
-            href="#"
-            id="navbarDropdownMenuLink"
-            role="button"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
+            class="nav-link"
+            routerLink="/payments"
+            routerLinkActive="active"
+            ariaCurrentWhenActive="page"
+            >Payments</a
           >
-            Users
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <li><a class="dropdown-item" href="#">All Users</a></li>
-            <li><a class="dropdown-item" href="#">Create User</a></li>
-          </ul>
         </li>
-        <li class="nav-item dropdown">
+        <li class="nav-item">
           <a
-            class="nav-link dropdown-toggle"
-            href="#"
-            id="navbarDropdownMenuLink"
-            role="button"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
+            class="nav-link"
+            routerLink="/users"
+            routerLinkActive="active"
+            ariaCurrentWhenActive="page"
+            >Users</a
           >
-            Projects
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <li><a class="dropdown-item" href="#">All Projects</a></li>
-            <li><a class="dropdown-item" href="#">Create Project</a></li>
-          </ul>
         </li>
-        <li class="nav-item dropdown">
+        <li class="nav-item">
           <a
-            class="nav-link dropdown-toggle"
-            href="#"
-            id="navbarDropdownMenuLink"
-            role="button"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
+            class="nav-link"
+            routerLink="/projects"
+            routerLinkActive="active"
+            ariaCurrentWhenActive="page"
+            >Projects</a
           >
-            Vendors
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <li><a class="dropdown-item" href="#">All Vendors</a></li>
-            <li><a class="dropdown-item" href="#">Create Vendor</a></li>
-          </ul>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLink="/vendors"
+            routerLinkActive="active"
+            ariaCurrentWhenActive="page"
+            >Vendors</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLink="/logout"
+            routerLinkActive="active"
+            ariaCurrentWhenActive="page"
+            >Logout</a
+          >
         </li>
       </ul>
     </div>
