@@ -1,0 +1,55 @@
+<div class="h1 p-3">
+  <span class="text-uppercase">All Requests</span>
+  <div class="d-flex justify-content-end">
+    <button class="btn btn-secondary" routerLink="add">
+      <i class="fa fa-plus"></i>
+      Raise New Request
+    </button>
+  </div>
+</div>
+
+<table
+  class="table table-bordered table-striped table-hover"
+  datatable
+  [dtOptions]="dtOptions"
+  class="row-border hover"
+>
+  <thead>
+    <tr>
+      <th>S. No</th>
+      <th>Raised By</th>
+      <th>Status</th>
+      <th>Created At</th>
+      <th>Deadline</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody *ngIf="requests?.length != 0">
+    <tr *ngFor="let request of requests; let i = index">
+      <td>{{ i + 1 }}</td>
+      <td>{{ request.raised_by_name }}</td>
+      <td>{{ request.status }}</td>
+      <td>{{ request.created_datetime | date: "fullDate" }}</td>
+      <td>{{ request.deadline_datetime | date: "fullDate" }}</td>
+      <td>
+        <button
+          [routerLink]="['view', request.request_uuid]"
+          class="btn btn-primary mx-1"
+        >
+          View
+        </button>
+        <button
+          [routerLink]="['edit', request.request_uuid]"
+          class="btn btn-warning mx-1"
+        >
+          Edit
+        </button>
+      </td>
+    </tr>
+  </tbody>
+  <tbody *ngIf="requests?.length == 0">
+    <tr>
+      <td colspan="7" class="text-center">No Requests found</td>
+    </tr>
+  </tbody>
+</table>
