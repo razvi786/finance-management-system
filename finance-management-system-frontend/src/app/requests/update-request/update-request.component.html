@@ -1,0 +1,81 @@
+<section>
+  <span>Request UUID: {{ requestUuid }}</span>
+  <div class="container pb-5 h-100">
+    <div class="row d-flex align-items-center justify-content-center h-100">
+      <div class="col-md-8 col-lg-7 col-xl-6">
+        <img
+          src="./../../assets/login.cover.jpg"
+          class="img-fluid"
+          alt="Phone image"
+        />
+      </div>
+      <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
+        <form>
+          <!-- Project input -->
+          <div class="form-outline mb-4">
+            <select id="project-id" class="form-control form-control-lg">
+              <option value="" disabled selected>Select Project</option>
+              <option value="1">Project 1</option>
+              <option value="2">Project 2</option>
+              <option value="3">Project 3</option>
+            </select>
+            <label class="form-label" for="project-id">Project</label>
+          </div>
+
+          <!-- Budget Remaining input -->
+          <div class="form-outline mb-4">
+            <input
+              type="number"
+              id="amount"
+              class="form-control form-control-lg"
+              value="0"
+              disabled
+            />
+            <label class="form-label" for="amount"
+              >Budget Remaining (&#8377;)</label
+            >
+          </div>
+
+          <!-- Amount input -->
+          <div class="form-outline mb-4">
+            <input
+              type="number"
+              id="amount"
+              class="form-control form-control-lg"
+              value="0"
+            />
+            <label class="form-label" for="amount">Amount (&#8377;)</label>
+          </div>
+
+          <!-- Description input -->
+          <div class="form-outline mb-4">
+            <textarea
+              id="description"
+              class="form-control form-control-lg"
+              placeholder="Request Description"
+              rows="3"
+            ></textarea>
+            <label class="form-label" for="description">Description</label>
+          </div>
+
+          <!-- Deadline input -->
+          <div class="form-outline mb-4">
+            <input
+              type="date"
+              id="deadline"
+              class="form-control form-control-lg"
+            />
+            <label class="form-label" for="deadline">Deadline</label>
+          </div>
+
+          <!-- Submit button -->
+          <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-primary btn-lg">
+              Update Request
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

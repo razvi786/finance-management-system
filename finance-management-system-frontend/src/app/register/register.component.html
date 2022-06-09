@@ -1,0 +1,83 @@
+<section>
+  <div class="container pb-5 h-100">
+    <div class="row d-flex align-items-center justify-content-center h-100">
+      <div class="col-md-8 col-lg-7 col-xl-6">
+        <img
+          src="./../../assets/register.cover.jpg"
+          class="img-fluid"
+          alt="Phone image"
+        />
+      </div>
+      <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
+        <form>
+          <!-- Name input -->
+          <div class="form-outline mb-4">
+            <input type="text" id="name" class="form-control form-control-lg" />
+            <label class="form-label" for="name">Name</label>
+          </div>
+
+          <!-- Email address input -->
+          <div class="form-outline mb-4">
+            <input
+              type="email"
+              id="email"
+              class="form-control form-control-lg"
+            />
+            <label class="form-label" for="email">Email address</label>
+          </div>
+
+          <!-- Phone Number input -->
+          <div class="form-outline mb-4">
+            <input
+              type="number"
+              id="number"
+              class="form-control form-control-lg"
+            />
+            <label class="form-label" for="number">Phone number</label>
+          </div>
+
+          <!-- Password input -->
+          <div class="form-outline mb-4">
+            <input
+              type="password"
+              id="password"
+              class="form-control form-control-lg"
+            />
+            <label class="form-label" for="password">Password</label>
+          </div>
+
+          <!-- Confirm password input -->
+          <div class="form-outline mb-4">
+            <input
+              type="password"
+              id="confirm-password"
+              class="form-control form-control-lg"
+            />
+            <label class="form-label" for="confirm-password"
+              >Confirm password</label
+            >
+          </div>
+
+          <!-- Role input -->
+          <div class="form-outline mb-4">
+            <select id="role" class="form-control form-control-lg">
+              <option value="" disabled selected>Select a Role</option>
+              <option value="employee">Admin</option>
+              <option value="employee">Manager</option>
+              <option value="employee">Employee</option>
+              <option value="employee">Accountant</option>
+            </select>
+            <label class="form-label" for="role">Role</label>
+          </div>
+
+          <!-- Submit button -->
+          <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-primary btn-lg">
+              Sign Up
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
