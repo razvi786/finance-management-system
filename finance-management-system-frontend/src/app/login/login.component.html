@@ -21,7 +21,7 @@
           </div>
 
           <!-- Password input -->
-          <div class="form-outline mb-4">
+          <div class="form-outline mb-2">
             <input
               type="password"
               id="password"
@@ -29,9 +29,9 @@
             />
             <label class="form-label" for="password">Password</label>
           </div>
-
-          <div class="d-flex justify-content-around align-items-center mb-4">
-            <a href="#!">Forgot password?</a>
+          <div class="d-flex justify-content-around align-items-centre mb-3">
+            <a [routerLink]="['/reset-password']">Reset password</a>
+            <a [routerLink]="['/forgot-password']">Forgot password?</a>
           </div>
 
           <!-- Submit button -->

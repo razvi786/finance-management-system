@@ -28,6 +28,8 @@ import { DataTablesModule } from 'angular-datatables';
 import { RaiseRequestComponent } from './requests/raise-request/raise-request.component';
 import { UpdateRequestComponent } from './requests/update-request/update-request.component';
 import { ViewRequestComponent } from './requests/view-request/view-request.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +43,8 @@ import { ViewRequestComponent } from './requests/view-request/view-request.compo
     RaiseRequestComponent,
     UpdateRequestComponent,
     ViewRequestComponent,
+    ForgotPasswordComponent,
+    ResetPasswordComponent,
   ],
   imports: [
     BrowserModule,
