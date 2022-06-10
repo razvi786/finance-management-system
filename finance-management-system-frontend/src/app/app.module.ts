@@ -30,6 +30,10 @@ import { UpdateRequestComponent } from './requests/update-request/update-request
 import { ViewRequestComponent } from './requests/view-request/view-request.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { CreateProjectComponent } from './projects/create-project/create-project.component';
+import { UpdateProjectComponent } from './projects/update-project/update-project.component';
+import { ViewProjectComponent } from './projects/view-project/view-project.component';
+import { AllProjectsComponent } from './projects/all-projects/all-projects.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +49,10 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     ViewRequestComponent,
     ForgotPasswordComponent,
     ResetPasswordComponent,
+    CreateProjectComponent,
+    UpdateProjectComponent,
+    ViewProjectComponent,
+    AllProjectsComponent,
   ],
   imports: [
     BrowserModule,
