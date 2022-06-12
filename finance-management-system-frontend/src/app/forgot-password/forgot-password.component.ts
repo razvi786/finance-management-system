@@ -11,5 +11,10 @@ export class ForgotPasswordComponent implements OnInit {
 
   ngOnInit(): void {
   }
+  email: string = '';
+  otp: number = 0;
+  sendResetPasswordEmail() {
+    console.log('it does nothing',this.email);
+  }
 
 }

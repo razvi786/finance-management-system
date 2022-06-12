@@ -34,6 +34,10 @@ import { CreateProjectComponent } from './projects/create-project/create-project
 import { UpdateProjectComponent } from './projects/update-project/update-project.component';
 import { ViewProjectComponent } from './projects/view-project/view-project.component';
 import { AllProjectsComponent } from './projects/all-projects/all-projects.component';
+import { AllUsersComponent } from './user/all-users/all-users.component';
+import { AddUserComponent } from './user/add-user/add-user.component';
+import { UpdateUserComponent } from './user/update-user/update-user.component';
+import { ViewUserComponent } from './user/view-user/view-user.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +57,10 @@ import { AllProjectsComponent } from './projects/all-projects/all-projects.compo
     UpdateProjectComponent,
     ViewProjectComponent,
     AllProjectsComponent,
+    AllUsersComponent,
+    AddUserComponent,
+    UpdateUserComponent,
+    ViewUserComponent,
   ],
   imports: [
     BrowserModule,

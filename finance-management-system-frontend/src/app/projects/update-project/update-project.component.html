@@ -1,1 +1,75 @@
-<p>update-project works!</p>
+<section>
+    <span>Project ID: {{ projectId }}</span>
+    <div class="container pb-5 h-100">
+      <div class="row d-flex align-items-center justify-content-center h-100">
+        <div class="col-md-8 col-lg-7 col-xl-6">
+          <img
+            src="./../../assets/project.jpg"
+            class="img-fluid"
+            alt="Project image"
+          />
+        </div>
+        <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
+          <form>
+            <!-- User input -->
+            <div class="form-outline mb-4">
+                <input
+                  type="number"
+                  id="user_id"
+                  class="form-control form-control-lg"
+                  value="0"
+                  disabled
+                />
+                <label class="form-label" for="user_id"
+                  >User ID</label
+                >
+              </div>
+
+            <!-- Project Name input -->
+            <div class="form-outline mb-4">
+                <input
+                  type="string"
+                  id="project_name"
+                  class="form-control form-control-lg"
+                  value="Project Name"
+                  disabled
+                />
+                <label class="form-label" for="project_name"
+                  >Project Name</label
+                >
+              </div>
+
+              <!-- Description input -->
+            <div class="form-outline mb-4">
+                <textarea
+                  id="description"
+                  class="form-control form-control-lg"
+                  placeholder="Project Description"
+                  rows="3"
+                ></textarea>
+                <label class="form-label" for="description">Description</label>
+              </div>
+  
+            <!-- Budget input -->
+            <div class="form-outline mb-4">
+              <input
+                type="number"
+                id="budget"
+                class="form-control form-control-lg"
+                value="0"
+              />
+              <label class="form-label" for="budget">Budget (&#8377;)</label>
+            </div>
+  
+            <!-- Submit button -->
+            <div class="d-grid gap-2">
+              <button type="submit" class="btn btn-primary btn-lg">
+                Create Project
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+  
