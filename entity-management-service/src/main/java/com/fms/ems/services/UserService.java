@@ -30,7 +30,7 @@ public class UserService {
     }
     
     public User getByResetPasswordToken(String token) {
-        return userRepo.findByResetPasswordToken(token);
+        return userRepo.findByVerificationCode(token);
     }
      
     public void updatePassword(User user, String newPassword) {
@@ -42,20 +42,23 @@ public class UserService {
     	userRepo.save(user);
     }
     
-    public char[] genarateOTP(){
+    public String genarateOTP(){
 
-		String numbers = "0123456789";
-   	 
-        // Using random method
-        Random rndm_method = new Random();
- 
-        char[] otp = new char[4];
- 
-        for (int i = 0; i < 4; i++)
-        {
-            otp[i] =
-             numbers.charAt(rndm_method.nextInt(numbers.length()));
-        }
+//		String numbers = "0123456789";
+//   	 
+//        // Using random method
+//        Random rndm_method = new Random();
+// 
+//        char[] otp = new char[4];
+// 
+//        for (int i = 0; i < 4; i++)
+//        {
+//            otp[i] =
+//             numbers.charAt(rndm_method.nextInt(numbers.length()));
+//        }
+//        return otp;
+    	int randomPin   =(int) (Math.random()*9000)+1000;
+        String otp  = String.valueOf(randomPin);
         return otp;
 	}
 }
