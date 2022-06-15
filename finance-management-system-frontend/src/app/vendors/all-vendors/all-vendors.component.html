@@ -1,0 +1,55 @@
+<div class="h2 p-3">
+  <span class="text-uppercase">All Vendors</span>
+  <div class="d-flex justify-content-end">
+    <button class="btn btn-secondary" routerLink="add">
+      <i class="fa fa-plus"></i>
+      Add New Vendor
+    </button>
+  </div>
+</div>
+
+<table
+  class="table table-bordered table-striped table-hover"
+  datatable
+  [dtOptions]="dtOptions"
+  class="row-border hover"
+>
+  <thead>
+    <tr>
+      <th>S. No</th>
+      <th>Vendor Name</th>
+      <th>Bank Name</th>
+      <th>Bank Branch</th>
+      <th>Created Date</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody *ngIf="vendors?.length != 0">
+    <tr *ngFor="let vendor of vendors; let i = index">
+      <td>{{ i + 1 }}</td>
+      <td>{{ vendor.vendor_name }}</td>
+      <td>{{ vendor.bank_name }}</td>
+      <td>{{ vendor.branch }}</td>
+      <td>{{ vendor.created_datetime | date: "fullDate" }}</td>
+      <td>
+        <button
+          [routerLink]="['view', vendor.vendor_id]"
+          class="btn btn-primary mx-1"
+        >
+          View
+        </button>
+        <button
+          [routerLink]="['edit', vendor.vendor_id]"
+          class="btn btn-warning mx-1"
+        >
+          Edit
+        </button>
+      </td>
+    </tr>
+  </tbody>
+  <tbody *ngIf="vendors?.length == 0">
+    <tr>
+      <td colspan="7" class="text-center">No Vendors found</td>
+    </tr>
+  </tbody>
+</table>

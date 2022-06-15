@@ -41,6 +41,7 @@
     "@types/datatables.net-buttons": "^1.4.7",
     "@types/jasmine": "~4.0.0",
     "@types/jquery": "^3.5.9",
+    "@types/uuid": "^8.3.4",
     "jasmine-core": "~4.1.0",
     "karma": "~6.3.0",
     "karma-chrome-launcher": "~3.1.0",

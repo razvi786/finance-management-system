@@ -5,10 +5,9 @@ import { Project } from 'src/app/models/Project.model';
 @Component({
   selector: 'app-view-project',
   templateUrl: './view-project.component.html',
-  styleUrls: ['./view-project.component.css']
+  styleUrls: ['./view-project.component.css'],
 })
 export class ViewProjectComponent implements OnInit {
-
   constructor(private activatedRoute: ActivatedRoute) {}
 
   projectId: string = '';
@@ -22,7 +21,7 @@ export class ViewProjectComponent implements OnInit {
     }
 
     let project = new Project();
-    project.project_id = 12345;
+    project.id = 12345;
     project.user_id = 9876;
     project.user_name = 'User';
     project.project_name = 'Anonymous';
@@ -32,5 +31,4 @@ export class ViewProjectComponent implements OnInit {
 
     this.project = project;
   }
-
 }

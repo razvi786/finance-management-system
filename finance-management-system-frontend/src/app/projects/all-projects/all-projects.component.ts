@@ -7,17 +7,16 @@ declare var $: any;
 @Component({
   selector: 'app-all-projects',
   templateUrl: './all-projects.component.html',
-  styleUrls: ['./all-projects.component.css']
+  styleUrls: ['./all-projects.component.css'],
 })
 export class AllProjectsComponent implements OnInit {
+  constructor() {}
 
-  constructor() { }
-
-  projects : Project[] = [];
+  projects: Project[] = [];
   dtOptions: DataTables.Settings = {};
   ngOnInit(): void {
     let project = new Project();
-    project.project_id = 1;
+    project.id = 1;
     project.user_id = 2;
     project.project_name = 'Project';
     project.description = 'Project Description';
@@ -45,5 +44,4 @@ export class AllProjectsComponent implements OnInit {
       pageLength: 10,
     };
   }
-
 }

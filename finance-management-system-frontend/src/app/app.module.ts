@@ -38,6 +38,12 @@ import { AllUsersComponent } from './user/all-users/all-users.component';
 import { AddUserComponent } from './user/add-user/add-user.component';
 import { UpdateUserComponent } from './user/update-user/update-user.component';
 import { ViewUserComponent } from './user/view-user/view-user.component';
+import { AllVendorsComponent } from './vendors/all-vendors/all-vendors.component';
+import { CreateVendorComponent } from './vendors/create-vendor/create-vendor.component';
+import { UpdateVendorComponent } from './vendors/update-vendor/update-vendor.component';
+import { ViewVendorComponent } from './vendors/view-vendor/view-vendor.component';
+import { DatePipe } from '@angular/common';
+import { LogoutComponent } from './logout/logout.component';
 
 @NgModule({
   declarations: [
@@ -61,6 +67,11 @@ import { ViewUserComponent } from './user/view-user/view-user.component';
     AddUserComponent,
     UpdateUserComponent,
     ViewUserComponent,
+    AllVendorsComponent,
+    CreateVendorComponent,
+    UpdateVendorComponent,
+    ViewVendorComponent,
+    LogoutComponent,
   ],
   imports: [
     BrowserModule,
@@ -83,7 +94,7 @@ import { ViewUserComponent } from './user/view-user/view-user.component';
     MatDatepickerModule,
     MatTooltipModule,
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -1,5 +1,4 @@
-<span>Request UUID: {{ requestUuid }}</span>
-<div class="progresses m-3">
+<!-- <div class="progresses m-3">
   <div
     class="steps"
     matTooltip="Approver Name, Approved time and Comments Given by the Approver"
@@ -36,6 +35,10 @@
   <div class="steps bg-light">
     <span class="font-weight-bold">3</span>
   </div>
+</div> -->
+
+<div class="row d-flex align-items-center justify-content-center h-100 h2 mb-3">
+  Request - {{ request.id }}
 </div>
 
 <div class="form-group pb-5">
@@ -44,8 +47,7 @@
     <input
       type="text"
       class="form-control bg-white"
-      placeholder="Request Uuid"
-      [value]="request.request_uuid"
+      [value]="request.id"
       disabled
     />
   </div>
@@ -54,7 +56,6 @@
     <input
       type="text"
       class="form-control bg-white"
-      placeholder="Raised By"
       [value]="request.raised_by_name"
       disabled
     />
@@ -64,7 +65,6 @@
     <input
       type="text"
       class="form-control bg-white"
-      placeholder="Project Name"
       [value]="request.project_name"
       disabled
     />
@@ -74,7 +74,6 @@
     <input
       type="number"
       class="form-control bg-white"
-      placeholder="Request Amount"
       [value]="request.amount"
       disabled
     />
@@ -84,7 +83,6 @@
     <input
       type="text"
       class="form-control bg-white"
-      placeholder="Request Status"
       [value]="request.status"
       disabled
     />
@@ -94,18 +92,25 @@
     <input
       type="text"
       class="form-control bg-white"
-      placeholder="Request Description"
       [value]="request.description"
       disabled
     />
   </div>
   <div class="input-group mb-2">
-    <span class="input-group-text">Deadline</span>
+    <span class="input-group-text">Deadline Date</span>
     <input
       type="text"
       class="form-control bg-white"
-      placeholder="Dealine Date"
       [value]="request.deadline_datetime | date: 'fullDate'"
+      disabled
+    />
+  </div>
+  <div class="input-group mb-2">
+    <span class="input-group-text">Created Date</span>
+    <input
+      type="text"
+      class="form-control bg-white"
+      [value]="request.created_datetime | date: 'fullDate'"
       disabled
     />
   </div>

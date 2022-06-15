@@ -6,16 +6,16 @@ import { Observable } from 'rxjs';
 import { User } from '../models/User.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ForgotPasswordService {
-  httpUrl=environment.url+"forgot-password/";
-  constructor(private httpClient:HttpClient,private router:Router) { }
-  sendEmail(email:String):Observable<User>{
-    return this.httpClient.get<User>(this.httpUrl+"send-email/"+email)
+  httpUrl = environment.apiUrl + 'forgot-password/';
+  constructor(private httpClient: HttpClient, private router: Router) {}
+  sendEmail(email: String): Observable<User> {
+    return this.httpClient.get<User>(this.httpUrl + 'send-email/' + email);
   }
-  getUserByEmail(email:String):Observable<User>{
-    return this.httpClient.get<User>(this.httpUrl+email)
+  getUserByEmail(email: String): Observable<User> {
+    return this.httpClient.get<User>(this.httpUrl + email);
   }
   // verifyUser() {
   //   return this.http.get(this.rootURL + '/forgot-password/');

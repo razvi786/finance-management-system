@@ -1,4 +1,4 @@
-<div class="h1 p-3">
+<div class="h2 p-3">
   <span class="text-uppercase">All Requests</span>
   <div class="d-flex justify-content-end">
     <button class="btn btn-secondary" routerLink="add">
@@ -19,8 +19,8 @@
       <th>S. No</th>
       <th>Raised By</th>
       <th>Status</th>
-      <th>Created At</th>
-      <th>Deadline</th>
+      <th>Created Date</th>
+      <th>Deadline Date</th>
       <th>Actions</th>
     </tr>
   </thead>
@@ -33,13 +33,13 @@
       <td>{{ request.deadline_datetime | date: "fullDate" }}</td>
       <td>
         <button
-          [routerLink]="['view', request.request_uuid]"
+          [routerLink]="['view', request.id]"
           class="btn btn-primary mx-1"
         >
           View
         </button>
         <button
-          [routerLink]="['edit', request.request_uuid]"
+          [routerLink]="['edit', request.id]"
           class="btn btn-warning mx-1"
         >
           Edit
