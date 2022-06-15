@@ -28,6 +28,12 @@ import { DataTablesModule } from 'angular-datatables';
 import { RaiseRequestComponent } from './requests/raise-request/raise-request.component';
 import { UpdateRequestComponent } from './requests/update-request/update-request.component';
 import { ViewRequestComponent } from './requests/view-request/view-request.component';
+import { AllVendorsComponent } from './vendors/all-vendors/all-vendors.component';
+import { CreateVendorComponent } from './vendors/create-vendor/create-vendor.component';
+import { UpdateVendorComponent } from './vendors/update-vendor/update-vendor.component';
+import { ViewVendorComponent } from './vendors/view-vendor/view-vendor.component';
+import { DatePipe } from '@angular/common';
+import { LogoutComponent } from './logout/logout.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +47,11 @@ import { ViewRequestComponent } from './requests/view-request/view-request.compo
     RaiseRequestComponent,
     UpdateRequestComponent,
     ViewRequestComponent,
+    AllVendorsComponent,
+    CreateVendorComponent,
+    UpdateVendorComponent,
+    ViewVendorComponent,
+    LogoutComponent,
   ],
   imports: [
     BrowserModule,
@@ -64,7 +75,7 @@ import { ViewRequestComponent } from './requests/view-request/view-request.compo
     MatDatepickerModule,
     MatTooltipModule,
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

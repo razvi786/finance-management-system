@@ -1,5 +1,4 @@
 <section>
-  <span>Request UUID: {{ requestUuid }}</span>
   <div class="container pb-5 h-100">
     <div class="row d-flex align-items-center justify-content-center h-100">
       <div class="col-md-8 col-lg-7 col-xl-6">
@@ -10,14 +9,19 @@
         />
       </div>
       <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
-        <form>
+        <form [formGroup]="updateRequestForm" (ngSubmit)="onSubmit()">
           <!-- Project input -->
           <div class="form-outline mb-4">
-            <select id="project-id" class="form-control form-control-lg">
+            <select
+              id="project-id"
+              class="form-control form-control-lg"
+              formControlName="projectId"
+              (change)="updateRemainingBudget()"
+            >
               <option value="" disabled selected>Select Project</option>
-              <option value="1">Project 1</option>
-              <option value="2">Project 2</option>
-              <option value="3">Project 3</option>
+              <option *ngFor="let project of projects" [value]="project.id">
+                {{ project.name }}
+              </option>
             </select>
             <label class="form-label" for="project-id">Project</label>
           </div>
@@ -28,8 +32,7 @@
               type="number"
               id="amount"
               class="form-control form-control-lg"
-              value="0"
-              disabled
+              formControlName="remainingBudget"
             />
             <label class="form-label" for="amount"
               >Budget Remaining (&#8377;)</label
@@ -42,7 +45,7 @@
               type="number"
               id="amount"
               class="form-control form-control-lg"
-              value="0"
+              formControlName="amount"
             />
             <label class="form-label" for="amount">Amount (&#8377;)</label>
           </div>
@@ -54,6 +57,7 @@
               class="form-control form-control-lg"
               placeholder="Request Description"
               rows="3"
+              formControlName="description"
             ></textarea>
             <label class="form-label" for="description">Description</label>
           </div>
@@ -64,6 +68,7 @@
               type="date"
               id="deadline"
               class="form-control form-control-lg"
+              formControlName="deadline"
             />
             <label class="form-label" for="deadline">Deadline</label>
           </div>
