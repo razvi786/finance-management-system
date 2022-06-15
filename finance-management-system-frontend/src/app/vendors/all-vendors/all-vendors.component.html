@@ -1,9 +1,9 @@
 <div class="h2 p-3">
-  <span class="text-uppercase">All Requests</span>
+  <span class="text-uppercase">All Vendors</span>
   <div class="d-flex justify-content-end">
     <button class="btn btn-secondary" routerLink="add">
       <i class="fa fa-plus"></i>
-      Raise New Request
+      Add New Vendor
     </button>
   </div>
 </div>
@@ -17,29 +17,29 @@
   <thead>
     <tr>
       <th>S. No</th>
-      <th>Raised By</th>
-      <th>Status</th>
+      <th>Vendor Name</th>
+      <th>Bank Name</th>
+      <th>Bank Branch</th>
       <th>Created Date</th>
-      <th>Deadline Date</th>
       <th>Actions</th>
     </tr>
   </thead>
-  <tbody *ngIf="requests?.length != 0">
-    <tr *ngFor="let request of requests; let i = index">
+  <tbody *ngIf="vendors?.length != 0">
+    <tr *ngFor="let vendor of vendors; let i = index">
       <td>{{ i + 1 }}</td>
-      <td>{{ request.raised_by_name }}</td>
-      <td>{{ request.status }}</td>
-      <td>{{ request.created_datetime | date: "fullDate" }}</td>
-      <td>{{ request.deadline_datetime | date: "fullDate" }}</td>
+      <td>{{ vendor.vendor_name }}</td>
+      <td>{{ vendor.bank_name }}</td>
+      <td>{{ vendor.branch }}</td>
+      <td>{{ vendor.created_datetime | date: "fullDate" }}</td>
       <td>
         <button
-          [routerLink]="['view', request.id]"
+          [routerLink]="['view', vendor.vendor_id]"
           class="btn btn-primary mx-1"
         >
           View
         </button>
         <button
-          [routerLink]="['edit', request.id]"
+          [routerLink]="['edit', vendor.vendor_id]"
           class="btn btn-warning mx-1"
         >
           Edit
@@ -47,9 +47,9 @@
       </td>
     </tr>
   </tbody>
-  <tbody *ngIf="requests?.length == 0">
+  <tbody *ngIf="vendors?.length == 0">
     <tr>
-      <td colspan="7" class="text-center">No Requests found</td>
+      <td colspan="7" class="text-center">No Vendors found</td>
     </tr>
   </tbody>
 </table>

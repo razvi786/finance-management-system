@@ -1,0 +1,86 @@
+<div class="row d-flex align-items-center justify-content-center h-100 h2 mb-3">
+  Vendor - {{ vendor.vendor_name }}
+</div>
+<div class="form-group pb-5">
+  <div class="input-group mb-2">
+    <span class="input-group-text">Vendor Id</span>
+    <input
+      type="text"
+      class="form-control bg-white"
+      [value]="vendor.vendor_id"
+      disabled
+    />
+  </div>
+  <div class="input-group mb-2">
+    <span class="input-group-text">Vendor Name</span>
+    <input
+      type="text"
+      class="form-control bg-white"
+      [value]="vendor.vendor_name"
+      disabled
+    />
+  </div>
+  <div class="input-group mb-2">
+    <span class="input-group-text">Account Holder Name</span>
+    <input
+      type="text"
+      class="form-control bg-white"
+      [value]="vendor.account_holder_name"
+      disabled
+    />
+  </div>
+  <div class="input-group mb-2">
+    <span class="input-group-text">Account Number</span>
+    <input
+      type="text"
+      class="form-control bg-white"
+      [value]="vendor.account_number"
+      disabled
+    />
+  </div>
+  <div class="input-group mb-2">
+    <span class="input-group-text">IFSC Code</span>
+    <input
+      type="number"
+      class="form-control bg-white"
+      [value]="vendor.ifsc_code"
+      disabled
+    />
+  </div>
+  <div class="input-group mb-2">
+    <span class="input-group-text">Bank Name</span>
+    <input
+      type="text"
+      class="form-control bg-white"
+      [value]="vendor.bank_name"
+      disabled
+    />
+  </div>
+  <div class="input-group mb-2">
+    <span class="input-group-text">Bank Branch</span>
+    <input
+      type="text"
+      class="form-control bg-white"
+      [value]="vendor.branch"
+      disabled
+    />
+  </div>
+  <div class="input-group mb-2">
+    <span class="input-group-text">UPI Id</span>
+    <input
+      type="text"
+      class="form-control bg-white"
+      [value]="vendor.upi_id"
+      disabled
+    />
+  </div>
+  <div class="input-group mb-2">
+    <span class="input-group-text">Created Date</span>
+    <input
+      type="text"
+      class="form-control bg-white"
+      [value]="vendor.created_datetime | date: 'fullDate'"
+      disabled
+    />
+  </div>
+</div>

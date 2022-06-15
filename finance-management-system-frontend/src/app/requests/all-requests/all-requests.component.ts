@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Subject } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
 import { Request } from 'src/app/models/Request.model';
+import { RequestService } from 'src/app/services/request.service';
 declare var $: any;
 
 @Component({
@@ -10,38 +11,27 @@ declare var $: any;
   styleUrls: ['./all-requests.component.css'],
 })
 export class AllRequestsComponent implements OnInit {
-  constructor() {}
+  constructor(private requestService: RequestService) {}
 
   requests: Request[] = [];
 
   dtOptions: DataTables.Settings = {};
 
   ngOnInit(): void {
-    let request = new Request();
-    request.request_uuid = '12345';
-    request.created_datetime = new Date();
-    request.deadline_datetime = new Date();
-    request.raised_by_name = 'Anonymous';
-    request.status = 'RAISED';
-    this.requests.push(request);
-    this.requests.push(request);
-    this.requests.push(request);
-    this.requests.push(request);
-    this.requests.push(request);
-    this.requests.push(request);
-    this.requests.push(request);
-    this.requests.push(request);
-    this.requests.push(request);
-    this.requests.push(request);
-    this.requests.push(request);
-    this.requests.push(request);
-    this.requests.push(request);
-    this.requests.push(request);
-    this.requests.push(request);
-
+    this.requestService.getAllRequests().subscribe((data) => {
+      this.requests = this.sortAscendingOrder(data);
+    });
     this.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 10,
     };
+  }
+
+  sortAscendingOrder(requests: Request[]): Request[] {
+    return requests.sort(
+      (request1: Request, request2: Request) =>
+        new Date(request2.created_datetime).getTime() -
+        new Date(request1.created_datetime).getTime()
+    );
   }
 }

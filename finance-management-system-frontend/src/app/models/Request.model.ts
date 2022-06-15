@@ -1,5 +1,5 @@
 export class Request {
-  request_uuid: string = '';
+  id: string = '';
   raised_by: number = 0;
   raised_by_name: string = '';
   status: string = '';

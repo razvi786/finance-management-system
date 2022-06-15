@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Request } from 'src/app/models/Request.model';
+import { RequestService } from 'src/app/services/request.service';
 
 @Component({
   selector: 'app-view-request',
@@ -8,7 +9,10 @@ import { Request } from 'src/app/models/Request.model';
   styleUrls: ['./view-request.component.css'],
 })
 export class ViewRequestComponent implements OnInit {
-  constructor(private activatedRoute: ActivatedRoute) {}
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private requestService: RequestService
+  ) {}
 
   requestUuid: string = '';
 
@@ -20,16 +24,8 @@ export class ViewRequestComponent implements OnInit {
       this.requestUuid = requestUuid;
     }
 
-    let request = new Request();
-    request.request_uuid = '12345';
-    request.created_datetime = new Date();
-    request.deadline_datetime = new Date();
-    request.raised_by_name = 'Anonymous';
-    request.status = 'RAISED';
-    request.project_name = 'HackFSE';
-    request.amount = 1000;
-    request.description = 'Request for Frontend Evaluation';
-
-    this.request = request;
+    this.requestService.getRequestById(this.requestUuid).subscribe((data) => {
+      this.request = data;
+    });
   }
 }

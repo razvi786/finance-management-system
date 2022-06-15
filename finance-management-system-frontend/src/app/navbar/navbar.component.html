@@ -14,7 +14,7 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
       <ul class="navbar-nav">
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="auth.isAuthenticated()">
           <a
             class="nav-link"
             class="nav-link"
@@ -24,7 +24,7 @@
             >Home</a
           >
         </li>
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="!auth.isAuthenticated()">
           <a
             class="nav-link"
             routerLink="/login"
@@ -33,7 +33,7 @@
             >Login</a
           >
         </li>
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="!auth.isAuthenticated()">
           <a
             class="nav-link"
             routerLink="/register"
@@ -42,7 +42,7 @@
             >Registration</a
           >
         </li>
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="auth.isAuthenticated()">
           <a
             class="nav-link"
             routerLink="/requests"
@@ -51,7 +51,7 @@
             >Requests</a
           >
         </li>
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="auth.isAuthenticated()">
           <a
             class="nav-link"
             routerLink="/payments"
@@ -60,7 +60,7 @@
             >Payments</a
           >
         </li>
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="auth.isAuthenticated()">
           <a
             class="nav-link"
             routerLink="/users"
@@ -69,7 +69,7 @@
             >Users</a
           >
         </li>
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="auth.isAuthenticated()">
           <a
             class="nav-link"
             routerLink="/projects"
@@ -78,7 +78,7 @@
             >Projects</a
           >
         </li>
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="auth.isAuthenticated()">
           <a
             class="nav-link"
             routerLink="/vendors"
@@ -87,7 +87,7 @@
             >Vendors</a
           >
         </li>
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="auth.isAuthenticated()">
           <a
             class="nav-link"
             routerLink="/logout"
