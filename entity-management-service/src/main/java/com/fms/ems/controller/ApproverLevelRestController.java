@@ -25,7 +25,7 @@ import com.fms.ems.repository.ProjectRepository;
 import com.fms.ems.repository.UserRepository;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/ems/")
 public class ApproverLevelRestController {
 
   @Autowired ApproverLevelRepository approverLevelRepository;

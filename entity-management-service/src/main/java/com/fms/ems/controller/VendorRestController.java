@@ -21,7 +21,7 @@ import com.fms.ems.entity.Vendor;
 import com.fms.ems.repository.VendorRepository;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/ems/")
 public class VendorRestController {
 
   @Autowired VendorRepository vendorRepository;

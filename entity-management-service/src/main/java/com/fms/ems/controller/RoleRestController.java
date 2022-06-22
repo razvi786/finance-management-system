@@ -24,7 +24,7 @@ import com.fms.ems.repository.PermissionRepository;
 import com.fms.ems.repository.RoleRepository;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/ems/")
 public class RoleRestController {
 
   @Autowired RoleRepository roleRepository;

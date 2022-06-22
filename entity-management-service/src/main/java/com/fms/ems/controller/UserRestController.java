@@ -23,7 +23,7 @@ import com.fms.ems.repository.RoleRepository;
 import com.fms.ems.repository.UserRepository;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/ems/")
 public class UserRestController {
 
   @Autowired UserRepository userRepository;

@@ -21,7 +21,7 @@ import com.fms.ems.entity.Permission;
 import com.fms.ems.repository.PermissionRepository;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/ems/")
 public class PermissionRestController {
 
   @Autowired PermissionRepository permissionRepository;
