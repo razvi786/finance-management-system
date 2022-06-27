@@ -3,6 +3,7 @@ import { FormGroup,FormControl, Validators, FormBuilder, FormArray } from '@angu
 import { Router } from '@angular/router';
 import { User } from '../models/User.model';
 import { ForgotPasswordService } from '../services/forgot-password.service';
+import { LocalStorageService } from '../services/local-storage.service';
 
 @Component({
   selector: 'app-forgot-password',
@@ -25,7 +26,11 @@ export class ForgotPasswordComponent implements OnInit {
    users: User[] | undefined;
    currentUser = new User();
    showOTPfield : boolean = false
-  constructor(private formBuilder:FormBuilder,private router:Router, private forgotPasswordService:ForgotPasswordService) { }
+  constructor(
+    private formBuilder:FormBuilder,
+    private router:Router,
+     private forgotPasswordService:ForgotPasswordService,
+     private localStorageService: LocalStorageService) { }
   
   ngOnInit() {
     this.forgotPasswordForm=this.formBuilder.group({
@@ -48,11 +53,15 @@ export class ForgotPasswordComponent implements OnInit {
       let email=this.forgotPasswordForm.controls.email.value;
     this.forgotPasswordService.getUserByEmail(email).subscribe(u=>{
       this.currentUser = u;
-      console.log('User name : ',this.currentUser);
+      console.log('User : ',this.currentUser);
       console.log('Verification Code : ',this.currentUser.verificationCode);
       let otp=this.forgotPasswordForm.controls.otp.value;
       if(this.currentUser.verificationCode == otp){
+        //save email in local storage
+        this.localStorageService.resetPassword(this.currentUser.email);
         this.router.navigate(['/reset-password'])
+      } else {
+        alert('Invalid OTP');
       }
     })
     }

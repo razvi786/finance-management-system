@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,14 +24,15 @@ import com.fms.ems.repository.RoleRepository;
 import com.fms.ems.repository.UserRepository;
 
 @RestController
-@RequestMapping("/api/ems/")
+@RequestMapping("/api/ems")
+@CrossOrigin(origins = "*")
 public class UserRestController {
 
   @Autowired UserRepository userRepository;
 
   @Autowired RoleRepository roleRepository;
 
-  @GetMapping("/users")
+  @GetMapping("/user")
   public ResponseEntity<List<User>> getAllUsers() {
     try {
       final List<User> users = userRepository.findAll();
@@ -57,6 +59,37 @@ public class UserRestController {
       return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
+  
+//  @CrossOrigin(origins = "http://localhost:4200")
+//  @GetMapping("/user/{email}")
+//  public ResponseEntity<User> getUserByEmail(@PathVariable String email) {
+//    try {
+//      final Optional<User> userOptional = userRepository.findByEmail(email);
+//      if (userOptional.isPresent()) {
+//        return new ResponseEntity<>(userOptional.get(), HttpStatus.OK);
+//      } else {
+//        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//      }
+//    } catch (Exception e) {
+//      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+//    }
+//  }
+  
+  @CrossOrigin(origins = "http://localhost:4200")
+  @GetMapping("/user/{email}/{password}")
+  public ResponseEntity<User> getUserByEmailAndPassword(@PathVariable String email, @PathVariable String password) {
+    try {
+      final Optional<User> userOptional = userRepository.findByEmailAndPassword(email, password);
+      if (userOptional.isPresent()) {
+    	  System.out.println("User: "+userOptional.get());
+        return new ResponseEntity<>(userOptional.get(), HttpStatus.OK);
+      } else {
+        return new ResponseEntity<>(null, HttpStatus.OK);
+      }
+    } catch (Exception e) {
+      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
 
   @PostMapping("/user")
   @Transactional
@@ -78,6 +111,7 @@ public class UserRestController {
     }
   }
 
+//  @CrossOrigin(origins = "http://localhost:4200")
   @PutMapping("/user/{id}")
   @Transactional
   public ResponseEntity<User> updateUser(@PathVariable String id, @RequestBody User user) {

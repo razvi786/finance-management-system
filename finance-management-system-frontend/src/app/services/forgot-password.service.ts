@@ -9,13 +9,14 @@ import { User } from '../models/User.model';
   providedIn: 'root',
 })
 export class ForgotPasswordService {
-  httpUrl = environment.apiUrl + 'forgot-password/';
+  httpUrl = environment.apiUrl;
+  usersPath: string = this.httpUrl + '/ems/forgot-password/';
   constructor(private httpClient: HttpClient, private router: Router) {}
   sendEmail(email: String): Observable<User> {
-    return this.httpClient.get<User>(this.httpUrl + 'send-email/' + email);
+    return this.httpClient.get<User>(this.usersPath + 'send-email/' + email);
   }
   getUserByEmail(email: String): Observable<User> {
-    return this.httpClient.get<User>(this.httpUrl + email);
+    return this.httpClient.get<User>(this.usersPath + email);
   }
   // verifyUser() {
   //   return this.http.get(this.rootURL + '/forgot-password/');
