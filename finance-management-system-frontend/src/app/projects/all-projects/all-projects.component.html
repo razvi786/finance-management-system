@@ -28,20 +28,20 @@
   <tbody *ngIf="projects?.length != 0">
     <tr *ngFor="let project of projects; let i = index">
       <td>{{ i + 1 }}</td>
-      <td>{{ project.project_name }}</td>
+      <td>{{ project.projectName }}</td>
       <td>{{ project.description }}</td>
-      <td>{{ project.user_name }}</td>
+      <td>{{ project.user.name }}</td>
       <td>{{ project.budget }}</td>
-      <td>{{ project.created_datetime | date: "fullDate" }}</td>
+      <td>{{ project.createdDatetime | date: "fullDate" }}</td>
       <td>
         <button
-          [routerLink]="['view', project.id]"
+          [routerLink]="['view', project.projectId]"
           class="btn btn-primary mx-1"
         >
           View
         </button>
         <button
-          [routerLink]="['edit', project.id]"
+          [routerLink]="['edit', project.projectId]"
           class="btn btn-warning mx-1"
         >
           Edit
@@ -51,7 +51,7 @@
   </tbody>
   <tbody *ngIf="projects?.length == 0">
     <tr>
-      <td colspan="7" class="text-center">No Requests found</td>
+      <td colspan="7" class="text-center">No Projects found</td>
     </tr>
   </tbody>
 </table>

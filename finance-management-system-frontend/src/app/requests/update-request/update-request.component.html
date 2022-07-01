@@ -19,8 +19,8 @@
               (change)="updateRemainingBudget()"
             >
               <option value="" disabled selected>Select Project</option>
-              <option *ngFor="let project of projects" [value]="project.id">
-                {{ project.project_name }}
+              <option *ngFor="let project of projects" [value]="project.projectId">
+                {{ project.projectName }}
               </option>
             </select>
             <label class="form-label" for="project-id">Project</label>

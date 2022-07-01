@@ -9,7 +9,7 @@
           />
         </div>
         <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
-          <form>
+          <form [formGroup]="createProjectForm" (ngSubmit)="onSubmit()">
               <!-- User Input -->
               <div class="form-outline mb-4">
                 <input
@@ -17,7 +17,7 @@
                   id="user_id"
                   class="form-control form-control-lg"
                   value="0"
-                  disabled
+                  formControlName="userId"
                 />
                 <label class="form-label" for="user_id"
                   >User ID</label
@@ -31,7 +31,7 @@
                   id="project_name"
                   class="form-control form-control-lg"
                   value="Project Name"
-                  disabled
+                  formControlName="projectName"
                 />
                 <label class="form-label" for="project_name"
                   >Project Name</label
@@ -45,6 +45,7 @@
                   class="form-control form-control-lg"
                   placeholder="Project Description"
                   rows="3"
+                  formControlName="description"
                 ></textarea>
                 <label class="form-label" for="description">Description</label>
               </div>
@@ -55,6 +56,7 @@
                 type="number"
                 id="budget"
                 class="form-control form-control-lg"
+                formControlName="budget"
                 value="0"
               />
               <label class="form-label" for="budget">Budget (&#8377;)</label>

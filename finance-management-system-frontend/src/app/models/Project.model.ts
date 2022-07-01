@@ -1,12 +1,14 @@
+import { User } from "./User.model";
 export class Project {
-  id: number = 0;
-  user_id: number = 0;
-  user_name: string = '';
-  project_name: string = '';
+  projectId: number = 0;
+  user : User = new User();
+  // userId: number = 0;
+  // name: string = '';
+  projectName: string = '';
   description: string = '';
   budget: number = 0;
   remainingBudget: number = 0;
-  created_datetime: Date = new Date();
-  updated_datetime: Date = new Date();
-  concurrency_version: number = 0;
+  createdDatetime: Date = new Date();
+  updatedDatetime: Date = new Date();
+  concurrencyVersion: number = 0;
 }

@@ -42,7 +42,7 @@ public class Project {
   private List<ApproverLevel> approverLevels;
 
   @Column(name = "name")
-  private String name;
+  private String projectName;
 
   @Column(name = "description")
   private String description;

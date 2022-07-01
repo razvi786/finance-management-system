@@ -84,8 +84,8 @@ export class UpdateRequestComponent implements OnInit {
     let request: Request = new Request();
     request.id = this.request.id;
     request.deadline_datetime = new Date(controls['deadline'].value);
-    request.project_id = this.selectedProject.id;
-    request.project_name = this.selectedProject.project_name;
+    request.project_id = this.selectedProject.projectId;
+    request.project_name = this.selectedProject.projectName;
     request.amount = controls['amount'].value;
     request.description = controls['description'].value;
     //Fetch from Local Storage of Logged in user

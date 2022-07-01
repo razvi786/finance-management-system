@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,6 +25,7 @@ import com.fms.ems.repository.UserRepository;
 
 @RestController
 @RequestMapping("/api/ems/")
+@CrossOrigin(origins = "*")
 public class ProjectRestController {
 
   @Autowired ProjectRepository projectRepository;

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Project } from 'src/app/models/Project.model';
+import { ProjectService } from 'src/app/services/project.service';
 
 @Component({
   selector: 'app-view-project',
@@ -8,7 +9,7 @@ import { Project } from 'src/app/models/Project.model';
   styleUrls: ['./view-project.component.css'],
 })
 export class ViewProjectComponent implements OnInit {
-  constructor(private activatedRoute: ActivatedRoute) {}
+  constructor(private activatedRoute: ActivatedRoute, private projectService: ProjectService) {}
 
   projectId: string = '';
 
@@ -16,18 +17,23 @@ export class ViewProjectComponent implements OnInit {
 
   ngOnInit(): void {
     let projectId = this.activatedRoute.snapshot.paramMap.get('project_id');
+    console.log('projectId:', projectId);
     if (projectId != null) {
       this.projectId = projectId;
+      this.projectService.getProjectById(this.projectId).subscribe(u=>{
+        this.project = u;
+        console.log('Projects : ',this.project)
+      })
     }
 
     let project = new Project();
-    project.id = 12345;
-    project.user_id = 9876;
-    project.user_name = 'User';
-    project.project_name = 'Anonymous';
+    project.projectId = 12345;
+    project.user.userId = 9876;
+    project.user.name = 'User';
+    project.projectName = 'Anonymous';
     project.description = 'Project Description';
     project.budget = 1000;
-    project.created_datetime = new Date();
+    project.createdDatetime = new Date();
 
     this.project = project;
   }

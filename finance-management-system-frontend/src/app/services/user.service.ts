@@ -38,6 +38,7 @@ export class UserService {
   }
 
   updateUser(user: User):Observable<User>{
+    console.log('User Update');
     return this.http.put<User>(this.usersPath+'/'+user.userId,user);
   }
 }
