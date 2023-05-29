@@ -30,7 +30,7 @@
     />
   </div>
   <div class="input-group mb-2">
-    <span class="input-group-text">User ID</span>
+    <span class="input-group-text">User Id</span>
     <input
       type="text"
       class="form-control bg-white"
@@ -56,6 +56,25 @@
       class="form-control bg-white"
       placeholder="Budget"
       [value]="project.budget"
+      disabled
+    />
+  </div>
+  <div class="input-group mb-2">
+    <span class="input-group-text">Remaining Budget (&#8377;)</span>
+    <input
+      type="number"
+      class="form-control bg-white"
+      placeholder="Remaining Budget"
+      [value]="project.remainingBudget"
+      disabled
+    />
+  </div>
+  <div class="input-group mb-2">
+    <span class="input-group-text">Created Date</span>
+    <input
+      type="text"
+      class="form-control bg-white"
+      [value]="project.createdDatetime | date : 'fullDate'"
       disabled
     />
   </div>

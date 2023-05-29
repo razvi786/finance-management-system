@@ -29,36 +29,38 @@ import lombok.ToString;
 @JsonIgnoreProperties(value = "approverLevels")
 public class Project {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.SEQUENCE)
-  @Column(name = "project_id")
-  private int projectId;
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@Column(name = "project_id")
+	private int projectId;
 
-  @ManyToOne
-  @JoinColumn(name = "user_id", nullable = false)
-  private User user;
+	@ManyToOne
+	@JoinColumn(name = "user_id", nullable = false)
+	private User user;
 
-  @OneToMany(mappedBy = "project")
-  private List<ApproverLevel> approverLevels;
+	@OneToMany(mappedBy = "project")
+	private List<ApproverLevel> approverLevels;
 
-  @Column(name = "name")
-  private String projectName;
+	@Column(name = "name")
+	private String projectName;
 
-  @Column(name = "description")
-  private String description;
+	@Column(name = "description")
+	private String description;
 
-  @Column(name = "budget")
-  private String budget;
+	@Column(name = "budget")
+	private String budget;
 
-  @CreationTimestamp
-  @Column(name = "created_datetime")
-  private OffsetDateTime createdDatetime;
+	private Double remainingBudget;
 
-  @UpdateTimestamp
-  @Column(name = "updated_datetime")
-  private OffsetDateTime updatedDatetime;
+	@CreationTimestamp
+	@Column(name = "created_datetime")
+	private OffsetDateTime createdDatetime;
 
-  @Version
-  @Column(name = "concurrency_version")
-  private Integer concurrencyVersion;
+	@UpdateTimestamp
+	@Column(name = "updated_datetime")
+	private OffsetDateTime updatedDatetime;
+
+	@Version
+	@Column(name = "concurrency_version")
+	private Integer concurrencyVersion;
 }

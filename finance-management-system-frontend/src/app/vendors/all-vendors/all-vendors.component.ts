@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Vendor } from 'src/app/models/Vendor.model';
+import { VendorService } from 'src/app/services/vendor.service';
 
 @Component({
   selector: 'app-all-vendors',
@@ -7,42 +8,28 @@ import { Vendor } from 'src/app/models/Vendor.model';
   styleUrls: ['./all-vendors.component.css'],
 })
 export class AllVendorsComponent implements OnInit {
-  constructor() {}
+  constructor(private vendorService: VendorService) {}
 
   vendors: Vendor[] = [];
 
   dtOptions: DataTables.Settings = {};
 
   ngOnInit(): void {
-    let vendor = new Vendor();
-    vendor.vendor_id = 123;
-    vendor.vendor_name = 'Mr. Razvi';
-    vendor.account_holder_name = 'Razvi';
-    vendor.account_number = '1234567890';
-    vendor.ifsc_code = 'HYD123';
-    vendor.bank_name = 'HDFC Bank';
-    vendor.branch = 'Hyderabad';
-    vendor.upi_id = 'Razvi123@okhdfc';
-    vendor.created_datetime = new Date();
-    this.vendors.push(vendor);
-    this.vendors.push(vendor);
-    this.vendors.push(vendor);
-    this.vendors.push(vendor);
-    this.vendors.push(vendor);
-    this.vendors.push(vendor);
-    this.vendors.push(vendor);
-    this.vendors.push(vendor);
-    this.vendors.push(vendor);
-    this.vendors.push(vendor);
-    this.vendors.push(vendor);
-    this.vendors.push(vendor);
-    this.vendors.push(vendor);
-    this.vendors.push(vendor);
-    this.vendors.push(vendor);
-
+    this.vendorService.getAllVendors().subscribe((data) => {
+      this.vendors = this.sortAscendingOrder(data);
+      console.log('Vendors : ', this.vendors);
+    });
     this.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 10,
     };
+  }
+
+  sortAscendingOrder(vendors: Vendor[]): Vendor[] {
+    return vendors.sort(
+      (vendor1: Vendor, vendor2: Vendor) =>
+        new Date(vendor2.createdDatetime).getTime() -
+        new Date(vendor1.createdDatetime).getTime()
+    );
   }
 }

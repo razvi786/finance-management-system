@@ -8,7 +8,7 @@ import org.springframework.data.annotation.Version;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-import com.fms.rms.enums.StatusType;
+import com.fms.common.enums.StatusType;
 
 import lombok.Data;
 
@@ -23,11 +23,20 @@ public class Request {
 	@Field(name = "raised_by")
 	private int raisedBy;
 
-	@Field(name = "status_type")
-	private StatusType statusType;
+	@Field(name = "status")
+	private StatusType status;
 
 	@Field(name = "deadline_datetime")
 	private OffsetDateTime deadlineDatetime;
+
+	@Field(name = "amount")
+	private double amount;
+
+	@Field(name = "description")
+	private String description;
+
+	@Field(name = "project_id")
+	private int projectId;
 
 	@Field(name = "created_datetime")
 	private OffsetDateTime createdDatetime;

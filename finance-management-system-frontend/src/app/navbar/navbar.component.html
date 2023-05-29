@@ -24,6 +24,15 @@
             >Home</a
           >
         </li>
+        <li class="nav-item" *ngIf="auth.isAuthenticated()">
+          <a
+            class="nav-link"
+            routerLink="/projects"
+            routerLinkActive="active"
+            ariaCurrentWhenActive="page"
+            >Projects</a
+          >
+        </li>
         <li class="nav-item" *ngIf="!auth.isAuthenticated()">
           <a
             class="nav-link"
@@ -67,15 +76,6 @@
             routerLinkActive="active"
             ariaCurrentWhenActive="page"
             >Users</a
-          >
-        </li>
-        <li class="nav-item" *ngIf="auth.isAuthenticated()">
-          <a
-            class="nav-link"
-            routerLink="/projects"
-            routerLinkActive="active"
-            ariaCurrentWhenActive="page"
-            >Projects</a
           >
         </li>
         <li class="nav-item" *ngIf="auth.isAuthenticated()">

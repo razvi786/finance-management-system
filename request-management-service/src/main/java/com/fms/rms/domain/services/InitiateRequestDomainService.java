@@ -10,16 +10,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fms.rms.application.IApplicationService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fms.common.BaseEvent;
+import com.fms.common.Header;
+import com.fms.common.enums.StatusType;
+import com.fms.common.events.CreateRequest;
+import com.fms.common.events.RequestChanged;
 import com.fms.rms.constants.RMSConstants;
 import com.fms.rms.domain.commands.InitiateRequestCommand;
-import com.fms.rms.domain.models.CreateRequestModel;
-import com.fms.rms.enums.StatusType;
 import com.fms.rms.infrastructure.entity.Request;
-import com.fms.rms.infrastructure.events.RequestChangedEvent;
 import com.fms.rms.infrastructure.repository.RequestRepository;
-import com.fms.rms.models.Header;
-import com.fms.rms.models.RMSEvent;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,25 +28,28 @@ import lombok.extern.slf4j.Slf4j;
 public class InitiateRequestDomainService {
 
 	@Autowired
+	private ObjectMapper mapper;
+
+	@Autowired
 	private ApplicationEventPublisher eventPublisher;
 
 	@Autowired
 	private RequestRepository requestRepository;
 
 	@Transactional
-	public void on(final InitiateRequestCommand initiateRequestCommand) throws JsonProcessingException {
+	public void on(final InitiateRequestCommand initiateRequestCommand) {
 
 		Request savedRequest = null;
 		try {
 			log.debug("Event Received in RequestDomainService with eventName: {}",
 					initiateRequestCommand.getHeader().getEventName());
 
-			CreateRequestModel createRequestModel = initiateRequestCommand.getBody();
+			CreateRequest createRequestModel = initiateRequestCommand.getBody();
 
 			Request createRequest = new Request();
 			createRequest.setRequestUuid(UUID.randomUUID());
 			createRequest.setRaisedBy(createRequestModel.getRaisedBy());
-			createRequest.setStatusType(StatusType.INITIATED);
+			createRequest.setStatus(StatusType.INITIATED);
 			createRequest.setDeadlineDatetime(createRequestModel.getDeadlineDatetime());
 			createRequest.setCreatedDatetime(OffsetDateTime.now());
 			savedRequest = requestRepository.save(createRequest);
@@ -56,26 +59,26 @@ public class InitiateRequestDomainService {
 		}
 	}
 
-	private RMSEvent publishRMSEvent(InitiateRequestCommand initiateRequestCommand, Request requestCreated)
+	private BaseEvent publishRMSEvent(InitiateRequestCommand initiateRequestCommand, Request requestCreated)
 			throws JsonProcessingException {
 		final Header initiateRequestHeader = initiateRequestCommand.getHeader();
 		initiateRequestHeader.setEventName(RMSConstants.REQUEST_INITIATED);
 		initiateRequestHeader.setEventFrom(RMSConstants.REQUEST_MANAGEMENT_SERVICE);
 		initiateRequestHeader.setEventDateTime(LocalDateTime.now());
-		RequestChangedEvent requestChangedEvent = mapEntityToEvent(requestCreated);
-		String body = IApplicationService.getObjectMapper().writeValueAsString(requestChangedEvent);
-		RMSEvent rmsEvent = new RMSEvent(initiateRequestHeader, body, null);
+		RequestChanged requestChangedEvent = mapEntityToEvent(requestCreated);
+		String body = mapper.writeValueAsString(requestChangedEvent);
+		BaseEvent rmsEvent = new BaseEvent(initiateRequestHeader, body, null);
 		eventPublisher.publishEvent(rmsEvent);
 		log.debug("Published Event with eventName: {} and requestUUid: {}", initiateRequestHeader.getEventName(),
 				requestChangedEvent.getRequestUuid());
 		return rmsEvent;
 	}
 
-	private RequestChangedEvent mapEntityToEvent(Request publishRequest) {
-		RequestChangedEvent requestChangedEvent = new RequestChangedEvent();
+	private RequestChanged mapEntityToEvent(Request publishRequest) {
+		RequestChanged requestChangedEvent = new RequestChanged();
 		requestChangedEvent.setRequestUuid(publishRequest.getRequestUuid());
 		requestChangedEvent.setRaisedBy(publishRequest.getRaisedBy());
-		requestChangedEvent.setStatusType(publishRequest.getStatusType());
+		requestChangedEvent.setStatusType(publishRequest.getStatus());
 		requestChangedEvent.setDeadlineDatetime(publishRequest.getDeadlineDatetime());
 		return requestChangedEvent;
 	}

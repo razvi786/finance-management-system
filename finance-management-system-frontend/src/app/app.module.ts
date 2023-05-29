@@ -44,6 +44,7 @@ import { UpdateVendorComponent } from './vendors/update-vendor/update-vendor.com
 import { ViewVendorComponent } from './vendors/view-vendor/view-vendor.component';
 import { DatePipe } from '@angular/common';
 import { LogoutComponent } from './logout/logout.component';
+import { LoggingInterceptor } from './interceptors/logging.interceptor';
 
 @NgModule({
   declarations: [
@@ -94,7 +95,7 @@ import { LogoutComponent } from './logout/logout.component';
     MatDatepickerModule,
     MatTooltipModule,
   ],
-  providers: [DatePipe],
+  providers: [DatePipe, LoggingInterceptor],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

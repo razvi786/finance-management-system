@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.fms.rms.application.IApplicationService;
+import com.fms.common.IApplicationService;
 
 @Configuration
 public class ApplicationServiceConfig {

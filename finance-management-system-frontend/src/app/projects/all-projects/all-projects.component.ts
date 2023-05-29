@@ -14,39 +14,25 @@ export class AllProjectsComponent implements OnInit {
   constructor(private projectService: ProjectService) {}
 
   projects: Project[] = [];
-  dtOptions: DataTables.Settings = {};
-  ngOnInit() {
-    this.projectService.getAllProjects().subscribe(u=>{
-      this.projects = u;
-      console.log('Projects : ',this.projects)
-    })
-    // let project = new Project();
-    // project.projectId = 1;
-    // project.userId = 2;
-    // project.projectName = 'Project';
-    // project.description = 'Project Description';
-    // project.budget = 12000;
-    // project.createdDatetime = new Date();
-    // project.name = 'Anonymous';
-    // this.projects.push(project);
-    // this.projects.push(project)
-    // this.projects.push(project);
-    // this.projects.push(project);
-    // this.projects.push(project);
-    // this.projects.push(project);
-    // this.projects.push(project);
-    // this.projects.push(project);
-    // this.projects.push(project);
-    // this.projects.push(project);
-    // this.projects.push(project);
-    // this.projects.push(project);
-    // this.projects.push(project);
-    // this.projects.push(project);
-    // this.projects.push(project);
 
+  dtOptions: DataTables.Settings = {};
+
+  ngOnInit() {
+    this.projectService.getAllProjects().subscribe((data) => {
+      this.projects = this.sortAscendingOrder(data);
+      console.log('Projects : ', this.projects);
+    });
     this.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 10,
     };
+  }
+
+  sortAscendingOrder(requests: Project[]): Project[] {
+    return requests.sort(
+      (project1: Project, project2: Project) =>
+        new Date(project2.createdDatetime).getTime() -
+        new Date(project1.createdDatetime).getTime()
+    );
   }
 }

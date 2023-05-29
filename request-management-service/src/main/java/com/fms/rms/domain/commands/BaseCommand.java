@@ -1,7 +1,7 @@
 package com.fms.rms.domain.commands;
 
-import com.fms.rms.models.ErrorList;
-import com.fms.rms.models.Header;
+import com.fms.common.ErrorList;
+import com.fms.common.Header;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

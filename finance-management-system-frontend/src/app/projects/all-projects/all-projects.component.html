@@ -20,7 +20,8 @@
       <th>Project Name</th>
       <th>Description</th>
       <th>Created By</th>
-      <th>Budget</th>
+      <th>Total Budget</th>
+      <th>Remaining Budget</th>
       <th>Created At</th>
       <th>Actions</th>
     </tr>
@@ -32,7 +33,8 @@
       <td>{{ project.description }}</td>
       <td>{{ project.user.name }}</td>
       <td>{{ project.budget }}</td>
-      <td>{{ project.createdDatetime | date: "fullDate" }}</td>
+      <td>{{ project.remainingBudget }}</td>
+      <td>{{ project.createdDatetime | date : "fullDate" }}</td>
       <td>
         <button
           [routerLink]="['view', project.projectId]"

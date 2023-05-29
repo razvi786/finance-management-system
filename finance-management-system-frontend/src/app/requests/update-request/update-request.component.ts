@@ -16,7 +16,7 @@ export class UpdateRequestComponent implements OnInit {
   projects: Project[] = [];
   selectedProject: Project = new Project();
   updateRequestForm: FormGroup = new FormGroup({});
-  todaysDate = new Date();
+  todaysDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
   request: Request = new Request();
 
   constructor(
@@ -25,7 +25,7 @@ export class UpdateRequestComponent implements OnInit {
     private requestService: RequestService,
     private fb: FormBuilder,
     private router: Router,
-    private datepipe: DatePipe
+    private datePipe: DatePipe
   ) {}
 
   requestUuid: string = '';
@@ -42,12 +42,12 @@ export class UpdateRequestComponent implements OnInit {
 
   createUpdateRequestForm() {
     this.updateRequestForm = this.fb.group({
-      projectId: [this.request.project_id],
+      projectId: [this.request.projectId],
       remainingBudget: [{ disabled: true }],
       amount: [this.request.amount],
       description: [this.request.description],
       deadline: [
-        this.datepipe.transform(this.request.deadline_datetime, 'yyyy-MM-dd'),
+        this.datePipe.transform(this.request.deadlineDatetime, 'yyyy-MM-dd'),
       ],
     });
     this.updateRemainingBudget();
@@ -62,6 +62,7 @@ export class UpdateRequestComponent implements OnInit {
   fetchCurrentRequest() {
     this.requestService.getRequestById(this.requestUuid).subscribe((data) => {
       this.request = data;
+      console.log('Request -> ', data);
       this.createUpdateRequestForm();
     });
   }
@@ -71,35 +72,45 @@ export class UpdateRequestComponent implements OnInit {
 
     this.projectService.getProjectById(selectedProjectId).subscribe((data) => {
       this.selectedProject = data;
-      this.updateRequestForm.controls['remainingBudget'].patchValue(
-        data.remainingBudget
-      );
+
+      this.requestService
+        .getRequestsByProjectId(selectedProjectId)
+        .subscribe((data) => {
+          let totalBudget: number = this.selectedProject.remainingBudget;
+          for (let request of data) {
+            if (request.requestUuid == this.request.requestUuid)
+              totalBudget += request.amount;
+          }
+          let budget: number =
+            totalBudget - this.updateRequestForm.controls['amount'].value;
+          if (budget < 0) {
+            alert('Budget Exceeded, please reduce the amount of request');
+            this.updateRequestForm.controls['amount'].patchValue(totalBudget);
+            this.updateRemainingBudget();
+          }
+          this.updateRequestForm.controls['remainingBudget'].patchValue(budget);
+        });
     });
   }
 
   onSubmit() {
-    console.log('Raise Request', this.updateRequestForm.value);
+    console.log('Update Request', this.updateRequestForm.value);
     let controls = this.updateRequestForm.controls;
     // Populate Request Body
     let request: Request = new Request();
-    request.id = this.request.id;
-    request.deadline_datetime = new Date(controls['deadline'].value);
-    request.project_id = this.selectedProject.projectId;
-    request.project_name = this.selectedProject.projectName;
+    request = this.request;
+    request.requestUuid = this.request.requestUuid;
+    request.deadlineDatetime = new Date(controls['deadline'].value);
+    request.projectId = this.selectedProject.projectId;
+    request.projectName = this.selectedProject.projectName;
     request.amount = controls['amount'].value;
     request.description = controls['description'].value;
-    //Fetch from Local Storage of Logged in user
-    request.raised_by = 123;
-    request.raised_by_name = 'Syed';
-    // Remove Below fields
-    request.status = 'RAISED';
-    request.created_datetime = new Date();
-    request.updated_datetime = new Date();
-    request.concurrency_version = 0;
-    console.log('Saving Request', request);
-    this.requestService.updateRequest(request.id, request).subscribe((data) => {
-      console.log('Request Updated');
-      this.router.navigate(['/requests']);
-    });
+    console.log('Updating Request', request);
+    this.requestService
+      .updateRequest(request.requestUuid, request)
+      .subscribe((data) => {
+        console.log('Request Updated');
+        this.router.navigate(['/requests']);
+      });
   }
 }

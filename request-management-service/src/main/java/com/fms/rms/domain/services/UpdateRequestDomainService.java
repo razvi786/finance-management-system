@@ -10,21 +10,24 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fms.rms.application.IApplicationService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fms.common.BaseEvent;
+import com.fms.common.Header;
+import com.fms.common.events.RequestChanged;
+import com.fms.common.events.UpdateRequest;
 import com.fms.rms.constants.RMSConstants;
 import com.fms.rms.domain.commands.UpdateRequestCommand;
-import com.fms.rms.domain.models.UpdateRequestModel;
 import com.fms.rms.infrastructure.entity.Request;
-import com.fms.rms.infrastructure.events.RequestChangedEvent;
 import com.fms.rms.infrastructure.repository.RequestRepository;
-import com.fms.rms.models.Header;
-import com.fms.rms.models.RMSEvent;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
 public class UpdateRequestDomainService {
+
+	@Autowired
+	private ObjectMapper mapper;
 
 	@Autowired
 	private ApplicationEventPublisher eventPublisher;
@@ -40,7 +43,7 @@ public class UpdateRequestDomainService {
 			log.debug("Event Received in RequestDomainService with eventName: {}",
 					updateRequestCommand.getHeader().getEventName());
 
-			UpdateRequestModel updateRequestModel = updateRequestCommand.getBody();
+			UpdateRequest updateRequestModel = updateRequestCommand.getBody();
 			Optional<Request> requestToBeUpdated = Optional.empty();
 			if (updateRequestModel.getRequestUuid() != null) {
 				requestToBeUpdated = requestRepository.findById(updateRequestModel.getRequestUuid());
@@ -48,7 +51,7 @@ public class UpdateRequestDomainService {
 			if (requestToBeUpdated.isPresent()) {
 				Request updateRequest = requestToBeUpdated.get();
 				updateRequest.setRaisedBy(updateRequestModel.getRaisedBy());
-				updateRequest.setStatusType(updateRequestModel.getStatusType());
+				updateRequest.setStatus(updateRequestModel.getStatusType());
 				updateRequest.setDeadlineDatetime(updateRequestModel.getDeadlineDatetime());
 				updateRequest.setCreatedDatetime(OffsetDateTime.now());
 				savedRequest = requestRepository.save(updateRequest);
@@ -59,26 +62,26 @@ public class UpdateRequestDomainService {
 		}
 	}
 
-	private RMSEvent publishRMSEvent(UpdateRequestCommand updateRequestCommand, Request requestUpdated)
+	private BaseEvent publishRMSEvent(UpdateRequestCommand updateRequestCommand, Request requestUpdated)
 			throws JsonProcessingException {
 		final Header updateRequestHeader = updateRequestCommand.getHeader();
 		updateRequestHeader.setEventName(RMSConstants.REQUEST_UPDATED);
 		updateRequestHeader.setEventFrom(RMSConstants.REQUEST_MANAGEMENT_SERVICE);
 		updateRequestHeader.setEventDateTime(LocalDateTime.now());
-		RequestChangedEvent requestChangedEvent = mapEntityToEvent(requestUpdated);
-		String body = IApplicationService.getObjectMapper().writeValueAsString(requestChangedEvent);
-		RMSEvent rmsEvent = new RMSEvent(updateRequestHeader, body, null);
+		RequestChanged requestChangedEvent = mapEntityToEvent(requestUpdated);
+		String body = mapper.writeValueAsString(requestChangedEvent);
+		BaseEvent rmsEvent = new BaseEvent(updateRequestHeader, body, null);
 		eventPublisher.publishEvent(rmsEvent);
 		log.debug("Published Event with eventName: {} and requestUUid: {}", updateRequestHeader.getEventName(),
 				requestChangedEvent.getRequestUuid());
 		return rmsEvent;
 	}
 
-	private RequestChangedEvent mapEntityToEvent(Request publishRequest) {
-		RequestChangedEvent requestChangedEvent = new RequestChangedEvent();
+	private RequestChanged mapEntityToEvent(Request publishRequest) {
+		RequestChanged requestChangedEvent = new RequestChanged();
 		requestChangedEvent.setRequestUuid(publishRequest.getRequestUuid());
 		requestChangedEvent.setRaisedBy(publishRequest.getRaisedBy());
-		requestChangedEvent.setStatusType(publishRequest.getStatusType());
+		requestChangedEvent.setStatusType(publishRequest.getStatus());
 		requestChangedEvent.setDeadlineDatetime(publishRequest.getDeadlineDatetime());
 		return requestChangedEvent;
 	}

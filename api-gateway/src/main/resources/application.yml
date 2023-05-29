@@ -14,7 +14,7 @@ spring:
               predicates:
                - Path=/api/ems/**
 server:
-   port: 4350
+   port: 5006
 eureka:
    client:
       serviceURL:

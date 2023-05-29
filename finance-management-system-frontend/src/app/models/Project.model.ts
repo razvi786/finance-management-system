@@ -1,9 +1,7 @@
-import { User } from "./User.model";
+import { User } from './User.model';
 export class Project {
   projectId: number = 0;
-  user : User = new User();
-  // userId: number = 0;
-  // name: string = '';
+  user: User = new User();
   projectName: string = '';
   description: string = '';
   budget: number = 0;

@@ -22,7 +22,11 @@ export class ProjectService {
     return this.http.get<Project>(this.path + '/project/' + id);
   }
 
-  createProject(project: Project): Observable<Project>{
-    return this.http.post<Project>(this.path + '/project' , project);
+  createProject(project: Project): Observable<Project> {
+    return this.http.post<Project>(this.path + '/project', project);
+  }
+
+  updateProject(id: string, project: Project): Observable<Project> {
+    return this.http.put<Project>(this.path + '/project/' + id, project);
   }
 }

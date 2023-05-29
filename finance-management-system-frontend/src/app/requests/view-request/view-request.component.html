@@ -38,7 +38,7 @@
 </div> -->
 
 <div class="row d-flex align-items-center justify-content-center h-100 h2 mb-3">
-  Request - {{ request.id }}
+  Request - {{ request.requestUuid }}
 </div>
 
 <div class="form-group pb-5">
@@ -47,7 +47,7 @@
     <input
       type="text"
       class="form-control bg-white"
-      [value]="request.id"
+      [value]="request.requestUuid"
       disabled
     />
   </div>
@@ -56,7 +56,7 @@
     <input
       type="text"
       class="form-control bg-white"
-      [value]="request.raised_by_name"
+      [value]="request.raisedByName"
       disabled
     />
   </div>
@@ -65,7 +65,7 @@
     <input
       type="text"
       class="form-control bg-white"
-      [value]="request.project_name"
+      [value]="request.projectName"
       disabled
     />
   </div>
@@ -101,7 +101,7 @@
     <input
       type="text"
       class="form-control bg-white"
-      [value]="request.deadline_datetime | date: 'fullDate'"
+      [value]="request.deadlineDatetime | date : 'fullDate'"
       disabled
     />
   </div>
@@ -110,7 +110,7 @@
     <input
       type="text"
       class="form-control bg-white"
-      [value]="request.created_datetime | date: 'fullDate'"
+      [value]="request.createdDatetime | date : 'fullDate'"
       disabled
     />
   </div>

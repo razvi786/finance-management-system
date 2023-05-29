@@ -8,7 +8,7 @@ import { environment } from './../../environments/environment';
   providedIn: 'root',
 })
 export class RequestService {
-  path: string = environment.apiUrl;
+  path: string = environment.apiUrl + '/rms';
 
   requestsPath: string = this.path + '/requests';
 
@@ -19,14 +19,18 @@ export class RequestService {
   }
 
   getRequestById(id: string): Observable<Request> {
-    return this.http.get<Request>(this.requestsPath + '/' + id);
+    return this.http.get<Request>(this.path + '/request/' + id);
   }
 
   createRequest(request: Request): Observable<Request> {
-    return this.http.post<Request>(this.requestsPath, request);
+    return this.http.post<Request>(this.path + '/request', request);
   }
 
   updateRequest(id: string, request: Request): Observable<Request> {
-    return this.http.put<Request>(this.requestsPath + '/' + id, request);
+    return this.http.put<Request>(this.path + '/request/' + id, request);
+  }
+
+  getRequestsByProjectId(id: string): Observable<Request[]> {
+    return this.http.get<Request[]>(this.path + '/' + id + '/requests');
   }
 }

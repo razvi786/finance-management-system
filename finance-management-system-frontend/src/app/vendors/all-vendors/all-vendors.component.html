@@ -27,19 +27,19 @@
   <tbody *ngIf="vendors?.length != 0">
     <tr *ngFor="let vendor of vendors; let i = index">
       <td>{{ i + 1 }}</td>
-      <td>{{ vendor.vendor_name }}</td>
-      <td>{{ vendor.bank_name }}</td>
+      <td>{{ vendor.vendorName }}</td>
+      <td>{{ vendor.bankName }}</td>
       <td>{{ vendor.branch }}</td>
-      <td>{{ vendor.created_datetime | date: "fullDate" }}</td>
+      <td>{{ vendor.createdDatetime | date : "fullDate" }}</td>
       <td>
         <button
-          [routerLink]="['view', vendor.vendor_id]"
+          [routerLink]="['view', vendor.vendorId]"
           class="btn btn-primary mx-1"
         >
           View
         </button>
         <button
-          [routerLink]="['edit', vendor.vendor_id]"
+          [routerLink]="['edit', vendor.vendorId]"
           class="btn btn-warning mx-1"
         >
           Edit
