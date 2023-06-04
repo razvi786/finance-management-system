@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Project } from 'src/app/models/Project.model';
 import { ProjectService } from 'src/app/services/project.service';
 
@@ -9,7 +9,11 @@ import { ProjectService } from 'src/app/services/project.service';
   styleUrls: ['./view-project.component.css'],
 })
 export class ViewProjectComponent implements OnInit {
-  constructor(private activatedRoute: ActivatedRoute, private projectService: ProjectService) {}
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private projectService: ProjectService,
+    private router: Router
+  ) {}
 
   projectId: string = '';
 
@@ -20,10 +24,10 @@ export class ViewProjectComponent implements OnInit {
     console.log('projectId:', projectId);
     if (projectId != null) {
       this.projectId = projectId;
-      this.projectService.getProjectById(this.projectId).subscribe(u=>{
+      this.projectService.getProjectById(this.projectId).subscribe((u) => {
         this.project = u;
-        console.log('Projects : ',this.project)
-      })
+        console.log('Projects : ', this.project);
+      });
     }
 
     let project = new Project();
@@ -36,5 +40,10 @@ export class ViewProjectComponent implements OnInit {
     project.createdDatetime = new Date();
 
     this.project = project;
+  }
+
+  redirectToApproverLevel() {
+    let url = '/projects/' + this.projectId + '/approver-level';
+    this.router.navigate([url]);
   }
 }

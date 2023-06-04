@@ -1,8 +1,8 @@
 package com.fms.ams.domain.commands;
 
 import com.fms.ams.domain.models.ApproveRequestModel;
-import com.fms.ams.models.ErrorList;
-import com.fms.ams.models.Header;
+import com.fms.common.ErrorList;
+import com.fms.common.Header;
 
 import lombok.Builder;
 import lombok.Data;

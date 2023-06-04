@@ -13,7 +13,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fms.common.BaseEvent;
 import com.fms.common.Header;
-import com.fms.common.enums.StatusType;
+import com.fms.common.enums.RequestStatus;
 import com.fms.common.events.CreateRequest;
 import com.fms.common.events.RequestChanged;
 import com.fms.rms.constants.RMSConstants;
@@ -49,7 +49,7 @@ public class InitiateRequestDomainService {
 			Request createRequest = new Request();
 			createRequest.setRequestUuid(UUID.randomUUID());
 			createRequest.setRaisedBy(createRequestModel.getRaisedBy());
-			createRequest.setStatus(StatusType.INITIATED);
+			createRequest.setStatus(RequestStatus.INITIATED);
 			createRequest.setDeadlineDatetime(createRequestModel.getDeadlineDatetime());
 			createRequest.setCreatedDatetime(OffsetDateTime.now());
 			savedRequest = requestRepository.save(createRequest);

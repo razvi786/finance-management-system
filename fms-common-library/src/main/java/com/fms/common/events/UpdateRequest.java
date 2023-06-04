@@ -4,7 +4,7 @@ import java.time.OffsetDateTime;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fms.common.enums.StatusType;
+import com.fms.common.enums.RequestStatus;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,7 +18,7 @@ public class UpdateRequest {
 
 	private int raisedBy;
 
-	private StatusType statusType;
+	private RequestStatus statusType;
 
 	private OffsetDateTime deadlineDatetime;
 }

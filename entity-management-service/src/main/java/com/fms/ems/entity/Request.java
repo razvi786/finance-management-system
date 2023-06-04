@@ -5,7 +5,7 @@ import java.util.UUID;
 
 import org.springframework.data.annotation.Id;
 
-import com.fms.common.enums.StatusType;
+import com.fms.common.enums.RequestStatus;
 
 import lombok.Data;
 
@@ -17,7 +17,7 @@ public class Request {
 
 	private int raisedBy;
 
-	private StatusType status;
+	private RequestStatus status;
 
 	private OffsetDateTime deadlineDatetime;
 

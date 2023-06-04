@@ -45,6 +45,7 @@ import { ViewVendorComponent } from './vendors/view-vendor/view-vendor.component
 import { DatePipe } from '@angular/common';
 import { LogoutComponent } from './logout/logout.component';
 import { LoggingInterceptor } from './interceptors/logging.interceptor';
+import { AssignApproverLevelComponent } from './approver-level/assign-approver-level/assign-approver-level.component';
 
 @NgModule({
   declarations: [
@@ -73,6 +74,7 @@ import { LoggingInterceptor } from './interceptors/logging.interceptor';
     UpdateVendorComponent,
     ViewVendorComponent,
     LogoutComponent,
+    AssignApproverLevelComponent,
   ],
   imports: [
     BrowserModule,

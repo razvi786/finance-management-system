@@ -3,7 +3,7 @@ package com.fms.common.entity;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
-import com.fms.common.enums.StatusType;
+import com.fms.common.enums.RequestStatus;
 
 import lombok.Data;
 
@@ -16,7 +16,7 @@ public class Request {
 
 	private String raisedByName;
 
-	private StatusType status;
+	private RequestStatus status;
 
 	private OffsetDateTime deadlineDatetime;
 

@@ -11,14 +11,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fms.ams.AMSConstants;
-import com.fms.ams.application.IApplicationService;
 import com.fms.ams.domain.commands.ApproveRequestCommand;
 import com.fms.ams.domain.models.ApproveRequestModel;
 import com.fms.ams.infrastructure.entity.Approval;
-import com.fms.ams.infrastructure.events.RequestApprovedEvent;
 import com.fms.ams.infrastructure.repository.ApprovalRepository;
-import com.fms.ams.models.AMSEvent;
-import com.fms.ams.models.Header;
+import com.fms.common.BaseEvent;
+import com.fms.common.Header;
+import com.fms.common.events.RequestApprovedEvent;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -48,7 +47,7 @@ public class ApproveRequestDomainService {
 			approval.setApproverLevelId(approveRequestModel.getApproverLevelId());
 			approval.setApproverId(approveRequestModel.getApproverId());
 			approval.setComments(approveRequestModel.getComments());
-			approval.setStatusType(approveRequestModel.getStatusType());
+			approval.setStatus(approveRequestModel.getStatus());
 			approval.setCreatedDatetime(OffsetDateTime.now());
 			approval.setUpdatedDatetime(OffsetDateTime.now());
 			saveApproval = approvalRepository.save(approval);
@@ -58,15 +57,14 @@ public class ApproveRequestDomainService {
 		}
 	}
 
-	private AMSEvent publishAMSEvent(ApproveRequestCommand approveRequestCommand, Approval approval)
+	private BaseEvent publishAMSEvent(ApproveRequestCommand approveRequestCommand, Approval approval)
 			throws JsonProcessingException {
 		final Header approveRequestHeader = approveRequestCommand.getHeader();
 		approveRequestHeader.setEventName(AMSConstants.REQUEST_APPROVED_EVENT);
 		approveRequestHeader.setEventFrom(AMSConstants.APPROVAL_MANAGEMENT_SERVICE);
 		approveRequestHeader.setEventDateTime(LocalDateTime.now());
 		RequestApprovedEvent requestApprovedEvent = mapEntityToEvent(approval);
-		String body = IApplicationService.getObjectMapper().writeValueAsString(requestApprovedEvent);
-		AMSEvent amsEvent = new AMSEvent(approveRequestHeader, body, null);
+		BaseEvent amsEvent = new BaseEvent(approveRequestHeader, requestApprovedEvent, null);
 		eventPublisher.publishEvent(amsEvent);
 		log.debug("Published Event with eventName: {} and approvalUUid: {}", approveRequestHeader.getEventName(),
 				requestApprovedEvent.getRequestUuid());
@@ -79,7 +77,7 @@ public class ApproveRequestDomainService {
 		requestApprovedEvent.setRequestUuid(publishApproval.getRequestUuid());
 		requestApprovedEvent.setApproverLevelId(publishApproval.getApproverLevelId());
 		requestApprovedEvent.setComments(publishApproval.getComments());
-		requestApprovedEvent.setStatusType(publishApproval.getStatusType());
+		requestApprovedEvent.setStatus(publishApproval.getStatus());
 		return requestApprovedEvent;
 	}
 }

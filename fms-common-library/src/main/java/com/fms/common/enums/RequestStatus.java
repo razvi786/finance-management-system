@@ -1,6 +1,6 @@
 package com.fms.common.enums;
 
-public enum StatusType {
+public enum RequestStatus {
 
 	INITIATED, PARTIALLY_APPROVED, APPROVED, REJECTED
 }

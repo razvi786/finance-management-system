@@ -1,9 +1,9 @@
-package com.fms.ams.infrastructure.events;
+package com.fms.common.events;
 
 import java.io.Serializable;
 import java.util.UUID;
 
-import com.fms.ams.infrastructure.enums.StatusType;
+import com.fms.common.enums.ApprovalStatus;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,5 +27,5 @@ public class RequestApprovedEvent implements Serializable {
 
 	private String comments;
 
-	private StatusType statusType;
+	private ApprovalStatus status;
 }

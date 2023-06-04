@@ -21,37 +21,37 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-import com.fms.common.entity.Request;
-import com.fms.common.ui.responses.RequestsList;
-import com.fms.ems.services.RequestService;
+import com.fms.common.entity.Approval;
+import com.fms.common.ui.responses.ApprovalsList;
+import com.fms.ems.services.ApprovalService;
 
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
-@RequestMapping("/api/rms")
+@RequestMapping("/api/ams")
 @CrossOrigin(origins = "*")
 @Slf4j
-public class RequestRestController {
+public class ApprovalRestController {
 
 	@Autowired
 	RestTemplate restTemplate;
 
-	@Value("${endpoint.rms}")
-	private String rmsEndpoint;
+	@Value("${endpoint.ams}")
+	private String amsEndpoint;
 
 	@Autowired
-	private RequestService requestService;
+	private ApprovalService approvalService;
 
-	@GetMapping("/requests")
+	@GetMapping("/approvals")
 	@Transactional
-	public ResponseEntity<RequestsList> getAllRequests() {
+	public ResponseEntity<ApprovalsList> getAllApprovals() {
 		try {
-			RequestsList requests = restTemplate.getForObject(rmsEndpoint + "/requests", RequestsList.class);
-			if (requests.isEmpty()) {
+			ApprovalsList approvals = restTemplate.getForObject(amsEndpoint + "/approvals", ApprovalsList.class);
+			if (approvals.isEmpty()) {
 				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 			} else {
-				requests = requestService.populateMetadata(requests);
-				return new ResponseEntity<>(requests, HttpStatus.OK);
+				approvals = approvalService.populateMetadata(approvals);
+				return new ResponseEntity<>(approvals, HttpStatus.OK);
 			}
 		} catch (Exception e) {
 			log.error(e.getMessage());
@@ -59,13 +59,13 @@ public class RequestRestController {
 		}
 	}
 
-	@GetMapping("/request/{requestUuid}")
-	public ResponseEntity<Request> getRequestById(@PathVariable UUID requestUuid) {
+	@GetMapping("/approval/{approvalUuid}")
+	public ResponseEntity<Approval> getApprovalById(@PathVariable UUID approvalUuid) {
 		try {
-			Request request = restTemplate.getForObject(rmsEndpoint + "/request/" + requestUuid, Request.class);
-			if (request != null) {
-				request = requestService.populateMetadata(request);
-				return new ResponseEntity<>(request, HttpStatus.OK);
+			Approval approval = restTemplate.getForObject(amsEndpoint + "/approval/" + approvalUuid, Approval.class);
+			if (approval != null) {
+				approval = approvalService.populateMetadata(approval);
+				return new ResponseEntity<>(approval, HttpStatus.OK);
 			} else {
 				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 			}
@@ -75,12 +75,12 @@ public class RequestRestController {
 		}
 	}
 
-	@PutMapping("/request/{requestUuid}")
+	@PutMapping("/approval/{approvalUuid}")
 	@Transactional
-	public ResponseEntity<Request> updateProject(@PathVariable String requestUuid, @RequestBody Request request) {
+	public ResponseEntity<Approval> updateApproval(@PathVariable String approvalUuid, @RequestBody Approval approval) {
 		try {
-			ResponseEntity<Request> response = restTemplate.exchange(rmsEndpoint + "/request/" + requestUuid,
-					HttpMethod.PUT, new HttpEntity<Request>(request), Request.class);
+			ResponseEntity<Approval> response = restTemplate.exchange(amsEndpoint + "/approval/" + approvalUuid,
+					HttpMethod.PUT, new HttpEntity<Approval>(approval), Approval.class);
 			if (response.getStatusCode() == HttpStatus.OK) {
 				return new ResponseEntity<>(response.getBody(), HttpStatus.OK);
 			} else {
@@ -92,14 +92,13 @@ public class RequestRestController {
 		}
 	}
 
-	@PostMapping("/request")
+	@PostMapping("/approval")
 	@Transactional
-	public ResponseEntity<Request> createRole(@RequestBody Request request) {
+	public ResponseEntity<Approval> createApproval(@RequestBody Approval approval) {
 		try {
-			ResponseEntity<Request> response = restTemplate.exchange(rmsEndpoint + "/request", HttpMethod.POST,
-					new HttpEntity<Request>(request), Request.class);
+			ResponseEntity<Approval> response = restTemplate.exchange(amsEndpoint + "/approval", HttpMethod.POST,
+					new HttpEntity<Approval>(approval), Approval.class);
 			if (response.getStatusCode() == HttpStatus.CREATED) {
-				requestService.mapAndPublishInitiateApprovalsEvent(response.getBody());
 				return new ResponseEntity<>(response.getBody(), HttpStatus.CREATED);
 			} else {
 				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -110,17 +109,17 @@ public class RequestRestController {
 		}
 	}
 
-	@GetMapping("/{projectId}/requests")
+	@GetMapping("/{requestUuid}/approvals")
 	@Transactional
-	public ResponseEntity<RequestsList> getAllRequestsByProjectId(@PathVariable int projectId) {
+	public ResponseEntity<ApprovalsList> getAllApprovalsByRequestUuid(@PathVariable UUID requestUuid) {
 		try {
-			RequestsList requests = restTemplate.getForObject(rmsEndpoint + "/" + projectId + "/requests",
-					RequestsList.class);
-			if (Objects.isNull(requests)) {
+			ApprovalsList approvals = restTemplate.getForObject(amsEndpoint + "/" + requestUuid + "/approvals",
+					ApprovalsList.class);
+			if (Objects.isNull(approvals)) {
 				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 			} else {
-				requests = requestService.populateMetadata(requests);
-				return new ResponseEntity<>(requests, HttpStatus.OK);
+				approvals = approvalService.populateMetadata(approvals);
+				return new ResponseEntity<>(approvals, HttpStatus.OK);
 			}
 		} catch (Exception e) {
 			log.error(e.getMessage());

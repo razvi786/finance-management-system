@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
-import com.fms.common.enums.StatusType;
+import com.fms.common.enums.RequestStatus;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,7 +19,7 @@ public class RequestChanged implements Serializable {
 
 	private int raisedBy;
 
-	private StatusType statusType;
+	private RequestStatus statusType;
 
 	private OffsetDateTime deadlineDatetime;
 }

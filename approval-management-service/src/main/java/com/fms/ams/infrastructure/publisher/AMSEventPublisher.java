@@ -13,10 +13,10 @@ import com.amazonaws.services.sns.model.MessageAttributeValue;
 import com.amazonaws.services.sns.model.PublishRequest;
 import com.amazonaws.services.sns.model.PublishResult;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fms.ams.AMSConstants;
-import com.fms.ams.application.IApplicationService;
-import com.fms.ams.models.AMSEvent;
-import com.fms.ams.models.Header;
+import com.fms.common.BaseEvent;
+import com.fms.common.Header;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,18 +25,21 @@ import lombok.extern.slf4j.Slf4j;
 public class AMSEventPublisher {
 
 	@Autowired
+	private ObjectMapper mapper;
+
+	@Autowired
 	private AmazonSNS snsClient;
 
 	@Value("${aws.sns.ams-topic-out.arn}")
 	private String outboundTopicArn;
 
 	@TransactionalEventListener
-	public PublishResult publishEvent(final AMSEvent event) throws JsonProcessingException {
+	public PublishResult publishEvent(final BaseEvent event) throws JsonProcessingException {
 
 		log.debug("Inside AMSEventPublisher.publishEvent() with event: {}", event);
 
 		try {
-			final String message = IApplicationService.getObjectMapper().writeValueAsString(event.getBody());
+			final String message = mapper.writeValueAsString(event.getBody());
 			log.debug("Mapped message to String: {}", message);
 
 			final Header header = event.getHeader();

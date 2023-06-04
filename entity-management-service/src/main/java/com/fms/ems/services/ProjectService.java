@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.fms.common.entity.Request;
-import com.fms.common.ui.responses.RMSAllRequestsResponse;
+import com.fms.common.ui.responses.RequestsList;
 import com.fms.ems.entity.Project;
 import com.fms.ems.repository.ProjectRepository;
 
@@ -40,8 +40,8 @@ public class ProjectService {
 	public List<Project> populateMetadata(List<Project> projects) {
 		for (Project project : projects) {
 			Double remainingBudget = Double.valueOf(project.getBudget());
-			RMSAllRequestsResponse requests = restTemplate.getForObject(
-					rmsEndpoint + "/" + project.getProjectId() + "/requests", RMSAllRequestsResponse.class);
+			RequestsList requests = restTemplate.getForObject(
+					rmsEndpoint + "/" + project.getProjectId() + "/requests", RequestsList.class);
 			if (requests != null) {
 				for (Request request : requests) {
 					remainingBudget -= request.getAmount();
@@ -55,8 +55,8 @@ public class ProjectService {
 
 	public Project populateMetadata(Project project) {
 		Double remainingBudget = Double.valueOf(project.getBudget());
-		RMSAllRequestsResponse requests = restTemplate
-				.getForObject(rmsEndpoint + "/" + project.getProjectId() + "/requests", RMSAllRequestsResponse.class);
+		RequestsList requests = restTemplate
+				.getForObject(rmsEndpoint + "/" + project.getProjectId() + "/requests", RequestsList.class);
 		if (requests != null) {
 			for (Request request : requests) {
 				remainingBudget -= request.getAmount();

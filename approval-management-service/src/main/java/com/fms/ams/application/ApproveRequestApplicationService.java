@@ -8,7 +8,7 @@ import com.fms.ams.AMSConstants;
 import com.fms.ams.domain.commands.ApproveRequestCommand;
 import com.fms.ams.domain.models.ApproveRequestModel;
 import com.fms.ams.domain.services.ApproveRequestDomainService;
-import com.fms.ams.models.AMSEvent;
+import com.fms.common.BaseEvent;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -27,14 +27,12 @@ public class ApproveRequestApplicationService implements IApplicationService {
 	}
 
 	@Override
-	public void process(AMSEvent amsEvent) throws JsonProcessingException {
+	public void process(BaseEvent event) {
 		try {
 
-			final ApproveRequestModel commandBody = IApplicationService.getObjectMapper().readValue(amsEvent.getBody(),
-					ApproveRequestModel.class);
-
 			final ApproveRequestCommand approveRequestCommand = ApproveRequestCommand.builder()
-					.header(amsEvent.getHeader()).body(commandBody).errors(amsEvent.getErrors()).build();
+					.header(event.getHeader()).body((ApproveRequestModel) event.getBody()).errors(event.getErrors())
+					.build();
 			log.debug("Approve Request Command created: {}", approveRequestCommand);
 
 			approveRequestDomainService.on(approveRequestCommand);

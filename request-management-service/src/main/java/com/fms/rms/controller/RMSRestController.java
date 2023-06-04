@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fms.common.enums.StatusType;
+import com.fms.common.enums.RequestStatus;
 import com.fms.rms.infrastructure.entity.Request;
 import com.fms.rms.infrastructure.repository.RequestRepository;
 
@@ -29,7 +29,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/api/rms")
 @CrossOrigin(origins = "*")
 @Slf4j
-public class RequestRestController {
+public class RMSRestController {
 
 	@Autowired
 	RequestRepository requestRepository;
@@ -71,7 +71,7 @@ public class RequestRestController {
 		try {
 			Request createRequest = new Request();
 			createRequest.setRequestUuid(UUID.randomUUID());
-			createRequest.setStatus(StatusType.INITIATED);
+			createRequest.setStatus(RequestStatus.INITIATED);
 			createRequest.setCreatedDatetime(OffsetDateTime.now());
 			createRequest.setUpdatedDatetime(OffsetDateTime.now());
 			createRequest.setRaisedBy(request.getRaisedBy());

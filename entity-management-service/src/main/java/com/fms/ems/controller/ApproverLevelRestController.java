@@ -3,11 +3,11 @@ package com.fms.ems.controller;
 import java.util.List;
 import java.util.Optional;
 
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,9 +25,12 @@ import com.fms.ems.repository.ApproverLevelRepository;
 import com.fms.ems.repository.ProjectRepository;
 import com.fms.ems.repository.UserRepository;
 
+import lombok.extern.slf4j.Slf4j;
+
 @RestController
 @RequestMapping("/api/ems")
 @CrossOrigin(origins = "*")
+@Slf4j
 public class ApproverLevelRestController {
 
 	@Autowired
@@ -69,7 +72,7 @@ public class ApproverLevelRestController {
 	}
 
 	@PostMapping("/approver-level")
-	@Transactional
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public ResponseEntity<ApproverLevel> createApproverLevel(@RequestBody ApproverLevel approverLevel) {
 		try {
 			if (approverLevel.getProject() != null) {
@@ -99,25 +102,27 @@ public class ApproverLevelRestController {
 	}
 
 	@PutMapping("/approver-level/{id}")
-	@Transactional
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public ResponseEntity<ApproverLevel> updateApproverLevel(@PathVariable String id,
 			@RequestBody ApproverLevel approverLevel) {
 		try {
 			final Optional<ApproverLevel> approverLevelOptional = approverLevelRepository
 					.findById(Integer.parseInt(id));
 			if (approverLevelOptional.isPresent()) {
+				log.info("Updating Approver Level {}", approverLevel);
 				final ApproverLevel updatedApproverLevel = approverLevelRepository.save(approverLevel);
 				return new ResponseEntity<>(updatedApproverLevel, HttpStatus.OK);
 			} else {
 				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 			}
 		} catch (Exception e) {
+			log.error(e.getMessage());
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
 	@DeleteMapping("/approver-level/{id}")
-	@Transactional
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public ResponseEntity<ApproverLevel> deleteApproverLevel(@PathVariable String id) {
 		try {
 			final Optional<ApproverLevel> approverLevelOptional = approverLevelRepository
@@ -127,6 +132,21 @@ public class ApproverLevelRestController {
 				return new ResponseEntity<>(HttpStatus.OK);
 			} else {
 				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			}
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@GetMapping("/project/{projectId}/approver-levels")
+	public ResponseEntity<List<ApproverLevel>> getApproverLevelsByProjectId(@PathVariable String projectId) {
+		try {
+			final List<ApproverLevel> approverLevels = approverLevelRepository
+					.findAllByProjectProjectIdOrderByLevel(Integer.valueOf(projectId));
+			if (approverLevels.isEmpty()) {
+				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			} else {
+				return new ResponseEntity<>(approverLevels, HttpStatus.OK);
 			}
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

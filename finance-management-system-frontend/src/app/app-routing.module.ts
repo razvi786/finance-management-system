@@ -19,6 +19,7 @@ import { AllVendorsComponent } from './vendors/all-vendors/all-vendors.component
 import { CreateVendorComponent } from './vendors/create-vendor/create-vendor.component';
 import { UpdateVendorComponent } from './vendors/update-vendor/update-vendor.component';
 import { ViewVendorComponent } from './vendors/view-vendor/view-vendor.component';
+import { AssignApproverLevelComponent } from './approver-level/assign-approver-level/assign-approver-level.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -93,6 +94,11 @@ const routes: Routes = [
   {
     path: 'projects/view/:project_id',
     component: ViewProjectComponent,
+    canActivate: [AuthenticationGuard],
+  },
+  {
+    path: 'projects/:project_id/approver-level',
+    component: AssignApproverLevelComponent,
     canActivate: [AuthenticationGuard],
   },
   { path: '**', component: HomeComponent },
