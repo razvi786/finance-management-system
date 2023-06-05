@@ -2,81 +2,6 @@
   Request - {{ request.requestUuid }}
 </div>
 
-<div class="form-group pb-5">
-  <div class="input-group mb-2">
-    <span class="input-group-text">Request Id</span>
-    <input
-      type="text"
-      class="form-control bg-white"
-      [value]="request.requestUuid"
-      disabled
-    />
-  </div>
-  <div class="input-group mb-2">
-    <span class="input-group-text">Raised By</span>
-    <input
-      type="text"
-      class="form-control bg-white"
-      [value]="request.raisedByName"
-      disabled
-    />
-  </div>
-  <div class="input-group mb-2">
-    <span class="input-group-text">Project</span>
-    <input
-      type="text"
-      class="form-control bg-white"
-      [value]="request.projectName"
-      disabled
-    />
-  </div>
-  <div class="input-group mb-2">
-    <span class="input-group-text">Amount (&#8377;)</span>
-    <input
-      type="number"
-      class="form-control bg-white"
-      [value]="request.amount"
-      disabled
-    />
-  </div>
-  <div class="input-group mb-2">
-    <span class="input-group-text">Status</span>
-    <input
-      type="text"
-      class="form-control bg-white"
-      [value]="request.status"
-      disabled
-    />
-  </div>
-  <div class="input-group mb-2">
-    <span class="input-group-text">Description</span>
-    <input
-      type="text"
-      class="form-control bg-white"
-      [value]="request.description"
-      disabled
-    />
-  </div>
-  <div class="input-group mb-2">
-    <span class="input-group-text">Deadline Date</span>
-    <input
-      type="text"
-      class="form-control bg-white"
-      [value]="request.deadlineDatetime | date : 'fullDate'"
-      disabled
-    />
-  </div>
-  <div class="input-group mb-2">
-    <span class="input-group-text">Created Date</span>
-    <input
-      type="text"
-      class="form-control bg-white"
-      [value]="request.createdDatetime | date : 'fullDate'"
-      disabled
-    />
-  </div>
-</div>
-
 <div class="progresses m-3">
   <div class="progresses" *ngFor="let approval of approvals">
     <div
@@ -142,5 +67,107 @@
         approval.approverLevel >= activeApprovalLevel
       "
     ></span>
+  </div>
+</div>
+
+<div class="form-group py-3">
+  <div class="input-group mb-2">
+    <span class="input-group-text">Request Id</span>
+    <input
+      type="text"
+      class="form-control bg-white"
+      [value]="request.requestUuid"
+      disabled
+    />
+  </div>
+  <div class="input-group mb-2">
+    <span class="input-group-text">Raised By</span>
+    <input
+      type="text"
+      class="form-control bg-white"
+      [value]="request.raisedByName"
+      disabled
+    />
+  </div>
+  <div class="input-group mb-2">
+    <span class="input-group-text">Project</span>
+    <input
+      type="text"
+      class="form-control bg-white"
+      [value]="request.projectName"
+      disabled
+    />
+  </div>
+  <div class="input-group mb-2">
+    <span class="input-group-text">Vendor</span>
+    <input
+      type="text"
+      class="form-control bg-white"
+      [value]="request.vendorName"
+      disabled
+    />
+  </div>
+  <div class="input-group mb-2">
+    <span class="input-group-text">Amount (&#8377;)</span>
+    <input
+      type="number"
+      class="form-control bg-white"
+      [value]="request.amount"
+      disabled
+    />
+  </div>
+  <div class="input-group mb-2">
+    <span class="input-group-text">Status</span>
+    <input
+      type="text"
+      class="form-control bg-white"
+      [value]="request.status"
+      disabled
+    />
+  </div>
+  <div class="input-group mb-2">
+    <span class="input-group-text">Description</span>
+    <input
+      type="text"
+      class="form-control bg-white"
+      [value]="request.description"
+      disabled
+    />
+  </div>
+  <div class="input-group mb-2">
+    <span class="input-group-text">Deadline Date</span>
+    <input
+      type="text"
+      class="form-control bg-white"
+      [value]="request.deadlineDatetime | date : 'fullDate'"
+      disabled
+    />
+  </div>
+  <div class="input-group mb-2">
+    <span class="input-group-text">Created Date</span>
+    <input
+      type="text"
+      class="form-control bg-white"
+      [value]="request.createdDatetime | date : 'fullDate'"
+      disabled
+    />
+  </div>
+</div>
+
+<div class="row" *ngIf="isEligibleUser()">
+  <div class="form-group col-md-6">
+    <textarea
+      [(ngModel)]="comments"
+      class="form-control"
+      placeholder="Type Comments"
+    ></textarea>
+    <div class="row">
+      <button class="btn btn-primary col-md-5 m-3" (click)="approveRequest()">
+        Approve Request
+      </button>
+      <button class="btn btn-danger col-md-5 m-3" (click)="rejectRequest()">
+        Reject Request
+      </button>
+    </div>
   </div>
 </div>

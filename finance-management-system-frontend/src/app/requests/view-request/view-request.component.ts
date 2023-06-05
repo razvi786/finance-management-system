@@ -1,10 +1,15 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { FormBuilder, FormControl } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { data } from 'jquery';
 import { Approval } from 'src/app/models/Approval.model';
 import { Request } from 'src/app/models/Request.model';
+import { User } from 'src/app/models/User.model';
 import { ApprovalService } from 'src/app/services/approval.service';
+import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { RequestService } from 'src/app/services/request.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-view-request',
@@ -16,18 +21,24 @@ export class ViewRequestComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private requestService: RequestService,
     private approvalService: ApprovalService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private localStorageService: LocalStorageService,
+    private userService: UserService,
+    private router: Router
   ) {}
 
   requestUuid: string = '';
 
   request: Request = new Request();
+  user: User = new User();
 
   approvals: Approval[] = [];
   approvalsCount: number = 0;
   activeApprovalLevel: number = Number.MAX_VALUE;
   rejectedRequest: boolean = false;
   rejectionLevel: number = 0;
+
+  comments: string = '';
 
   ngOnInit(): void {
     let requestUuid = this.activatedRoute.snapshot.paramMap.get('request_uuid');
@@ -39,6 +50,13 @@ export class ViewRequestComponent implements OnInit {
       console.log('Request', data);
       this.request = data;
     });
+
+    let userId = this.localStorageService.getUserId();
+    this.userService
+      .getUserById(userId != null ? userId : '')
+      .subscribe((data) => {
+        this.user = data;
+      });
 
     this.updateApprovals();
   }
@@ -110,5 +128,46 @@ export class ViewRequestComponent implements OnInit {
         return pending;
       else return waiting;
     }
+  }
+
+  isEligibleUser(): boolean {
+    let currentapproval;
+    if (
+      this.activeApprovalLevel <= this.approvals.length &&
+      !this.rejectedRequest
+    ) {
+      currentapproval = this.approvals[this.activeApprovalLevel - 1];
+      if (currentapproval.approverId == this.user.userId) return true;
+      else if (this.user.role.roleName == 'Admin') return true;
+      else return false;
+    } else {
+      return false;
+    }
+  }
+
+  approveRequest() {
+    let currentapproval = this.approvals[this.activeApprovalLevel - 1];
+    currentapproval.comments = this.comments;
+    currentapproval.approverId = this.user.userId;
+
+    this.approvalService
+      .approveRequest(currentapproval.requestUuid, currentapproval)
+      .subscribe((approval) => {
+        alert('Request approved successfully');
+        this.router.navigate(['/requests']);
+      });
+  }
+
+  rejectRequest() {
+    let currentapproval = this.approvals[this.activeApprovalLevel - 1];
+    currentapproval.comments = this.comments;
+    currentapproval.approverId = this.user.userId;
+
+    this.approvalService
+      .rejectRequest(currentapproval.requestUuid, currentapproval)
+      .subscribe((approval) => {
+        alert('Request rejected successfully');
+        this.router.navigate(['/requests']);
+      });
   }
 }

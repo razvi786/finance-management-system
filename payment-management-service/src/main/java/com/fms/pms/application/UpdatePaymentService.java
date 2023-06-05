@@ -6,10 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fms.common.BaseEvent;
+import com.fms.common.IApplicationService;
+import com.fms.common.events.UpdatePaymentBody;
 import com.fms.pms.domain.commands.HandleUpdatePaymentCommand;
 import com.fms.pms.domain.services.UpdatePaymentDomainService;
-import com.fms.pms.events.UpdatePaymentBody;
-import com.fms.pms.models.FmsEvent;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -17,38 +19,32 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class UpdatePaymentService implements IApplicationService {
 
-  private static final String EVENT_NAME = UPDATE_PAYMENT;
+	@Autowired
+	private ObjectMapper mapper;
 
-  @Autowired private UpdatePaymentDomainService updatePaymentDomainService;
+	@Autowired
+	private UpdatePaymentDomainService updatePaymentDomainService;
 
-  @Override
-  public String getServiceIdentifier() {
-    return EVENT_NAME;
-  }
+	private static final String EVENT_NAME = UPDATE_PAYMENT;
 
-  @Override
-  public void process(final FmsEvent fmsEvent) {
+	@Override
+	public String getServiceIdentifier() {
+		return EVENT_NAME;
+	}
 
-    log.debug("Inside UpdatePaymentService.process() method with Event: {}", fmsEvent);
-    try {
+	@Override
+	public void process(BaseEvent event) throws JsonProcessingException {
 
-      final UpdatePaymentBody commandBody =
-          IApplicationService.getObjectMapper()
-              .readValue(fmsEvent.getBody(), UpdatePaymentBody.class);
+		log.info("Inside UpdatePaymentService.process() method with Event: {}", event);
 
-      final HandleUpdatePaymentCommand handleUpdatePaymentCommand =
-          HandleUpdatePaymentCommand.builder()
-              .header(fmsEvent.getHeader())
-              .body(commandBody)
-              .errors(fmsEvent.getErrors())
-              .build();
-      log.debug("HandleUpdatePaymentCommand created: {}", handleUpdatePaymentCommand);
+		UpdatePaymentBody updatePaymentCommandBody = mapper.treeToValue(event.getBody(), UpdatePaymentBody.class);
 
-      updatePaymentDomainService.on(handleUpdatePaymentCommand);
+		final HandleUpdatePaymentCommand handleUpdatePaymentCommand = HandleUpdatePaymentCommand.builder()
+				.header(event.getHeader()).body(updatePaymentCommandBody).errors(event.getErrors()).build();
 
-    } catch (JsonProcessingException exception) {
+		log.info("HandleUpdatePaymentCommand created: {}", handleUpdatePaymentCommand);
 
-      log.error("Exception while mapping eventBody to Command: {}", exception);
-    }
-  }
+		updatePaymentDomainService.on(handleUpdatePaymentCommand);
+
+	}
 }

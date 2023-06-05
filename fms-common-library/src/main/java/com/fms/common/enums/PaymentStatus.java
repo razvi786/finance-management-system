@@ -1,6 +1,6 @@
-package com.fms.pms.enums;
+package com.fms.common.enums;
 
-public enum Status {
+public enum PaymentStatus {
   INITIATED,
   COMPLETED,
   FAILED,

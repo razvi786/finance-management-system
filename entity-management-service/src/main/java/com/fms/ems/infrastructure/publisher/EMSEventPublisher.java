@@ -13,16 +13,19 @@ import com.amazonaws.services.sns.model.MessageAttributeValue;
 import com.amazonaws.services.sns.model.PublishRequest;
 import com.amazonaws.services.sns.model.PublishResult;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fms.common.BaseEvent;
 import com.fms.common.Header;
 import com.fms.ems.EMSConstants;
-import com.fms.ems.application.IApplicationService;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
 public class EMSEventPublisher {
+
+	@Autowired
+	private ObjectMapper mapper;
 
 	@Autowired
 	private AmazonSNS snsClient;
@@ -33,14 +36,15 @@ public class EMSEventPublisher {
 	@TransactionalEventListener
 	public PublishResult publishEvent(final BaseEvent event) throws JsonProcessingException {
 
-		log.debug("Inside AMSEventPublisher.publishEvent() with event: {}", event);
+		log.info("Inside AMSEventPublisher.publishEvent() with event: {}", event);
 
 		try {
-			final String message = IApplicationService.getObjectMapper().writeValueAsString(event.getBody());
-			log.debug("Mapped message to String: {}", message);
+			final String message = mapper.writeValueAsString(event);
+			log.info("Mapped message to String: {}", message);
 
 			final Header header = event.getHeader();
 			final Map<String, MessageAttributeValue> messageAttributes = getMessageAttributes(header);
+			log.info("Message attributes added: {}", messageAttributes);
 
 			final PublishRequest publishRequest = new PublishRequest().withMessageAttributes(messageAttributes)
 					.withTopicArn(outboundTopicArn).withMessage(message);

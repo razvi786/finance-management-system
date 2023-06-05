@@ -1,8 +1,9 @@
 package com.fms.pms.domain.commands;
 
-import com.fms.pms.events.RequestFullyApprovedBody;
-import com.fms.pms.models.Errors;
-import com.fms.pms.models.Header;
+import com.fms.common.BaseCommand;
+import com.fms.common.ErrorList;
+import com.fms.common.Header;
+import com.fms.common.events.RequestFullyApprovedBody;
 
 import lombok.Builder;
 import lombok.Data;
@@ -16,12 +17,12 @@ import lombok.ToString;
 @NoArgsConstructor
 public class HandleRequestFullyApprovedCommand extends BaseCommand {
 
-  private RequestFullyApprovedBody body;
+	private RequestFullyApprovedBody body;
 
-  @Builder
-  public HandleRequestFullyApprovedCommand(
-      final Header header, final RequestFullyApprovedBody body, final Errors errors) {
-    super(header, errors);
-    this.body = body;
-  }
+	@Builder
+	public HandleRequestFullyApprovedCommand(final Header header, final RequestFullyApprovedBody body,
+			final ErrorList errors) {
+		super(header, errors);
+		this.body = body;
+	}
 }

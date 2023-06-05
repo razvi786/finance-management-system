@@ -6,10 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fms.common.BaseEvent;
+import com.fms.common.IApplicationService;
+import com.fms.common.events.RequestFullyApprovedBody;
 import com.fms.pms.domain.commands.HandleRequestFullyApprovedCommand;
 import com.fms.pms.domain.services.RequestFullyApprovedDomainService;
-import com.fms.pms.events.RequestFullyApprovedBody;
-import com.fms.pms.models.FmsEvent;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -17,38 +19,33 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class RequestFullyApprovedService implements IApplicationService {
 
-  private static final String EVENT_NAME = REQUEST_FULLY_APPROVED;
+	@Autowired
+	private ObjectMapper mapper;
 
-  @Autowired private RequestFullyApprovedDomainService requestFullyApprovedDomainService;
+	@Autowired
+	private RequestFullyApprovedDomainService requestFullyApprovedDomainService;
 
-  @Override
-  public String getServiceIdentifier() {
-    return EVENT_NAME;
-  }
+	private static final String EVENT_NAME = REQUEST_FULLY_APPROVED;
 
-  @Override
-  public void process(final FmsEvent fmsEvent) {
+	@Override
+	public String getServiceIdentifier() {
+		return EVENT_NAME;
+	}
 
-    log.debug("Inside RequestFullyApprovedService.process() method with Event: {}", fmsEvent);
-    try {
+	@Override
+	public void process(BaseEvent event) throws JsonProcessingException {
 
-      final RequestFullyApprovedBody commandBody =
-          IApplicationService.getObjectMapper()
-              .readValue(fmsEvent.getBody(), RequestFullyApprovedBody.class);
+		log.info("Inside RequestFullyApprovedService.process() method with Event: {}", event);
 
-      final HandleRequestFullyApprovedCommand handleRequestFullyApprovedCommand =
-          HandleRequestFullyApprovedCommand.builder()
-              .header(fmsEvent.getHeader())
-              .body(commandBody)
-              .errors(fmsEvent.getErrors())
-              .build();
-      log.debug("HandleRequestFullyApprovedCommand created: {}", handleRequestFullyApprovedCommand);
+		RequestFullyApprovedBody requestFullyApprovedCommandBody = mapper.treeToValue(event.getBody(),
+				RequestFullyApprovedBody.class);
 
-      requestFullyApprovedDomainService.on(handleRequestFullyApprovedCommand);
+		final HandleRequestFullyApprovedCommand handleRequestFullyApprovedCommand = HandleRequestFullyApprovedCommand
+				.builder().header(event.getHeader()).body(requestFullyApprovedCommandBody).errors(event.getErrors())
+				.build();
+		log.info("HandleRequestFullyApprovedCommand created: {}", handleRequestFullyApprovedCommand);
 
-    } catch (JsonProcessingException exception) {
+		requestFullyApprovedDomainService.on(handleRequestFullyApprovedCommand);
 
-      log.error("Exception while mapping eventBody to Command: {}", exception);
-    }
-  }
+	}
 }

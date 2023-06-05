@@ -1,5 +1,7 @@
 package com.fms.common;
 
+import com.fasterxml.jackson.databind.JsonNode;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,7 +13,7 @@ public class BaseEvent {
 
 	Header header;
 
-	Object body;
+	JsonNode body;
 
 	ErrorList errors;
 }

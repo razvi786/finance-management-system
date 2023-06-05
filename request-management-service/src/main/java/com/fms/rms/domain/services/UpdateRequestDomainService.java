@@ -70,7 +70,7 @@ public class UpdateRequestDomainService {
 		updateRequestHeader.setEventDateTime(LocalDateTime.now());
 		RequestChanged requestChangedEvent = mapEntityToEvent(requestUpdated);
 		String body = mapper.writeValueAsString(requestChangedEvent);
-		BaseEvent rmsEvent = new BaseEvent(updateRequestHeader, body, null);
+		BaseEvent rmsEvent = new BaseEvent(updateRequestHeader, mapper.valueToTree(body), null);
 		eventPublisher.publishEvent(rmsEvent);
 		log.debug("Published Event with eventName: {} and requestUUid: {}", updateRequestHeader.getEventName(),
 				requestChangedEvent.getRequestUuid());

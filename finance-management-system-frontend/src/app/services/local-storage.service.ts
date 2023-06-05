@@ -18,12 +18,12 @@ export class LocalStorageService {
 
   loginUser(user: User) {
     localStorage.setItem('userId', user.userId.toString());
-    localStorage.setItem('roleName', user.roleName);
+    localStorage.setItem('roleName', user.role.roleName);
     localStorage.setItem('name', user.name);
     // localStorage.setItem('userData', JSON.stringify(user));
   }
 
-  resetPassword(email: String){
+  resetPassword(email: String) {
     localStorage.setItem('email', email.toString());
   }
 

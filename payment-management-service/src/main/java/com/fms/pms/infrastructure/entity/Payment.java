@@ -8,7 +8,7 @@ import org.springframework.data.annotation.Version;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-import com.fms.pms.enums.Status;
+import com.fms.common.enums.PaymentStatus;
 
 import lombok.Data;
 
@@ -16,29 +16,38 @@ import lombok.Data;
 @Document(collection = "payment")
 public class Payment {
 
-  @Id
-  @Field(name = "payment_uuid")
-  private UUID paymentUuid;
+	@Id
+	@Field(name = "payment_uuid")
+	private UUID paymentUuid;
 
-  @Field(name = "vendor_id")
-  private int vendorId;
+	@Field(name = "request_uuid")
+	private UUID requestUuid;
 
-  @Field(name = "amount")
-  private double amount;
+	@Field(name = "project_id")
+	private int projectId;
 
-  @Field(name = "status")
-  private Status status;
+	@Field(name = "vendor_id")
+	private int vendorId;
 
-  @Field(name = "transaction_id")
-  private String transactionId;
+	@Field(name = "user_id")
+	private int userId;
 
-  @Field(name = "created_datetime")
-  private OffsetDateTime createdDatetime;
+	@Field(name = "amount")
+	private double amount;
 
-  @Field(name = "updated_datetime")
-  private OffsetDateTime updatedDatetime;
+	@Field(name = "status")
+	private PaymentStatus status;
 
-  @Version
-  @Field(name = "concurrency_version")
-  private Integer concurrencyVersion;
+	@Field(name = "transaction_id")
+	private String transactionId;
+
+	@Field(name = "created_datetime")
+	private OffsetDateTime createdDatetime;
+
+	@Field(name = "updated_datetime")
+	private OffsetDateTime updatedDatetime;
+
+	@Version
+	@Field(name = "concurrency_version")
+	private Integer concurrencyVersion;
 }

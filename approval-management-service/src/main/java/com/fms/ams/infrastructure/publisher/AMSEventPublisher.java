@@ -36,14 +36,15 @@ public class AMSEventPublisher {
 	@TransactionalEventListener
 	public PublishResult publishEvent(final BaseEvent event) throws JsonProcessingException {
 
-		log.debug("Inside AMSEventPublisher.publishEvent() with event: {}", event);
+		log.info("Inside AMSEventPublisher.publishEvent() with event: {}", event);
 
 		try {
-			final String message = mapper.writeValueAsString(event.getBody());
+			final String message = mapper.writeValueAsString(event);
 			log.debug("Mapped message to String: {}", message);
 
 			final Header header = event.getHeader();
 			final Map<String, MessageAttributeValue> messageAttributes = getMessageAttributes(header);
+			log.info("Message attributes added: {}", messageAttributes);
 
 			final PublishRequest publishRequest = new PublishRequest().withMessageAttributes(messageAttributes)
 					.withTopicArn(outboundTopicArn).withMessage(message);

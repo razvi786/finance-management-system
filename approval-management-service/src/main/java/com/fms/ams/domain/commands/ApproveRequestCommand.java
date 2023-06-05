@@ -1,6 +1,7 @@
 package com.fms.ams.domain.commands;
 
 import com.fms.ams.domain.models.ApproveRequestModel;
+import com.fms.common.BaseCommand;
 import com.fms.common.ErrorList;
 import com.fms.common.Header;
 

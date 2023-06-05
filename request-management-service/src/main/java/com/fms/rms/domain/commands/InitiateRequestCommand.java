@@ -1,5 +1,6 @@
 package com.fms.rms.domain.commands;
 
+import com.fms.common.BaseCommand;
 import com.fms.common.ErrorList;
 import com.fms.common.Header;
 import com.fms.common.events.CreateRequest;

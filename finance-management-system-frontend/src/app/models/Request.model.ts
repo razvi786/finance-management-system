@@ -8,6 +8,8 @@ export class Request {
   description: string = '';
   projectId: number = 0;
   projectName: string = '';
+  vendorId: number = 0;
+  vendorName: string = '';
   createdDatetime: Date = new Date();
   updatedDatetime: Date = new Date();
   concurrencyVersion: number = 0;

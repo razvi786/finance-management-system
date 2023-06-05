@@ -77,7 +77,7 @@ public class RequestRestController {
 
 	@PutMapping("/request/{requestUuid}")
 	@Transactional
-	public ResponseEntity<Request> updateProject(@PathVariable String requestUuid, @RequestBody Request request) {
+	public ResponseEntity<Request> updateRequest(@PathVariable String requestUuid, @RequestBody Request request) {
 		try {
 			ResponseEntity<Request> response = restTemplate.exchange(rmsEndpoint + "/request/" + requestUuid,
 					HttpMethod.PUT, new HttpEntity<Request>(request), Request.class);
@@ -94,7 +94,7 @@ public class RequestRestController {
 
 	@PostMapping("/request")
 	@Transactional
-	public ResponseEntity<Request> createRole(@RequestBody Request request) {
+	public ResponseEntity<Request> createRequest(@RequestBody Request request) {
 		try {
 			ResponseEntity<Request> response = restTemplate.exchange(rmsEndpoint + "/request", HttpMethod.POST,
 					new HttpEntity<Request>(request), Request.class);
@@ -127,4 +127,5 @@ public class RequestRestController {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+
 }

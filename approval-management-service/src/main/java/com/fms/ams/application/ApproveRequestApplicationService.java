@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fms.ams.AMSConstants;
 import com.fms.ams.domain.commands.ApproveRequestCommand;
 import com.fms.ams.domain.models.ApproveRequestModel;
@@ -15,6 +16,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 public class ApproveRequestApplicationService implements IApplicationService {
+
+	@Autowired
+	private ObjectMapper mapper;
 
 	@Autowired
 	private ApproveRequestDomainService approveRequestDomainService;
@@ -29,10 +33,11 @@ public class ApproveRequestApplicationService implements IApplicationService {
 	@Override
 	public void process(BaseEvent event) {
 		try {
+			ApproveRequestModel approveRequestCommandBody = mapper.treeToValue(event.getBody(),
+					ApproveRequestModel.class);
 
 			final ApproveRequestCommand approveRequestCommand = ApproveRequestCommand.builder()
-					.header(event.getHeader()).body((ApproveRequestModel) event.getBody()).errors(event.getErrors())
-					.build();
+					.header(event.getHeader()).body(approveRequestCommandBody).errors(event.getErrors()).build();
 			log.debug("Approve Request Command created: {}", approveRequestCommand);
 
 			approveRequestDomainService.on(approveRequestCommand);

@@ -38,6 +38,9 @@ public class Request {
 	@Field(name = "project_id")
 	private int projectId;
 
+	@Field(name = "vendor_id")
+	private int vendorId;
+
 	@Field(name = "created_datetime")
 	private OffsetDateTime createdDatetime;
 

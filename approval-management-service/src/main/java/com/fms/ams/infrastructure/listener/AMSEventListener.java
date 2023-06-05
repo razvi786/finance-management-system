@@ -11,7 +11,7 @@ import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fms.ams.application.IApplicationService;
 import com.fms.common.BaseEvent;
@@ -33,7 +33,9 @@ public class AMSEventListener {
 
 		log.info("Received Message: {}", incomingMessage);
 
-		final BaseEvent event = mapper.readValue(incomingMessage, BaseEvent.class);
+		JsonNode jsonNode = mapper.readTree(incomingMessage);
+
+		final BaseEvent event = mapper.convertValue(jsonNode, BaseEvent.class);
 
 		log.info("Received {} event with header: {} body: {} and errors: {}", event.getHeader().getEventName(),
 				event.getHeader(), event.getBody(), event.getErrors());

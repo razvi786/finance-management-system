@@ -46,6 +46,9 @@ import { DatePipe } from '@angular/common';
 import { LogoutComponent } from './logout/logout.component';
 import { LoggingInterceptor } from './interceptors/logging.interceptor';
 import { AssignApproverLevelComponent } from './approver-level/assign-approver-level/assign-approver-level.component';
+import { FormsModule } from '@angular/forms';
+import { AllPaymentsComponent } from './payments/all-payments/all-payments.component';
+import { ViewPaymentComponent } from './payments/view-payment/view-payment.component';
 
 @NgModule({
   declarations: [
@@ -75,6 +78,8 @@ import { AssignApproverLevelComponent } from './approver-level/assign-approver-l
     ViewVendorComponent,
     LogoutComponent,
     AssignApproverLevelComponent,
+    AllPaymentsComponent,
+    ViewPaymentComponent,
   ],
   imports: [
     BrowserModule,
@@ -96,6 +101,7 @@ import { AssignApproverLevelComponent } from './approver-level/assign-approver-l
     DataTablesModule,
     MatDatepickerModule,
     MatTooltipModule,
+    FormsModule,
   ],
   providers: [DatePipe, LoggingInterceptor],
   bootstrap: [AppComponent],

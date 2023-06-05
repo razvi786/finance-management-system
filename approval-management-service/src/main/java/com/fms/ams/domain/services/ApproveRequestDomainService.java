@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fms.ams.AMSConstants;
 import com.fms.ams.domain.commands.ApproveRequestCommand;
 import com.fms.ams.domain.models.ApproveRequestModel;
@@ -24,6 +25,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 public class ApproveRequestDomainService {
+
+	@Autowired
+	private ObjectMapper mapper;
 
 	@Autowired
 	private ApplicationEventPublisher eventPublisher;
@@ -64,7 +68,7 @@ public class ApproveRequestDomainService {
 		approveRequestHeader.setEventFrom(AMSConstants.APPROVAL_MANAGEMENT_SERVICE);
 		approveRequestHeader.setEventDateTime(LocalDateTime.now());
 		RequestApprovedEvent requestApprovedEvent = mapEntityToEvent(approval);
-		BaseEvent amsEvent = new BaseEvent(approveRequestHeader, requestApprovedEvent, null);
+		BaseEvent amsEvent = new BaseEvent(approveRequestHeader, mapper.valueToTree(requestApprovedEvent), null);
 		eventPublisher.publishEvent(amsEvent);
 		log.debug("Published Event with eventName: {} and approvalUUid: {}", approveRequestHeader.getEventName(),
 				requestApprovedEvent.getRequestUuid());

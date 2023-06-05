@@ -28,6 +28,10 @@ public class Request {
 
 	private String projectName;
 
+	private int vendorId;
+
+	private String vendorName;
+
 	private OffsetDateTime createdDatetime;
 
 	private OffsetDateTime updatedDatetime;

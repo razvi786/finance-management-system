@@ -67,7 +67,7 @@ public class InitiateRequestDomainService {
 		initiateRequestHeader.setEventDateTime(LocalDateTime.now());
 		RequestChanged requestChangedEvent = mapEntityToEvent(requestCreated);
 		String body = mapper.writeValueAsString(requestChangedEvent);
-		BaseEvent rmsEvent = new BaseEvent(initiateRequestHeader, body, null);
+		BaseEvent rmsEvent = new BaseEvent(initiateRequestHeader, mapper.valueToTree(body), null);
 		eventPublisher.publishEvent(rmsEvent);
 		log.debug("Published Event with eventName: {} and requestUUid: {}", initiateRequestHeader.getEventName(),
 				requestChangedEvent.getRequestUuid());

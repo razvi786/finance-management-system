@@ -1,0 +1,47 @@
+<div class="h2 p-3">
+  <span class="text-uppercase">All Payments</span>
+</div>
+
+<table
+  class="table table-bordered table-striped table-hover"
+  datatable
+  [dtOptions]="dtOptions"
+  class="row-border hover"
+>
+  <thead>
+    <tr>
+      <th>S. No</th>
+      <th>Project Name</th>
+      <th>Vendor Name</th>
+      <th>Amount</th>
+      <th>Assigned To</th>
+      <th>Status</th>
+      <th>Created Date</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody *ngIf="payments?.length != 0">
+    <tr *ngFor="let payment of payments; let i = index">
+      <td>{{ i + 1 }}</td>
+      <td>{{ payment.projectName }}</td>
+      <td>{{ payment.vendorName }}</td>
+      <td>{{ payment.amount }}</td>
+      <td>{{ payment.userName }}</td>
+      <td>{{ payment.status }}</td>
+      <td>{{ payment.createdDatetime | date : "fullDate" }}</td>
+      <td>
+        <button
+          [routerLink]="['view', payment.paymentUuid]"
+          class="btn btn-primary mx-1"
+        >
+          View
+        </button>
+      </td>
+    </tr>
+  </tbody>
+  <tbody *ngIf="payments?.length == 0">
+    <tr>
+      <td colspan="7" class="text-center">No Payments found</td>
+    </tr>
+  </tbody>
+</table>

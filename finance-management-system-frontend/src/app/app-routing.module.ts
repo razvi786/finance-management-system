@@ -20,6 +20,8 @@ import { CreateVendorComponent } from './vendors/create-vendor/create-vendor.com
 import { UpdateVendorComponent } from './vendors/update-vendor/update-vendor.component';
 import { ViewVendorComponent } from './vendors/view-vendor/view-vendor.component';
 import { AssignApproverLevelComponent } from './approver-level/assign-approver-level/assign-approver-level.component';
+import { AllPaymentsComponent } from './payments/all-payments/all-payments.component';
+import { ViewPaymentComponent } from './payments/view-payment/view-payment.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -72,6 +74,16 @@ const routes: Routes = [
   {
     path: 'vendors',
     component: AllVendorsComponent,
+    canActivate: [AuthenticationGuard],
+  },
+  {
+    path: 'payments/view/:payment_id',
+    component: ViewPaymentComponent,
+    canActivate: [AuthenticationGuard],
+  },
+  {
+    path: 'payments',
+    component: AllPaymentsComponent,
     canActivate: [AuthenticationGuard],
   },
   { path: 'forgot-password', component: ForgotPasswordComponent },

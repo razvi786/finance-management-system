@@ -1,4 +1,4 @@
-package com.fms.pms.events;
+package com.fms.common.events;
 
 import java.util.UUID;
 

@@ -79,6 +79,7 @@ public class RMSRestController {
 			createRequest.setAmount(request.getAmount());
 			createRequest.setDescription(request.getDescription());
 			createRequest.setProjectId(request.getProjectId());
+			createRequest.setVendorId(request.getVendorId());
 			Request savedRequest = requestRepository.save(createRequest);
 			return new ResponseEntity<>(savedRequest, HttpStatus.CREATED);
 		} catch (Exception e) {
@@ -100,6 +101,7 @@ public class RMSRestController {
 				existingRequest.setAmount(request.getAmount());
 				existingRequest.setDescription(request.getDescription());
 				existingRequest.setProjectId(request.getProjectId());
+				existingRequest.setVendorId(request.getVendorId());
 				final Request updatedRequest = requestRepository.save(existingRequest);
 				return new ResponseEntity<>(updatedRequest, HttpStatus.OK);
 			} else {

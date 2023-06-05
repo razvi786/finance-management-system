@@ -33,4 +33,21 @@ export class ApprovalService {
       this.path + '/' + requestUuid + '/approvals'
     );
   }
+
+  approveRequest(
+    requestUuid: string,
+    approval: Approval
+  ): Observable<Approval> {
+    return this.http.put<Approval>(
+      this.path + '/' + requestUuid + '/approve-request',
+      approval
+    );
+  }
+
+  rejectRequest(requestUuid: string, approval: Approval): Observable<Approval> {
+    return this.http.put<Approval>(
+      this.path + '/' + requestUuid + '/reject-request',
+      approval
+    );
+  }
 }

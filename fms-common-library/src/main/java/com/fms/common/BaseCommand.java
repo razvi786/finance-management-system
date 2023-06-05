@@ -1,7 +1,4 @@
-package com.fms.pms.domain.commands;
-
-import com.fms.pms.models.Errors;
-import com.fms.pms.models.Header;
+package com.fms.common;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class BaseCommand {
 
-  private Header header;
+	private Header header;
 
-  private Errors errors;
+	private ErrorList errors;
 }
