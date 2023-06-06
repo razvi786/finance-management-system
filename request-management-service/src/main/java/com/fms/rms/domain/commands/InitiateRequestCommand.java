@@ -1,8 +1,9 @@
 package com.fms.rms.domain.commands;
 
-import com.fms.rms.domain.models.CreateRequestModel;
-import com.fms.rms.models.ErrorList;
-import com.fms.rms.models.Header;
+import com.fms.common.BaseCommand;
+import com.fms.common.ErrorList;
+import com.fms.common.Header;
+import com.fms.common.events.CreateRequest;
 
 import lombok.Builder;
 import lombok.Data;
@@ -14,10 +15,10 @@ import lombok.ToString;
 @ToString(callSuper = true)
 public class InitiateRequestCommand extends BaseCommand {
 
-	private CreateRequestModel body;
+	private CreateRequest body;
 
 	@Builder
-	public InitiateRequestCommand(final Header header, final CreateRequestModel body, final ErrorList errors) {
+	public InitiateRequestCommand(final Header header, final CreateRequest body, final ErrorList errors) {
 		super(header, errors);
 		this.body = body;
 	}

@@ -1,13 +1,13 @@
 export class Vendor {
-  vendor_id: number = 0;
-  vendor_name: string = '';
-  account_holder_name: string = '';
-  account_number: string = '';
-  ifsc_code: string = '';
-  bank_name: string = '';
+  vendorId: number = 0;
+  vendorName: string = '';
+  accountHolderName: string = '';
+  accountNumber: string = '';
+  ifscCode: string = '';
+  bankName: string = '';
   branch: string = '';
-  upi_id: string = '';
-  created_datetime: Date = new Date();
-  updated_datetime: Date = new Date();
-  concurrency_version: number = 0;
+  upiId: string = '';
+  createdDatetime: Date = new Date();
+  updatedDatetime: Date = new Date();
+  concurrencyVersion: number = 0;
 }

@@ -20,6 +20,7 @@ export class AllRequestsComponent implements OnInit {
   ngOnInit(): void {
     this.requestService.getAllRequests().subscribe((data) => {
       this.requests = this.sortAscendingOrder(data);
+      console.log('Requests : ', this.requests);
     });
     this.dtOptions = {
       pagingType: 'full_numbers',
@@ -30,8 +31,8 @@ export class AllRequestsComponent implements OnInit {
   sortAscendingOrder(requests: Request[]): Request[] {
     return requests.sort(
       (request1: Request, request2: Request) =>
-        new Date(request2.created_datetime).getTime() -
-        new Date(request1.created_datetime).getTime()
+        new Date(request2.createdDatetime).getTime() -
+        new Date(request1.createdDatetime).getTime()
     );
   }
 }

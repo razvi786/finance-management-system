@@ -1,0 +1,31 @@
+<div class="row d-flex align-items-center justify-content-center h-100 h2 mb-3">
+  Approver Levels - {{ project.projectName }}
+</div>
+
+<div class="form-group pb-5">
+  <div class="input-group mb-2" *ngFor="let approverLevel of approverLevels">
+    <span class="input-group-text">Level {{ approverLevel.level }}</span>
+    <select
+      #selectedApproverLevel
+      class="form-control bg-white"
+      (change)="updateApprover(approverLevel, selectedApproverLevel.value)"
+    >
+      <option
+        *ngFor="let user of users"
+        [value]="user.userId"
+        [selected]="approverLevel.approver.userId === user.userId"
+      >
+        {{ user.name }}
+      </option>
+      <option selected disabled value="-1">Select Approver</option>
+    </select>
+  </div>
+</div>
+
+<button (click)="addNewApproverLevel()" class="btn btn-warning btn mx-2">
+  Add New Approver Level
+</button>
+
+<button (click)="deleteLatestApproverLevel()" class="btn btn-danger btn">
+  Delete Latest Approver Level
+</button>

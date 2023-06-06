@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Vendor } from 'src/app/models/Vendor.model';
+import { VendorService } from 'src/app/services/vendor.service';
 
 @Component({
   selector: 'app-view-vendor',
@@ -8,7 +9,10 @@ import { Vendor } from 'src/app/models/Vendor.model';
   styleUrls: ['./view-vendor.component.css'],
 })
 export class ViewVendorComponent implements OnInit {
-  constructor(private activatedRoute: ActivatedRoute) {}
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private vendorService: VendorService
+  ) {}
 
   vendorId: string = '';
 
@@ -16,21 +20,13 @@ export class ViewVendorComponent implements OnInit {
 
   ngOnInit(): void {
     let vendorId = this.activatedRoute.snapshot.paramMap.get('vendor_id');
+    console.log('vendorId:', vendorId);
     if (vendorId != null) {
       this.vendorId = vendorId;
+      this.vendorService.getVendorById(this.vendorId).subscribe((data) => {
+        this.vendor = data;
+        console.log('Vendor : ', this.vendor);
+      });
     }
-
-    let vendor = new Vendor();
-    vendor.vendor_id = +this.vendorId;
-    vendor.vendor_name = 'Mr. Razvi';
-    vendor.account_holder_name = 'Razvi';
-    vendor.account_number = '1234567890';
-    vendor.ifsc_code = 'HYD123';
-    vendor.bank_name = 'HDFC Bank';
-    vendor.branch = 'Hyderabad';
-    vendor.upi_id = 'Razvi123@okhdfc';
-    vendor.created_datetime = new Date();
-
-    this.vendor = vendor;
   }
 }

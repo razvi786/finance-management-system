@@ -19,8 +19,11 @@
               (change)="updateRemainingBudget()"
             >
               <option value="" disabled selected>Select Project</option>
-              <option *ngFor="let project of projects" [value]="project.id">
-                {{ project.name }}
+              <option
+                *ngFor="let project of projects"
+                [value]="project.projectId"
+              >
+                {{ project.projectName }}
               </option>
             </select>
             <label class="form-label" for="project-id">Project</label>
@@ -46,8 +49,25 @@
               id="amount"
               class="form-control form-control-lg"
               formControlName="amount"
+              (change)="updateRemainingBudget()"
             />
             <label class="form-label" for="amount">Amount (&#8377;)</label>
+          </div>
+
+          <!-- Vendor input -->
+          <div class="form-outline mb-4">
+            <select
+              id="vendor-id"
+              class="form-control form-control-lg"
+              formControlName="vendorId"
+              (change)="updateSelectedVendor()"
+            >
+              <option value="" disabled selected>Select Vendor</option>
+              <option *ngFor="let vendor of vendors" [value]="vendor.vendorId">
+                {{ vendor.vendorName }}
+              </option>
+            </select>
+            <label class="form-label" for="vendor-id">Vendor</label>
           </div>
 
           <!-- Description input -->
@@ -69,6 +89,7 @@
               id="deadline"
               class="form-control form-control-lg"
               formControlName="deadline"
+              [min]="todaysDate"
             />
             <label class="form-label" for="deadline">Deadline</label>
           </div>

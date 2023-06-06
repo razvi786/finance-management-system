@@ -35,9 +35,11 @@ export class LoginComponent implements OnInit {
         controls['password'].value
       )
       .subscribe((data) => {
-        if (data.length > 0) {
-          this.localStorageService.loginUser(data[0]);
-          this.router.navigate(['/home']);
+        if (data!=null) {
+          console.log(data);
+          this.localStorageService.loginUser(data);
+          console.log(data.userId);
+          this.router.navigate(['/home'])
         } else {
           alert('Invalid Email / Password');
         }

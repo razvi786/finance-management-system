@@ -1,0 +1,40 @@
+spring:
+   main: 
+      web-application-type: reactive
+   application:
+      name: finance-management-service-gateway
+   cloud:
+      gateway:
+         discovery:
+            locator:
+               enabled: true
+         routes:
+            - id: entities
+              uri: lb://entity-management-service
+              predicates:
+               - Path=/api/ems/**
+server:
+   port: 5006
+eureka:
+   client:
+      serviceURL:
+         defaultZone: http://localhost:8761/eureka
+   instance:
+      preferIpAddress:
+         true
+management:
+   security:
+      enabled: false
+   endpoint:
+      metrics:
+         enabled: true
+      prometheus:
+         enabled: true
+   metrics:
+      export:
+         prometheus:
+            enabled: true
+   endpoints:
+      web:
+         exposure:
+            include: '*'

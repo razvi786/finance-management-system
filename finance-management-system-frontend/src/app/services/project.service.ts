@@ -8,7 +8,7 @@ import { environment } from './../../environments/environment';
   providedIn: 'root',
 })
 export class ProjectService {
-  path: string = environment.apiUrl;
+  path: string = environment.apiUrl + '/ems';
 
   projectsPath: string = this.path + '/projects';
 
@@ -18,7 +18,15 @@ export class ProjectService {
     return this.http.get<Project[]>(this.projectsPath);
   }
 
-  getProjectById(id: number): Observable<Project> {
-    return this.http.get<Project>(this.projectsPath + '/' + id);
+  getProjectById(id: string): Observable<Project> {
+    return this.http.get<Project>(this.path + '/project/' + id);
+  }
+
+  createProject(project: Project): Observable<Project> {
+    return this.http.post<Project>(this.path + '/project', project);
+  }
+
+  updateProject(id: string, project: Project): Observable<Project> {
+    return this.http.put<Project>(this.path + '/project/' + id, project);
   }
 }

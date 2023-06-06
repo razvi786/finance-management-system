@@ -1,0 +1,84 @@
+<div class="form-group pb-5">
+  <div class="input-group mb-2">
+    <span class="input-group-text">Project Id</span>
+    <input
+      type="text"
+      class="form-control bg-white"
+      placeholder="Project Id"
+      [value]="project.projectId"
+      disabled
+    />
+  </div>
+  <div class="input-group mb-2">
+    <span class="input-group-text">Project Name</span>
+    <input
+      type="text"
+      class="form-control bg-white"
+      placeholder="Project Name"
+      [value]="project.projectName"
+      disabled
+    />
+  </div>
+  <div class="input-group mb-2">
+    <span class="input-group-text">Description</span>
+    <input
+      type="text"
+      class="form-control bg-white"
+      placeholder="Project Description"
+      [value]="project.description"
+      disabled
+    />
+  </div>
+  <div class="input-group mb-2">
+    <span class="input-group-text">User Id</span>
+    <input
+      type="text"
+      class="form-control bg-white"
+      placeholder="User Id"
+      [value]="project.user.userId"
+      disabled
+    />
+  </div>
+  <div class="input-group mb-2">
+    <span class="input-group-text">User Name</span>
+    <input
+      type="text"
+      class="form-control bg-white"
+      placeholder="User Name"
+      [value]="project.user.name"
+      disabled
+    />
+  </div>
+  <div class="input-group mb-2">
+    <span class="input-group-text">Budget (&#8377;)</span>
+    <input
+      type="number"
+      class="form-control bg-white"
+      placeholder="Budget"
+      [value]="project.budget"
+      disabled
+    />
+  </div>
+  <div class="input-group mb-2">
+    <span class="input-group-text">Remaining Budget (&#8377;)</span>
+    <input
+      type="number"
+      class="form-control bg-white"
+      placeholder="Remaining Budget"
+      [value]="project.remainingBudget"
+      disabled
+    />
+  </div>
+  <div class="input-group mb-2">
+    <span class="input-group-text">Created Date</span>
+    <input
+      type="text"
+      class="form-control bg-white"
+      [value]="project.createdDatetime | date : 'fullDate'"
+      disabled
+    />
+  </div>
+  <button (click)="redirectToApproverLevel()" class="btn btn-warning btn">
+    Assign Approver Levels
+  </button>
+</div>

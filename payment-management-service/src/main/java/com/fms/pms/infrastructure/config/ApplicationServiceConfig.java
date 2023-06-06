@@ -10,24 +10,24 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.fms.pms.application.IApplicationService;
+import com.fms.common.IApplicationService;
 
 @Configuration
 public class ApplicationServiceConfig {
 
-  @Value("${aws.region}")
-  private String region;
+	@Value("${aws.region}")
+	private String region;
 
-  List<IApplicationService> applicationServices;
+	List<IApplicationService> applicationServices;
 
-  @Autowired
-  public ApplicationServiceConfig(final List<IApplicationService> applicationServices) {
-    this.applicationServices = applicationServices;
-  }
+	@Autowired
+	public ApplicationServiceConfig(final List<IApplicationService> applicationServices) {
+		this.applicationServices = applicationServices;
+	}
 
-  @Bean(name = "applicationServiceMap")
-  public Map<String, IApplicationService> getApplciationServiceMap() {
-    return applicationServices.stream()
-        .collect(Collectors.toMap(IApplicationService::getServiceIdentifier, Function.identity()));
-  }
+	@Bean(name = "applicationServiceMap")
+	public Map<String, IApplicationService> getApplciationServiceMap() {
+		return applicationServices.stream()
+				.collect(Collectors.toMap(IApplicationService::getServiceIdentifier, Function.identity()));
+	}
 }

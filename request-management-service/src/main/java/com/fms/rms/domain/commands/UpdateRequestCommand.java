@@ -1,8 +1,9 @@
 package com.fms.rms.domain.commands;
 
-import com.fms.rms.domain.models.UpdateRequestModel;
-import com.fms.rms.models.ErrorList;
-import com.fms.rms.models.Header;
+import com.fms.common.BaseCommand;
+import com.fms.common.ErrorList;
+import com.fms.common.Header;
+import com.fms.common.events.UpdateRequest;
 
 import lombok.Builder;
 import lombok.Data;
@@ -14,10 +15,10 @@ import lombok.ToString;
 @ToString(callSuper = true)
 public class UpdateRequestCommand extends BaseCommand {
 
-	private UpdateRequestModel body;
+	private UpdateRequest body;
 
 	@Builder
-	public UpdateRequestCommand(final Header header, final UpdateRequestModel body, final ErrorList errors) {
+	public UpdateRequestCommand(final Header header, final UpdateRequest body, final ErrorList errors) {
 		super(header, errors);
 		this.body = body;
 	}

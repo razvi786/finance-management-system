@@ -1,0 +1,59 @@
+<div class="h1 p-3">
+  <span class="text-uppercase">All Projects</span>
+  <div class="d-flex justify-content-end">
+    <button class="btn btn-secondary" routerLink="add">
+      <i class="fa fa-plus"></i>
+      Create New Project
+    </button>
+  </div>
+</div>
+
+<table
+  class="table table-bordered table-striped table-hover"
+  datatable
+  [dtOptions]="dtOptions"
+  class="row-border hover"
+>
+  <thead>
+    <tr>
+      <th>S. No</th>
+      <th>Project Name</th>
+      <th>Description</th>
+      <th>Created By</th>
+      <th>Total Budget</th>
+      <th>Remaining Budget</th>
+      <th>Created At</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody *ngIf="projects?.length != 0">
+    <tr *ngFor="let project of projects; let i = index">
+      <td>{{ i + 1 }}</td>
+      <td>{{ project.projectName }}</td>
+      <td>{{ project.description }}</td>
+      <td>{{ project.user.name }}</td>
+      <td>{{ project.budget }}</td>
+      <td>{{ project.remainingBudget }}</td>
+      <td>{{ project.createdDatetime | date : "fullDate" }}</td>
+      <td>
+        <button
+          [routerLink]="['view', project.projectId]"
+          class="btn btn-primary mx-1"
+        >
+          View
+        </button>
+        <button
+          [routerLink]="['edit', project.projectId]"
+          class="btn btn-warning mx-1"
+        >
+          Edit
+        </button>
+      </td>
+    </tr>
+  </tbody>
+  <tbody *ngIf="projects?.length == 0">
+    <tr>
+      <td colspan="7" class="text-center">No Projects found</td>
+    </tr>
+  </tbody>
+</table>

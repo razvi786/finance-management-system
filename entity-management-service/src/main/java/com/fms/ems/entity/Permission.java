@@ -28,7 +28,7 @@ public class Permission {
 	private int permissionId;
 
 	@Column(name = "name")
-	private String name;
+	private String permissionName;
 
 	@CreationTimestamp
 	@Column(name = "created_datetime")

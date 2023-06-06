@@ -1,5 +1,5 @@
 <div class="row d-flex align-items-center justify-content-center h-100 h2 mb-3">
-  Vendor - {{ vendor.vendor_name }}
+  Vendor - {{ vendor.vendorName }}
 </div>
 <div class="form-group pb-5">
   <div class="input-group mb-2">
@@ -7,7 +7,7 @@
     <input
       type="text"
       class="form-control bg-white"
-      [value]="vendor.vendor_id"
+      [value]="vendor.vendorId"
       disabled
     />
   </div>
@@ -16,7 +16,7 @@
     <input
       type="text"
       class="form-control bg-white"
-      [value]="vendor.vendor_name"
+      [value]="vendor.vendorName"
       disabled
     />
   </div>
@@ -25,7 +25,7 @@
     <input
       type="text"
       class="form-control bg-white"
-      [value]="vendor.account_holder_name"
+      [value]="vendor.accountHolderName"
       disabled
     />
   </div>
@@ -34,7 +34,7 @@
     <input
       type="text"
       class="form-control bg-white"
-      [value]="vendor.account_number"
+      [value]="vendor.accountNumber"
       disabled
     />
   </div>
@@ -43,7 +43,7 @@
     <input
       type="number"
       class="form-control bg-white"
-      [value]="vendor.ifsc_code"
+      [value]="vendor.ifscCode"
       disabled
     />
   </div>
@@ -52,7 +52,7 @@
     <input
       type="text"
       class="form-control bg-white"
-      [value]="vendor.bank_name"
+      [value]="vendor.bankName"
       disabled
     />
   </div>
@@ -70,7 +70,7 @@
     <input
       type="text"
       class="form-control bg-white"
-      [value]="vendor.upi_id"
+      [value]="vendor.upiId"
       disabled
     />
   </div>
@@ -79,7 +79,7 @@
     <input
       type="text"
       class="form-control bg-white"
-      [value]="vendor.created_datetime | date: 'fullDate'"
+      [value]="vendor.createdDatetime | date : 'fullDate'"
       disabled
     />
   </div>

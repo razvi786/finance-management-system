@@ -32,7 +32,7 @@ public class Role {
   private int roleId;
 
   @Column(name = "name")
-  private String name;
+  private String roleName;
 
   @ManyToMany
   @JoinTable(

@@ -14,15 +14,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fms.pms.application.IApplicationService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fms.common.BaseEvent;
+import com.fms.common.Header;
+import com.fms.common.enums.PaymentStatus;
+import com.fms.common.events.PaymentInitiatedBody;
+import com.fms.common.events.RequestFullyApprovedBody;
 import com.fms.pms.domain.commands.HandleRequestFullyApprovedCommand;
-import com.fms.pms.enums.Status;
-import com.fms.pms.events.PaymentInitiatedBody;
-import com.fms.pms.events.RequestFullyApprovedBody;
 import com.fms.pms.infrastructure.entity.Payment;
 import com.fms.pms.infrastructure.repository.PaymentRepository;
-import com.fms.pms.models.FmsEvent;
-import com.fms.pms.models.Header;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -30,77 +30,75 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class RequestFullyApprovedDomainService {
 
-  @Autowired private PaymentRepository paymentRepository;
+	@Autowired
+	private PaymentRepository paymentRepository;
 
-  @Autowired private ApplicationEventPublisher eventPublisher;
+	@Autowired
+	private ApplicationEventPublisher eventPublisher;
 
-  @Transactional
-  public void on(final HandleRequestFullyApprovedCommand requestFullyApprovedCommand)
-      throws JsonProcessingException {
-    log.debug(
-        "Inside RequestFullyCompletedDomainService.on() method with Command: {}",
-        requestFullyApprovedCommand);
+	@Autowired
+	private ObjectMapper mapper;
 
-    final Payment payment = persistPaymentToDatabase(requestFullyApprovedCommand.getBody());
-    log.debug("Payment is inserted to database: {}", payment);
+	@Transactional
+	public void on(final HandleRequestFullyApprovedCommand requestFullyApprovedCommand) throws JsonProcessingException {
+		log.debug("Inside RequestFullyCompletedDomainService.on() method with Command: {}",
+				requestFullyApprovedCommand);
 
-    final FmsEvent paymentInitiatedEvent =
-        mapToPaymentInitiatedEvent(requestFullyApprovedCommand, payment);
+		final Payment payment = persistPaymentToDatabase(requestFullyApprovedCommand.getBody());
+		log.debug("Payment is inserted to database: {}", payment);
 
-    publishEventToOutboundTopic(paymentInitiatedEvent);
-  }
+		final BaseEvent paymentInitiatedEvent = mapToPaymentInitiatedEvent(requestFullyApprovedCommand, payment);
 
-  Payment persistPaymentToDatabase(final RequestFullyApprovedBody requestFullyApprovedBody) {
-    log.info("Inside persistPaymentToDatabase() method");
+		publishEventToOutboundTopic(paymentInitiatedEvent);
+	}
 
-    final Payment payment = new Payment();
-    payment.setPaymentUuid(UUID.randomUUID());
-    payment.setVendorId(requestFullyApprovedBody.getVendorId());
-    payment.setAmount(requestFullyApprovedBody.getRequestAmount());
-    payment.setStatus(Status.INITIATED);
-    payment.setCreatedDatetime(OffsetDateTime.now());
-    payment.setUpdatedDatetime(OffsetDateTime.now());
-    return paymentRepository.save(payment);
-  }
+	Payment persistPaymentToDatabase(final RequestFullyApprovedBody requestFullyApprovedBody) {
+		log.info("Inside persistPaymentToDatabase() method");
 
-  FmsEvent mapToPaymentInitiatedEvent(
-      final HandleRequestFullyApprovedCommand requestFullyApprovedCommand, final Payment payment)
-      throws JsonProcessingException {
-    log.info("Inside mapToPaymentInitiatedEvent() method");
+		final Payment payment = new Payment();
+		payment.setPaymentUuid(UUID.randomUUID());
+		payment.setVendorId(requestFullyApprovedBody.getVendorId());
+		payment.setAmount(requestFullyApprovedBody.getRequestAmount());
+		payment.setStatus(PaymentStatus.INITIATED);
+		payment.setCreatedDatetime(OffsetDateTime.now());
+		payment.setUpdatedDatetime(OffsetDateTime.now());
+		return paymentRepository.save(payment);
+	}
 
-    final Header header = requestFullyApprovedCommand.getHeader();
-    header.setEventName(PAYMENT_INITIATED);
-    header.setEventFrom(PAYMENT_MANAGEMENT_SERVICE);
-    header.setEventTo(null);
-    header.setEventDateTime(LocalDateTime.now());
+	BaseEvent mapToPaymentInitiatedEvent(final HandleRequestFullyApprovedCommand requestFullyApprovedCommand,
+			final Payment payment) throws JsonProcessingException {
+		log.info("Inside mapToPaymentInitiatedEvent() method");
 
-    final PaymentInitiatedBody paymentInitiatedBody = new PaymentInitiatedBody();
-    BeanUtils.copyProperties(requestFullyApprovedCommand.getBody(), paymentInitiatedBody);
-    paymentInitiatedBody.setPaymentUuid(payment.getPaymentUuid());
+		final Header header = requestFullyApprovedCommand.getHeader();
+		header.setEventName(PAYMENT_INITIATED);
+		header.setEventFrom(PAYMENT_MANAGEMENT_SERVICE);
+		header.setEventTo(null);
+		header.setEventDateTime(LocalDateTime.now());
 
-    FmsEvent paymentInitiatedEvent;
-    try {
-      final String body =
-          IApplicationService.getObjectMapper().writeValueAsString(paymentInitiatedBody);
+		final PaymentInitiatedBody paymentInitiatedBody = new PaymentInitiatedBody();
+		BeanUtils.copyProperties(requestFullyApprovedCommand.getBody(), paymentInitiatedBody);
+		paymentInitiatedBody.setPaymentUuid(payment.getPaymentUuid());
 
-      paymentInitiatedEvent = new FmsEvent(header, body, null);
-      log.debug(
-          "Mapped to {} event: {}",
-          paymentInitiatedEvent.getHeader().getEventName(),
-          paymentInitiatedEvent);
+		BaseEvent paymentInitiatedEvent;
+		try {
+			final String body = mapper.writeValueAsString(paymentInitiatedBody);
 
-    } catch (JsonProcessingException exception) {
+			paymentInitiatedEvent = new BaseEvent(header, mapper.valueToTree(body), null);
+			log.debug("Mapped to {} event: {}", paymentInitiatedEvent.getHeader().getEventName(),
+					paymentInitiatedEvent);
 
-      log.error("Exception while mapping publishing event body to String: {}", exception);
-      throw exception;
-    }
+		} catch (JsonProcessingException exception) {
 
-    return paymentInitiatedEvent;
-  }
+			log.error("Exception while mapping publishing event body to String: {}", exception);
+			throw exception;
+		}
 
-  void publishEventToOutboundTopic(final FmsEvent event) {
-    log.info("Inside publishEventToOutboundTopic() method");
+		return paymentInitiatedEvent;
+	}
 
-    eventPublisher.publishEvent(event);
-  }
+	void publishEventToOutboundTopic(final BaseEvent event) {
+		log.info("Inside publishEventToOutboundTopic() method");
+
+		eventPublisher.publishEvent(event);
+	}
 }

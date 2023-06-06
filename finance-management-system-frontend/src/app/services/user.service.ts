@@ -10,24 +10,32 @@ import { environment } from './../../environments/environment';
 export class UserService {
   path: string = environment.apiUrl;
 
-  usersPath: string = this.path + '/users';
+  usersPath: string = this.path + '/ems/user';
 
   constructor(private http: HttpClient) {}
+
+  getAllUsers(): Observable<User[]> {
+    return this.http.get<User[]>(this.usersPath);
+  }
 
   getUserById(id: string): Observable<User> {
     return this.http.get<User>(this.usersPath + '/' + id);
   }
 
-  getUserByEmailAndPassword(
-    email: string,
-    password: string
-  ): Observable<User[]> {
-    return this.http.get<User[]>(
-      this.usersPath + '?email=' + email + '&password=' + password
-    );
+  getUserByEmailAndPassword(email: string, password: string): Observable<User> {
+    return this.http.get<User>(this.usersPath + '/' + email + '/' + password);
+  }
+
+  getUserByEmail(email: string): Observable<User> {
+    return this.http.get<User>(this.path + '/ems/forgot-password/' + email);
   }
 
   createUser(user: User): Observable<User> {
     return this.http.post<User>(this.usersPath, user);
+  }
+
+  updateUser(user: User): Observable<User> {
+    console.log('User Update');
+    return this.http.put<User>(this.usersPath + '/' + user.userId, user);
   }
 }

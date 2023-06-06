@@ -18,6 +18,8 @@
     <tr>
       <th>S. No</th>
       <th>Raised By</th>
+      <th>Project Name</th>
+      <th>Amount</th>
       <th>Status</th>
       <th>Created Date</th>
       <th>Deadline Date</th>
@@ -27,19 +29,21 @@
   <tbody *ngIf="requests?.length != 0">
     <tr *ngFor="let request of requests; let i = index">
       <td>{{ i + 1 }}</td>
-      <td>{{ request.raised_by_name }}</td>
+      <td>{{ request.raisedByName }}</td>
+      <td>{{ request.projectName }}</td>
+      <td>{{ request.amount }}</td>
       <td>{{ request.status }}</td>
-      <td>{{ request.created_datetime | date: "fullDate" }}</td>
-      <td>{{ request.deadline_datetime | date: "fullDate" }}</td>
+      <td>{{ request.createdDatetime | date : "fullDate" }}</td>
+      <td>{{ request.deadlineDatetime | date : "fullDate" }}</td>
       <td>
         <button
-          [routerLink]="['view', request.id]"
+          [routerLink]="['view', request.requestUuid]"
           class="btn btn-primary mx-1"
         >
           View
         </button>
         <button
-          [routerLink]="['edit', request.id]"
+          [routerLink]="['edit', request.requestUuid]"
           class="btn btn-warning mx-1"
         >
           Edit

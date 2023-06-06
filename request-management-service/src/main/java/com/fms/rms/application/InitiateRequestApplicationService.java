@@ -4,11 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fms.common.BaseEvent;
+import com.fms.common.IApplicationService;
+import com.fms.common.events.CreateRequest;
 import com.fms.rms.constants.RMSConstants;
 import com.fms.rms.domain.commands.InitiateRequestCommand;
-import com.fms.rms.domain.models.CreateRequestModel;
 import com.fms.rms.domain.services.InitiateRequestDomainService;
-import com.fms.rms.models.RMSEvent;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -17,9 +19,12 @@ import lombok.extern.slf4j.Slf4j;
 public class InitiateRequestApplicationService implements IApplicationService {
 
 	@Autowired
+	private ObjectMapper mapper;
+
+	@Autowired
 	private InitiateRequestDomainService initiateRequestDomainService;
 
-	private static final String EVENT_NAME = RMSConstants.REQUEST_INITIATE_RESOURCE_TYPE;
+	private static final String EVENT_NAME = RMSConstants.REQUEST_INITIATED;
 
 	@Override
 	public String getServiceIdentifier() {
@@ -27,22 +32,17 @@ public class InitiateRequestApplicationService implements IApplicationService {
 	}
 
 	@Override
-	public void process(RMSEvent rmsEvent) throws JsonProcessingException {
-		try {
+	public void process(BaseEvent event) throws JsonProcessingException {
 
-			final CreateRequestModel requestBody = IApplicationService.getObjectMapper().readValue(rmsEvent.getBody(),
-					CreateRequestModel.class);
+		log.info("Inside InitiateRequestApplicationService.process() method with Event: {}", event);
 
-			final InitiateRequestCommand initiateRequestCommand = InitiateRequestCommand.builder()
-					.header(rmsEvent.getHeader()).body(requestBody).errors(rmsEvent.getErrors()).build();
-			log.debug("Initiate Request Command created: {}", initiateRequestCommand);
+		CreateRequest createRequestCommandBody = mapper.treeToValue(event.getBody(), CreateRequest.class);
 
-			initiateRequestDomainService.on(initiateRequestCommand);
+		final InitiateRequestCommand initiateRequestCommand = InitiateRequestCommand.builder().header(event.getHeader())
+				.body(createRequestCommandBody).errors(event.getErrors()).build();
+		log.info("Initiate Request Command created: {}", initiateRequestCommand);
 
-		} catch (JsonProcessingException exception) {
-
-			log.error("Exception while mapping eventBody to Command: {}", exception);
-		}
+		initiateRequestDomainService.on(initiateRequestCommand);
 	}
 
 }

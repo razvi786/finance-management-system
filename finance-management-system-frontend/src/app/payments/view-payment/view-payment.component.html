@@ -1,0 +1,86 @@
+<div class="row d-flex align-items-center justify-content-center h-100 h2 mb-3">
+  Payment - {{ payment.paymentUuid }}
+</div>
+<div class="form-group pb-5">
+  <div class="input-group mb-2">
+    <span class="input-group-text">Payment Id</span>
+    <input
+      type="text"
+      class="form-control bg-white"
+      [value]="payment.paymentUuid"
+      disabled
+    />
+  </div>
+  <div class="input-group mb-2">
+    <span class="input-group-text">Request Id</span>
+    <input
+      type="text"
+      class="form-control bg-white"
+      [value]="payment.requestUuid"
+      disabled
+    />
+  </div>
+  <div class="input-group mb-2">
+    <span class="input-group-text">Project</span>
+    <input
+      type="text"
+      class="form-control bg-white"
+      [value]="payment.projectName"
+      disabled
+    />
+  </div>
+  <div class="input-group mb-2">
+    <span class="input-group-text">Vendor</span>
+    <input
+      type="text"
+      class="form-control bg-white"
+      [value]="payment.vendorName"
+      disabled
+    />
+  </div>
+  <div class="input-group mb-2">
+    <span class="input-group-text">Amount</span>
+    <input
+      type="text"
+      class="form-control bg-white"
+      [value]="payment.amount"
+      disabled
+    />
+  </div>
+  <div class="input-group mb-2">
+    <span class="input-group-text">Assigned To</span>
+    <input
+      type="text"
+      class="form-control bg-white"
+      [value]="payment.userName"
+      disabled
+    />
+  </div>
+  <div class="input-group mb-2">
+    <span class="input-group-text">Status</span>
+    <input
+      type="text"
+      class="form-control bg-white"
+      [value]="payment.status"
+      disabled
+    />
+  </div>
+  <div class="input-group mb-2">
+    <span class="input-group-text">Transaction Id</span>
+    <input
+      type="number"
+      class="form-control bg-white"
+      [value]="payment.transactionId"
+      disabled
+    />
+  </div>
+  <div class="input-group mb-2">
+    <span class="input-group-text">Created Date</span>
+    <input
+      type="text"
+      class="form-control bg-white"
+      [value]="payment.createdDatetime | date : 'fullDate'"
+      disabled
+    />
+  </div>
+</div>

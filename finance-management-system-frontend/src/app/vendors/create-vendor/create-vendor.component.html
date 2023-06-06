@@ -9,7 +9,7 @@
         />
       </div>
       <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
-        <form>
+        <form [formGroup]="createVendorForm" (ngSubmit)="onSubmit()">
           <!-- Vendor Name input -->
           <div class="form-outline mb-4">
             <input
@@ -17,6 +17,7 @@
               id="vendor_name"
               class="form-control form-control-lg"
               placeholder="Enter Vendor Name"
+              formControlName="vendorName"
             />
             <label class="form-label" for="vendor_name">Vendor Name</label>
           </div>
@@ -28,6 +29,7 @@
               id="account_holder_name"
               class="form-control form-control-lg"
               placeholder="Enter Account Holder Name"
+              formControlName="accountHolderName"
             />
             <label class="form-label" for="account_holder_name"
               >Account Holder Name</label
@@ -41,6 +43,7 @@
               id="account_number"
               class="form-control form-control-lg"
               placeholder="Enter Account Number"
+              formControlName="accountNumber"
             />
             <label class="form-label" for="account_number"
               >Account Number</label
@@ -54,6 +57,7 @@
               id="ifsc_code"
               class="form-control form-control-lg"
               placeholder="Enter IFSC Code"
+              formControlName="ifscCode"
             />
             <label class="form-label" for="ifsc_code">IFSC Code</label>
           </div>
@@ -65,6 +69,7 @@
               id="bank_name"
               class="form-control form-control-lg"
               placeholder="Enter Bank Name"
+              formControlName="bankName"
             />
             <label class="form-label" for="bank_name">Bank Name</label>
           </div>
@@ -76,6 +81,7 @@
               id="branch"
               class="form-control form-control-lg"
               placeholder="Enter Bank Branch (Optional)"
+              formControlName="branch"
             />
             <label class="form-label" for="branch">Bank Branch</label>
           </div>
@@ -87,6 +93,7 @@
               id="upi_id"
               class="form-control form-control-lg"
               placeholder="Enter UPI Id (Optional)"
+              formControlName="upiId"
             />
             <label class="form-label" for="upi_id">UPI Id</label>
           </div>

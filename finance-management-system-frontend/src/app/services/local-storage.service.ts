@@ -17,17 +17,21 @@ export class LocalStorageService {
   }
 
   loginUser(user: User) {
-    localStorage.setItem('userId', user.id.toString());
-    localStorage.setItem('role', user.role);
-    localStorage.setItem('userName', user.name);
-    localStorage.setItem('userData', JSON.stringify(user));
+    localStorage.setItem('userId', user.userId.toString());
+    localStorage.setItem('roleName', user.role.roleName);
+    localStorage.setItem('name', user.name);
+    // localStorage.setItem('userData', JSON.stringify(user));
+  }
+
+  resetPassword(email: String) {
+    localStorage.setItem('email', email.toString());
   }
 
   logoutUser() {
     localStorage.removeItem('userId');
-    localStorage.removeItem('role');
-    localStorage.removeItem('userName');
-    localStorage.removeItem('userData');
+    localStorage.removeItem('role_name');
+    localStorage.removeItem('name');
+    // localStorage.removeItem('userData');
   }
 
   getUserId() {
@@ -35,6 +39,10 @@ export class LocalStorageService {
   }
 
   getUserName() {
-    return localStorage.getItem('userName');
+    return localStorage.getItem('name');
+  }
+
+  getUserEmail() {
+    return localStorage.getItem('email');
   }
 }

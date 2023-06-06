@@ -1,8 +1,9 @@
 package com.fms.pms.domain.commands;
 
-import com.fms.pms.events.UpdatePaymentBody;
-import com.fms.pms.models.Errors;
-import com.fms.pms.models.Header;
+import com.fms.common.BaseCommand;
+import com.fms.common.ErrorList;
+import com.fms.common.Header;
+import com.fms.common.events.UpdatePaymentBody;
 
 import lombok.Builder;
 import lombok.Data;
@@ -16,12 +17,11 @@ import lombok.ToString;
 @NoArgsConstructor
 public class HandleUpdatePaymentCommand extends BaseCommand {
 
-  private UpdatePaymentBody body;
+	private UpdatePaymentBody body;
 
-  @Builder
-  public HandleUpdatePaymentCommand(
-      final Header header, final UpdatePaymentBody body, final Errors errors) {
-    super(header, errors);
-    this.body = body;
-  }
+	@Builder
+	public HandleUpdatePaymentCommand(final Header header, final UpdatePaymentBody body, final ErrorList errors) {
+		super(header, errors);
+		this.body = body;
+	}
 }

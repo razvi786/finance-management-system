@@ -8,7 +8,7 @@ import org.springframework.data.annotation.Version;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-import com.fms.ams.infrastructure.enums.StatusType;
+import com.fms.common.enums.ApprovalStatus;
 
 import lombok.Data;
 
@@ -33,7 +33,7 @@ public class Approval {
 	private String comments;
 
 	@Field(name = "status_type")
-	private StatusType statusType;
+	private ApprovalStatus status;
 
 	@Field(name = "created_datetime")
 	private OffsetDateTime createdDatetime;
