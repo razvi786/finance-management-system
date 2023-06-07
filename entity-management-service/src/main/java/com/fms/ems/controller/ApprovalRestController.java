@@ -29,6 +29,7 @@ import com.fms.common.ui.responses.ApprovalsList;
 import com.fms.ems.entity.ApproverLevel;
 import com.fms.ems.services.ApprovalService;
 import com.fms.ems.services.ApproverLevelService;
+import com.fms.ems.services.NotificationService;
 import com.fms.ems.services.RequestService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -53,6 +54,9 @@ public class ApprovalRestController {
 
 	@Autowired
 	private ApproverLevelService approverLevelService;
+
+	@Autowired
+	private NotificationService notificationService;
 
 	@GetMapping("/approvals")
 	@Transactional
@@ -146,6 +150,7 @@ public class ApprovalRestController {
 		try {
 			ResponseEntity<Approval> approvalResponse = approvalService.approveApproval(approval);
 			Request request = requestService.getRequestByRequestUuid(requestUuid);
+			requestService.populateMetadata(request);
 			List<ApproverLevel> approverLevels = approverLevelService
 					.getApproverLevelsByProjectId(request.getProjectId());
 			if (approverLevels.size() == approverLevel) {
@@ -155,10 +160,17 @@ public class ApprovalRestController {
 				request.setStatus(RequestStatus.PARTIALLY_APPROVED);
 			}
 			ResponseEntity<Request> requestResponse = requestService.updateRequest(requestUuid, request);
+
 			if (approvalResponse.getStatusCode() == HttpStatus.OK && requestResponse.getStatusCode() == HttpStatus.OK) {
+
+				notificationService.mapAndSendAppNotificationForRequestApproved(request, approval);
 				if (requestResponse.getBody().getStatus() == RequestStatus.APPROVED) {
 					requestService.mapAndPublishInitiatePaymentEvent(approval, requestResponse.getBody());
+					notificationService.mapAndSendAppNotificationForRequestFullyApproved(request);
+				} else {
+					notificationService.mapAndSendAppNotificationForRequestAssignedAfterLevel(request, approverLevel);
 				}
+
 				return new ResponseEntity<>(approvalResponse.getBody(), HttpStatus.OK);
 			} else {
 				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -181,9 +193,11 @@ public class ApprovalRestController {
 				}
 			}
 			Request request = requestService.getRequestByRequestUuid(requestUuid);
+			requestService.populateMetadata(request);
 			request.setStatus(RequestStatus.REJECTED);
 			ResponseEntity<Request> requestResponse = requestService.updateRequest(requestUuid, request);
 			if (approvalResponse.getStatusCode() == HttpStatus.OK && requestResponse.getStatusCode() == HttpStatus.OK) {
+				notificationService.mapAndSendAppNotificationForRequestRejected(request, approval);
 				return new ResponseEntity<>(approvalResponse.getBody(), HttpStatus.OK);
 			} else {
 				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

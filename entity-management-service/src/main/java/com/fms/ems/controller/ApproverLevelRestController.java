@@ -24,6 +24,7 @@ import com.fms.ems.entity.User;
 import com.fms.ems.repository.ApproverLevelRepository;
 import com.fms.ems.repository.ProjectRepository;
 import com.fms.ems.repository.UserRepository;
+import com.fms.ems.services.NotificationService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -41,6 +42,9 @@ public class ApproverLevelRestController {
 
 	@Autowired
 	ProjectRepository projectRepository;
+
+	@Autowired
+	NotificationService notificationService;
 
 	@GetMapping("/approver-levels")
 	public ResponseEntity<List<ApproverLevel>> getAllApproverLevels() {
@@ -81,6 +85,8 @@ public class ApproverLevelRestController {
 				if (projectOptional.isPresent()) {
 					final Project project = projectOptional.get();
 					approverLevel.setProject(project);
+
+					notificationService.mapAndSendAppNotificationForApproverLevelAssigned(approverLevel);
 				} else {
 					return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 				}
@@ -111,6 +117,8 @@ public class ApproverLevelRestController {
 			if (approverLevelOptional.isPresent()) {
 				log.info("Updating Approver Level {}", approverLevel);
 				final ApproverLevel updatedApproverLevel = approverLevelRepository.save(approverLevel);
+
+				notificationService.mapAndSendAppNotificationForApproverLevelAssigned(approverLevel);
 				return new ResponseEntity<>(updatedApproverLevel, HttpStatus.OK);
 			} else {
 				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

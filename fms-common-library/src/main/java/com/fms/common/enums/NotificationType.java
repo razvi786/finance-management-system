@@ -1,4 +1,4 @@
-package com.fms.nms.enums;
+package com.fms.common.enums;
 
 public enum NotificationType {
   ALL,

@@ -23,6 +23,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.fms.common.entity.Request;
 import com.fms.common.ui.responses.RequestsList;
+import com.fms.ems.services.NotificationService;
 import com.fms.ems.services.RequestService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -41,6 +42,9 @@ public class RequestRestController {
 
 	@Autowired
 	private RequestService requestService;
+
+	@Autowired
+	NotificationService notificationService;
 
 	@GetMapping("/requests")
 	@Transactional
@@ -100,6 +104,8 @@ public class RequestRestController {
 					new HttpEntity<Request>(request), Request.class);
 			if (response.getStatusCode() == HttpStatus.CREATED) {
 				requestService.mapAndPublishInitiateApprovalsEvent(response.getBody());
+
+				notificationService.mapAndSendAppNotificationForRequestRaised(request);
 				return new ResponseEntity<>(response.getBody(), HttpStatus.CREATED);
 			} else {
 				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
