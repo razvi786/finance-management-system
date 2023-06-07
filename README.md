@@ -1,4 +1,4 @@
-# finance-management-system
+# Finance Maanagement System
 
 Project Document:
 https://docs.google.com/document/d/1Z4_kSpuOYEDCl4L2ChVSDDzgs-9gdvB5Thikd9ifLxY
@@ -40,7 +40,8 @@ https://docs.google.com/document/d/17j-aY47cF7_nJClIue6899WyDTA5rCpJ63IcZVyBg2s
   - When Payment record is created, it should be assigned automatically to Project's PaymentAsignee
   - When PaymentAsignee is updated, it should be updated in all the active Payments
 
-References:
+# References
+
 - [Angular DataTables:](http://l-lin.github.io/angular-datatables/#/welcome)
 - [MDBootstrap:](https://mdbootstrap.com/docs/standard/getting-started/installation)
 - [Send sms using aws simple notification service (SNS) and Spring boot](https://www.rajith.me/2020/03/send-sms-using-aws-simple-notification.html)
