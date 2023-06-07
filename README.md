@@ -11,6 +11,7 @@ https://docs.google.com/document/d/14e5gAoa-3U7Aa53yY3iOqQ9UIkpsmGsKKylFti7gUKw
 - Buttons to update payment status from INITIATED to PENDING to COMPLETED / REJECTED
 - Notifications list can be shown to user and they will get redirect link for them
 - Roles and Permissions assigned to each user for which page they can access
+- Add Filtering and Search logic to Data table
 - Admin can be able to do CRUD operations on users
 - Users can opt how they want to receive notifications and Notifications can be sent to user to all those ways (Email, SMS)
 - A scheduler can find out if any approval is pending and configured days left for deadline, then send automated notification to the assigned user
