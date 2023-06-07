@@ -1,19 +1,14 @@
 # Finance Maanagement System
 
-Project Document:
-https://docs.google.com/document/d/1Z4_kSpuOYEDCl4L2ChVSDDzgs-9gdvB5Thikd9ifLxY
+- [Project Document](https://docs.google.com/document/d/1Z4_kSpuOYEDCl4L2ChVSDDzgs-9gdvB5Thikd9ifLxY)
 
-Database Design:
-https://docs.google.com/document/d/14e5gAoa-3U7Aa53yY3iOqQ9UIkpsmGsKKylFti7gUKw
+- [Database Design](https://docs.google.com/document/d/14e5gAoa-3U7Aa53yY3iOqQ9UIkpsmGsKKylFti7gUKw)
 
-Event Definitions:
-https://docs.google.com/document/d/1raMWo0s9U4Vj5Kh0EMmdzeIMfxhhy2BQiYAbSsQ-A3s
+- [Event Definitions](https://docs.google.com/document/d/1raMWo0s9U4Vj5Kh0EMmdzeIMfxhhy2BQiYAbSsQ-A3s)
 
-Low Level Design:
-https://docs.google.com/document/d/1JIJEH3vPydKhve3Jf1kFQJqXouOoUZARGSo3mAL5Klk
+- [Low Level Design](https://docs.google.com/document/d/1JIJEH3vPydKhve3Jf1kFQJqXouOoUZARGSo3mAL5Klk)
 
-Frontend Design:
-https://docs.google.com/document/d/17j-aY47cF7_nJClIue6899WyDTA5rCpJ63IcZVyBg2s
+- [Frontend Design](https://docs.google.com/document/d/17j-aY47cF7_nJClIue6899WyDTA5rCpJ63IcZVyBg2s)
 
 # Upcoming Features
 
