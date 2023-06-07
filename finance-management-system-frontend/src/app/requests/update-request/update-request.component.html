@@ -12,6 +12,7 @@
         <form [formGroup]="updateRequestForm" (ngSubmit)="onSubmit()">
           <!-- Project input -->
           <div class="form-outline mb-4">
+            <label class="form-label" for="project-id">Project</label>
             <select
               id="project-id"
               class="form-control form-control-lg"
@@ -26,24 +27,24 @@
                 {{ project.projectName }}
               </option>
             </select>
-            <label class="form-label" for="project-id">Project</label>
           </div>
 
           <!-- Budget Remaining input -->
           <div class="form-outline mb-4">
+            <label class="form-label" for="amount"
+              >Budget Remaining (&#8377;)</label
+            >
             <input
               type="number"
               id="amount"
               class="form-control form-control-lg"
               formControlName="remainingBudget"
             />
-            <label class="form-label" for="amount"
-              >Budget Remaining (&#8377;)</label
-            >
           </div>
 
           <!-- Amount input -->
           <div class="form-outline mb-4">
+            <label class="form-label" for="amount">Amount (&#8377;)</label>
             <input
               type="number"
               id="amount"
@@ -51,11 +52,11 @@
               formControlName="amount"
               (change)="updateRemainingBudget()"
             />
-            <label class="form-label" for="amount">Amount (&#8377;)</label>
           </div>
 
           <!-- Vendor input -->
           <div class="form-outline mb-4">
+            <label class="form-label" for="vendor-id">Vendor</label>
             <select
               id="vendor-id"
               class="form-control form-control-lg"
@@ -67,11 +68,11 @@
                 {{ vendor.vendorName }}
               </option>
             </select>
-            <label class="form-label" for="vendor-id">Vendor</label>
           </div>
 
           <!-- Description input -->
           <div class="form-outline mb-4">
+            <label class="form-label" for="description">Description</label>
             <textarea
               id="description"
               class="form-control form-control-lg"
@@ -79,11 +80,11 @@
               rows="3"
               formControlName="description"
             ></textarea>
-            <label class="form-label" for="description">Description</label>
           </div>
 
           <!-- Deadline input -->
           <div class="form-outline mb-4">
+            <label class="form-label" for="deadline">Deadline</label>
             <input
               type="date"
               id="deadline"
@@ -91,7 +92,6 @@
               formControlName="deadline"
               [min]="todaysDate"
             />
-            <label class="form-label" for="deadline">Deadline</label>
           </div>
 
           <!-- Submit button -->

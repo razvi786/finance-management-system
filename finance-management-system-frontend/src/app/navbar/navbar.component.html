@@ -17,7 +17,6 @@
         <li class="nav-item" *ngIf="auth.isAuthenticated()">
           <a
             class="nav-link"
-            class="nav-link"
             routerLink="/home"
             routerLinkActive="active"
             ariaCurrentWhenActive="page"
@@ -69,7 +68,7 @@
             >Payments</a
           >
         </li>
-        <li class="nav-item" *ngIf="auth.isAuthenticated()">
+        <!-- <li class="nav-item" *ngIf="auth.isAuthenticated()">
           <a
             class="nav-link"
             routerLink="/users"
@@ -77,7 +76,7 @@
             ariaCurrentWhenActive="page"
             >Users</a
           >
-        </li>
+        </li> -->
         <li class="nav-item" *ngIf="auth.isAuthenticated()">
           <a
             class="nav-link"
@@ -98,5 +97,62 @@
         </li>
       </ul>
     </div>
+    <!-- Notifications -->
+    <ul
+      class="navbar-nav d-flex flex-row me-1"
+      *ngIf="auth.isAuthenticated()"
+      (click)="fetchAllNotifications()"
+    >
+      <li class="nav-item me-3 me-lg-0">
+        <div class="dropdown">
+          <a
+            class="me-3 dropdown-toggle hidden-arrow"
+            href="#"
+            id="navbarDropdownMenuLink"
+            role="button"
+            data-mdb-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <i class="fas fa-bell"></i>
+            <span
+              class="badge rounded-pill badge-notification bg-danger"
+              *ngIf="unseenNotificationsCount"
+              >{{ unseenNotificationsCount }}</span
+            >
+          </a>
+          <ul
+            class="dropdown-menu dropdown-menu-end"
+            aria-labelledby="navbarDropdownMenuLink"
+          >
+            <li *ngFor="let notification of notifications; let i = index">
+              <a
+                [routerLink]="['/notification/', notification.notificationUuid]"
+                (click)="markNotificaitonAsSeen(notification.notificationUuid)"
+                class="dropdown-item"
+                *ngIf="i < notificationsLimit"
+              >
+                <span
+                  class="fw-bold"
+                  *ngIf="notification.seenDatetime == null"
+                  >{{ notification.message }}</span
+                >
+                <span
+                  class="text-secondary"
+                  *ngIf="notification.seenDatetime != null"
+                  >{{ notification.message }}</span
+                >
+              </a>
+            </li>
+            <li>
+              <a
+                routerLink="/notifications"
+                class="dropdown-item fst-italic fw-bold text-primary"
+                >View all notifications</a
+              >
+            </li>
+          </ul>
+        </div>
+      </li>
+    </ul>
   </div>
 </nav>

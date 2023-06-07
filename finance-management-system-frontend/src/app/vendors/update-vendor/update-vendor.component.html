@@ -12,6 +12,7 @@
         <form [formGroup]="updateVendorForm" (ngSubmit)="onSubmit()">
           <!-- Vendor Name input -->
           <div class="form-outline mb-4">
+            <label class="form-label" for="vendor_name">Vendor Name</label>
             <input
               type="text"
               id="vendor_name"
@@ -19,11 +20,13 @@
               placeholder="Enter Vendor Name"
               formControlName="vendorName"
             />
-            <label class="form-label" for="vendor_name">Vendor Name</label>
           </div>
 
           <!-- Account Holder Name input -->
           <div class="form-outline mb-4">
+            <label class="form-label" for="account_holder_name"
+              >Account Holder Name</label
+            >
             <input
               type="text"
               id="account_holder_name"
@@ -31,13 +34,13 @@
               placeholder="Enter Account Holder Name"
               formControlName="accountHolderName"
             />
-            <label class="form-label" for="account_holder_name"
-              >Account Holder Name</label
-            >
           </div>
 
           <!-- Account Number input -->
           <div class="form-outline mb-4">
+            <label class="form-label" for="account_number"
+              >Account Number</label
+            >
             <input
               type="text"
               id="account_number"
@@ -45,13 +48,11 @@
               placeholder="Enter Account Number"
               formControlName="accountNumber"
             />
-            <label class="form-label" for="account_number"
-              >Account Number</label
-            >
           </div>
 
           <!-- IFSC Code input -->
           <div class="form-outline mb-4">
+            <label class="form-label" for="ifsc_code">IFSC Code</label>
             <input
               type="text"
               id="ifsc_code"
@@ -59,11 +60,11 @@
               placeholder="Enter IFSC Code"
               formControlName="ifscCode"
             />
-            <label class="form-label" for="ifsc_code">IFSC Code</label>
           </div>
 
           <!-- Bank Name input -->
           <div class="form-outline mb-4">
+            <label class="form-label" for="bank_name">Bank Name</label>
             <input
               type="text"
               id="bank_name"
@@ -71,11 +72,11 @@
               placeholder="Enter Bank Name"
               formControlName="bankName"
             />
-            <label class="form-label" for="bank_name">Bank Name</label>
           </div>
 
           <!-- Branch input -->
           <div class="form-outline mb-4">
+            <label class="form-label" for="branch">Bank Branch</label>
             <input
               type="text"
               id="branch"
@@ -83,11 +84,11 @@
               placeholder="Enter Bank Branch (Optional)"
               formControlName="branch"
             />
-            <label class="form-label" for="branch">Bank Branch</label>
           </div>
 
           <!-- UPI Id input -->
           <div class="form-outline mb-4">
+            <label class="form-label" for="upi_id">UPI Id</label>
             <input
               type="text"
               id="upi_id"
@@ -95,7 +96,6 @@
               placeholder="Enter UPI Id (Optional)"
               formControlName="upiId"
             />
-            <label class="form-label" for="upi_id">UPI Id</label>
           </div>
 
           <!-- Submit button -->

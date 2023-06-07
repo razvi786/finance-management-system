@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LocalStorageService } from '../services/local-storage.service';
 import { UserService } from '../services/user.service';
+import { NotificationService } from '../services/notification.service';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,8 @@ export class LoginComponent implements OnInit {
     private userService: UserService,
     private fb: FormBuilder,
     private router: Router,
-    private localStorageService: LocalStorageService
+    private localStorageService: LocalStorageService,
+    private notificationService: NotificationService
   ) {}
 
   loginForm: FormGroup = new FormGroup({});
@@ -35,11 +37,12 @@ export class LoginComponent implements OnInit {
         controls['password'].value
       )
       .subscribe((data) => {
-        if (data!=null) {
+        if (data != null) {
           console.log(data);
           this.localStorageService.loginUser(data);
           console.log(data.userId);
-          this.router.navigate(['/home'])
+          this.notificationService.setNotificationInterval(10000);
+          this.router.navigate(['/home']);
         } else {
           alert('Invalid Email / Password');
         }

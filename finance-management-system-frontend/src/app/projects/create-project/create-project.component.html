@@ -12,6 +12,7 @@
         <form [formGroup]="createProjectForm" (ngSubmit)="onSubmit()">
           <!-- Project Name input -->
           <div class="form-outline mb-4">
+            <label class="form-label" for="project_name">Project Name</label>
             <input
               type="string"
               id="project_name"
@@ -19,11 +20,11 @@
               placeholder="Project Name"
               formControlName="projectName"
             />
-            <label class="form-label" for="project_name">Project Name</label>
           </div>
 
           <!-- Description input -->
           <div class="form-outline mb-4">
+            <label class="form-label" for="description">Description</label>
             <textarea
               id="description"
               class="form-control form-control-lg"
@@ -31,11 +32,11 @@
               rows="3"
               formControlName="description"
             ></textarea>
-            <label class="form-label" for="description">Description</label>
           </div>
 
           <!-- Budget input -->
           <div class="form-outline mb-4">
+            <label class="form-label" for="budget">Budget (&#8377;)</label>
             <input
               type="number"
               id="budget"
@@ -43,7 +44,6 @@
               formControlName="budget"
               value="0"
             />
-            <label class="form-label" for="budget">Budget (&#8377;)</label>
           </div>
 
           <!-- Submit button -->
