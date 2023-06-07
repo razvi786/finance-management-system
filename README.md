@@ -1,7 +1,19 @@
 # finance-management-system
 
+Project Document:
+https://docs.google.com/document/d/1Z4_kSpuOYEDCl4L2ChVSDDzgs-9gdvB5Thikd9ifLxY
+
 Database Design:
 https://docs.google.com/document/d/14e5gAoa-3U7Aa53yY3iOqQ9UIkpsmGsKKylFti7gUKw
+
+Event Definitions:
+https://docs.google.com/document/d/1raMWo0s9U4Vj5Kh0EMmdzeIMfxhhy2BQiYAbSsQ-A3s
+
+Low Level Design:
+https://docs.google.com/document/d/1JIJEH3vPydKhve3Jf1kFQJqXouOoUZARGSo3mAL5Klk
+
+Frontend Design:
+https://docs.google.com/document/d/17j-aY47cF7_nJClIue6899WyDTA5rCpJ63IcZVyBg2s
 
 # Upcoming Features
 
@@ -27,3 +39,10 @@ https://docs.google.com/document/d/14e5gAoa-3U7Aa53yY3iOqQ9UIkpsmGsKKylFti7gUKw
   - Project should contain a column PaymentAsignee
   - When Payment record is created, it should be assigned automatically to Project's PaymentAsignee
   - When PaymentAsignee is updated, it should be updated in all the active Payments
+
+References:
+- [Angular DataTables:](http://l-lin.github.io/angular-datatables/#/welcome)
+- [MDBootstrap:](https://mdbootstrap.com/docs/standard/getting-started/installation)
+- [Send sms using aws simple notification service (SNS) and Spring boot](https://www.rajith.me/2020/03/send-sms-using-aws-simple-notification.html)
+- [How to refresh a component from another in angular](https://stackoverflow.com/questions/63888794/how-to-refresh-a-component-from-another-in-angular#:~:text=To%20refresh%2C%20or%20better%20to,from%20APIs%20for%20CRUD%20operations.)
+- [Markdown Basic Syntax](https://www.markdownguide.org/basic-syntax/)
